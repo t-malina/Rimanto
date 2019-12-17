@@ -1,4 +1,4 @@
 package de.kalkihe.rimanto.view;
 
-public class ViewModule {
+public class ViewModule implements IViewModule{
 }

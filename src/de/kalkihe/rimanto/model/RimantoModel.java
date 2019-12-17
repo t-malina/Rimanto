@@ -1,4 +1,4 @@
 package de.kalkihe.rimanto.model;
 
-public class RimantoModel {
+public class RimantoModel implements IRimantoModel{
 }
