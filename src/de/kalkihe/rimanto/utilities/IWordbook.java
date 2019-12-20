@@ -1,4 +1,4 @@
-package de.kalkihe.rimanto.view.wordbook;
+package de.kalkihe.rimanto.utilities;
 
 public interface IWordbook {
   String getWordFor(String identifier);

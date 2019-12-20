@@ -1,4 +1,4 @@
-package de.kalkihe.rimanto.view.wordbook;
+package de.kalkihe.rimanto.utilities;
 
 import java.util.Map;
 import java.util.TreeMap;

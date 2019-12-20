@@ -1,4 +1,4 @@
 package de.kalkihe.rimanto.presenter;
 
-public class EventProcessor {
+public class EventProcessor implements IEventProcessor{
 }

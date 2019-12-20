@@ -1,6 +1,17 @@
 package de.kalkihe.rimanto.view;
 
+import com.google.inject.Injector;
+import de.kalkihe.rimanto.presenter.IRimantoPresenter;
+
 public interface IRimantoView {
-  public void initView() throws ClassNotFoundException;
-  public void showErrorDialog(Exception exception, boolean shutdownApplication);
+  void showErrorDialog(Exception exception, boolean shutdownApplication);
+  void setPresenter(IRimantoPresenter rimantoPresenter);
+  void initializeApplicationWindow() throws Exception;
+
+
+  String[] requestColumnNamesForProjectOverview();
+  String[][] requestDataForProjectOverview();
+  String[] requestColumnNamesForRiskOverview();
+  String[][] requestDataForRiskOverview();
 }
+
