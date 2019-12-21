@@ -16,6 +16,10 @@ public class Project implements IProject{
   private List<IRisk> projectRisks;
 
 
+  /*
+   * Constructor
+   * Initializes project data with passed data
+   */
   public Project(String projectName, String projectDescription, GregorianCalendar dateOfProjectStart, GregorianCalendar dateOfProjectEnd, List<File> attachedFiles, List<URI> linkedResources, GregorianCalendar dateOfNextProjectRevision) {
     this.projectName = projectName;
     this.projectDescription = projectDescription;

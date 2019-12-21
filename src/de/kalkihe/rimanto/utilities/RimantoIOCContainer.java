@@ -29,6 +29,9 @@ public class RimantoIOCContainer {
   IPanelGetter panelGetter;
   IRimantoFileStorage rimantoFileStorage;
 
+  /*
+   * Private Constructor, so that only one instance of this class can be created
+   */
   private RimantoIOCContainer()
   {
     this.createSingletonInstances();
@@ -44,11 +47,18 @@ public class RimantoIOCContainer {
     this.rimantoFileStorage = new DummyDataFileStorage();
   }
 
+  /*
+   * Method to get a reference to the instance of this class
+   */
   public static RimantoIOCContainer getInstance()
   {
     return iocContainer;
   }
 
+  /*
+   * Returns a instance of the passed class.
+   * Uses created singleton if applicable
+   */
   public Object getInstanceFor(Class wantedClass) throws Exception {
     if (wantedClass == IRimantoModel.class) {
       return this.rimantoModel;

@@ -37,14 +37,21 @@ public class Wordbook implements IWordbook{
     words.put("import project", "import Project");
     words.put("current projects", "current Projects");
     words.put("back", "back");
-
+    words.put("no projects", "No projects yet!");
   }
 
+  /*
+   * Gets the word in the correct language for the given identifier
+   */
   @Override
   public String getWordFor(String identifier) {
     return words.get(identifier);
   }
 
+  /*
+   * Gets the word in the correct language for the given identifier
+   * The first letter of the word is capitalized in this case
+   */
   @Override
   public String getWordForWithCapitalLeadingLetter(String identifier) {
     // Get word for identifier

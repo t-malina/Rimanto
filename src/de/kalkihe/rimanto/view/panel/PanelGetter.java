@@ -20,8 +20,11 @@ public class PanelGetter implements IPanelGetter{
     this.rimantoView = rimantoView;
   }
 
+  /*
+   * Creates new Overview Panel and returns it
+   */
   @Override
-  public JPanel getPanelForOverview() {
+  public JPanel getPanelForOverview() throws Exception {
     return new OverviewPanel(this.wordbook, this.eventProcessor, this.rimantoView);
   }
 
