@@ -1,6 +1,5 @@
 package de.kalkihe.rimanto.view.panel;
 
-import com.google.inject.Inject;
 import de.kalkihe.rimanto.presenter.IEventProcessor;
 import de.kalkihe.rimanto.utilities.IWordbook;
 import de.kalkihe.rimanto.view.IRimantoView;
@@ -12,7 +11,6 @@ public class PanelGetter implements IPanelGetter{
   private IEventProcessor eventProcessor;
   private IRimantoView rimantoView;
 
-  @Inject
   public PanelGetter(IWordbook wordbook, IEventProcessor eventProcessor, IRimantoView rimantoView)
   {
     this.wordbook = wordbook;
