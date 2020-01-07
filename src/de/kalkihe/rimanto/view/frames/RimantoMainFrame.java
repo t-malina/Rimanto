@@ -33,7 +33,7 @@ public class RimantoMainFrame extends JFrame {
     // Set Title of Main window
     this.setTitle("Rimanto");
     // Set icon of the main window
-    ImageIcon icon = new ImageIcon("/windows/Nextcloud/Studium/Module/T3_3101 Studienarbeit/Rimanto/images/danger.png");
+    ImageIcon icon = new ImageIcon("./images/danger.png");
     this.setIconImage(icon.getImage());
     // Set initial size of the current window
     // this.setSize(800, 700);

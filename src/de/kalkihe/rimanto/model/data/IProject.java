@@ -56,4 +56,9 @@ public interface IProject {
    * Method to get a list of all risks of that project
    */
   List<IRisk> getProjectRisks();
+
+  /*
+   * Returns true, if the project is to review
+   */
+  boolean isToReview();
 }

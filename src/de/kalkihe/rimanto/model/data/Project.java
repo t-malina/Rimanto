@@ -2,6 +2,7 @@ package de.kalkihe.rimanto.model.data;
 
 import java.io.File;
 import java.net.URI;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -73,5 +74,16 @@ public class Project implements IProject{
 
   public List<IRisk> getProjectRisks() {
     return projectRisks;
+  }
+
+  /*
+   * Returns true, if the project has to be reviewed
+   * This is determined by checking if dateofNextProjectRevision was before current date
+   */
+  @Override
+  public boolean isToReview() {
+    Calendar currentDate = Calendar.getInstance();
+    return this.dateOfNextProjectRevision.before(currentDate);
+
   }
 }
