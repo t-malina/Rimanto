@@ -32,5 +32,7 @@ public interface IRimantoView {
    * Requests a list of risks for the passed project from presenter
    */
   List<IRisk> requestRisksForProject(IProject project);
+
+  void startCreationOfProject();
 }
 

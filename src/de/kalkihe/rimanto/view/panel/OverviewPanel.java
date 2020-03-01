@@ -82,6 +82,9 @@ public class OverviewPanel extends GeneralRimantoPanel {
 
     //TODO: Buttons
     JButton newProjectButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("new project"));
+    newProjectButton.addActionListener(actionEvent -> {
+      this.eventProcessor.newProjectButtonClick();
+    });
     JButton importProjectButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("import project"));
     this.southPanel.add(importProjectButton);
     this.southPanel.add(newProjectButton);

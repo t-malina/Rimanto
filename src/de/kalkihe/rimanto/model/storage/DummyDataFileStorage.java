@@ -25,6 +25,5 @@ public class DummyDataFileStorage implements IRimantoFileStorage {
     resultList.add(project1);
     resultList.add(project2);
     return resultList;
-
   }
 }
