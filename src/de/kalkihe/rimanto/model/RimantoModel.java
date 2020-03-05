@@ -1,6 +1,5 @@
 package de.kalkihe.rimanto.model;
 
-import com.google.inject.Injector;
 import de.kalkihe.rimanto.model.data.IProject;
 import de.kalkihe.rimanto.model.data.IRisk;
 import de.kalkihe.rimanto.model.storage.IRimantoFileStorage;
@@ -9,7 +8,7 @@ import de.kalkihe.rimanto.utilities.RimantoIOCContainer;
 
 import java.util.List;
 
-public class RimantoModel implements IRimantoModel{
+public class RimantoModel implements de.kalkihe.rimanto.model.IRimantoModel {
   // List with all projects existing
   private List<IProject> projectList;
   // Needed references to objects

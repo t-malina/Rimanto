@@ -1,6 +1,5 @@
 package de.kalkihe.rimanto.model;
 
-import com.google.inject.Injector;
 import de.kalkihe.rimanto.model.data.IProject;
 import de.kalkihe.rimanto.model.data.IRisk;
 
