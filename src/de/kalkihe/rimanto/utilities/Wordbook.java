@@ -30,7 +30,7 @@ public class Wordbook implements IWordbook{
     words.put("date of project end", "date of project end");
     words.put("attached documents", "attached documents");
     words.put("next date of revision", "next date of revision");
-    words.put("further resources", "further resources");
+    words.put("further resources", "further resources (one per line)");
     words.put("impact", "impact");
     words.put("errorlookandfeel", "Error while reading the look and feel from the system!");
     words.put("new project", "new Project");
@@ -40,6 +40,11 @@ public class Wordbook implements IWordbook{
     words.put("no projects", "No projects yet!");
     words.put("project description", "Description of the project");
     words.put("project name" , "Name of the project");
+    words.put("save", "save");
+    words.put("cancel", "cancel");
+    words.put("missing project data", "At least a project name is required!");
+    words.put("error", "error");
+    words.put("wrong revision date", "The revision date has to be between the start and the end date");
   }
 
   /*
