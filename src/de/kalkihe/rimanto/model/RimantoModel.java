@@ -6,6 +6,7 @@ import de.kalkihe.rimanto.model.storage.IRimantoFileStorage;
 import de.kalkihe.rimanto.utilities.IWordbook;
 import de.kalkihe.rimanto.utilities.RimantoIOCContainer;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -56,5 +57,10 @@ public class RimantoModel implements de.kalkihe.rimanto.model.IRimantoModel {
   @Override
   public String getProjectFileFormat() {
     return this.rimantoFileStorage.getProjectFileFormat();
+  }
+
+  @Override
+  public void importProject(File importFile) throws IOException {
+    this.rimantoFileStorage.importProject(importFile);
   }
 }

@@ -80,7 +80,6 @@ public class OverviewPanel extends GeneralRimantoPanel {
     // Add Scroll pane to center panel
     this.centerPanel.add(this.projectTableScrollPane);
 
-    //TODO: Buttons
     JButton newProjectButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("new project"));
     newProjectButton.addActionListener(actionEvent -> {
       this.eventProcessor.newProjectButtonClick();

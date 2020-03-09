@@ -3,6 +3,8 @@ package de.kalkihe.rimanto.model.storage;
 import de.kalkihe.rimanto.model.data.IProject;
 
 import java.io.*;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -77,16 +79,16 @@ public class RimantoFileStorage implements IRimantoFileStorage {
   }
 
   @Override
-  public void importProject(File importFile) {
+  public void importProject(File importFile) throws IOException {
     String fileName = importFile.getName();
     File targetFile = new File(this.pathToStorageFolder.toString(), fileName);
     if (targetFile.exists())
     {
-      
+      throw new FileAlreadyExistsException(targetFile.getAbsolutePath());
     }
     else
     {
-
+      Files.copy(importFile.toPath(), targetFile.toPath());
     }
 
   }
