@@ -4,6 +4,7 @@ import de.kalkihe.rimanto.model.data.IProject;
 import de.kalkihe.rimanto.model.data.IRisk;
 import de.kalkihe.rimanto.presenter.IRimantoPresenter;
 
+import java.io.File;
 import java.util.List;
 
 public interface IRimantoView {
@@ -34,5 +35,11 @@ public interface IRimantoView {
   List<IRisk> requestRisksForProject(IProject project);
 
   void startCreationOfProject();
+
+  void cancelCreationOfProject() throws Exception;
+
+  void projectCreated() throws Exception;
+
+  File showImportFileDialog(String allowedFileFormat);
 }
 

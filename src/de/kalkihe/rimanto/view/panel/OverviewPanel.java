@@ -86,6 +86,9 @@ public class OverviewPanel extends GeneralRimantoPanel {
       this.eventProcessor.newProjectButtonClick();
     });
     JButton importProjectButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("import project"));
+    importProjectButton.addActionListener(actionEvent -> {
+      this.eventProcessor.projectImportRequested();
+    });
     this.southPanel.add(importProjectButton);
     this.southPanel.add(newProjectButton);
     //TODO: Labels

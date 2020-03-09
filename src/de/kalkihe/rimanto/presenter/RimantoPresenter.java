@@ -6,6 +6,7 @@ import de.kalkihe.rimanto.model.data.IRisk;
 import de.kalkihe.rimanto.utilities.RimantoIOCContainer;
 import de.kalkihe.rimanto.view.IRimantoView;
 
+import java.io.IOException;
 import java.util.List;
 
 public class RimantoPresenter implements IRimantoPresenter{
@@ -69,7 +70,15 @@ public class RimantoPresenter implements IRimantoPresenter{
    */
   @Override
   public List<IProject> fetchProjects() {
-    return this.rimantoModel.getProjectList();
+    try
+    {
+      return this.rimantoModel.getProjectList();
+    }
+    catch (Exception exception)
+    {
+      this.rimantoView.showErrorDialog(exception, true);
+      return null;
+    }
   }
 
   /*

@@ -1,10 +1,12 @@
 package de.kalkihe.rimanto.model.data;
 
 import java.io.File;
+import java.io.Serializable;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.List;
+import java.util.UUID;
 
 public interface IProject {
   /*
@@ -39,7 +41,7 @@ public interface IProject {
   LocalDate getDateOfProjectEnd();
 
   /*
-   * Method to get List of links to ressources linked to the project
+   * Method to get List of links to resources linked to the project
    */
   List<URI> getLinkedResources();
 
@@ -57,4 +59,6 @@ public interface IProject {
    * Returns true, if the project is to review
    */
   boolean isToReview();
+
+  public UUID getUuid();
 }

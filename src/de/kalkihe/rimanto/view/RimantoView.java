@@ -9,6 +9,8 @@ import de.kalkihe.rimanto.view.panel.IPanelGetter;
 import de.kalkihe.rimanto.utilities.IWordbook;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import java.io.File;
 import java.util.List;
 
 public class RimantoView implements IRimantoView{
@@ -34,7 +36,7 @@ public class RimantoView implements IRimantoView{
    */
   @Override
   public void showErrorDialog(Exception exception, boolean shutdownApplication) {
-    //TODO: Implement Error Dialog showing
+    JOptionPane.showMessageDialog(this.rimantoMainFrame, exception.getMessage());
   }
 
   /*
@@ -85,6 +87,38 @@ public class RimantoView implements IRimantoView{
   public void startCreationOfProject() {
     this.rimantoMainFrame.setJPanel(this.panelGetter.getPanelForProjectInput());
 
+  }
+
+  @Override
+  public void cancelCreationOfProject() throws Exception {
+    this.rimantoMainFrame.setJPanel(this.panelGetter.getPanelForOverview());
+  }
+
+  @Override
+  public void projectCreated() throws Exception {
+    this.rimantoMainFrame.setJPanel(this.panelGetter.getPanelForOverview());
+  }
+
+  @Override
+  public File showImportFileDialog(String allowedFileFormat) {
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setFileFilter(new FileFilter() {
+      @Override
+      public boolean accept(File file) {
+        return file.isDirectory() || file.getName().toLowerCase().endsWith(allowedFileFormat);
+      }
+
+      @Override
+      public String getDescription() {
+        return wordbook.getWordForWithCapitalLeadingLetter("rimanto project");
+      }
+    });
+    int state = fileChooser.showOpenDialog(null);
+    if (state == JFileChooser.APPROVE_OPTION)
+    {
+      return fileChooser.getSelectedFile();
+    }
+      return null;
   }
 
 
