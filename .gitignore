@@ -72,3 +72,6 @@ fabric.properties
 
 # Outputs
 out/*
+
+# META-INF
+src/META-INF/*
