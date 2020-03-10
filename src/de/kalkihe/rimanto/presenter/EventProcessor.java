@@ -2,6 +2,7 @@ package de.kalkihe.rimanto.presenter;
 
 import de.kalkihe.rimanto.model.IRimantoModel;
 import de.kalkihe.rimanto.model.data.IProject;
+import de.kalkihe.rimanto.model.data.IRisk;
 import de.kalkihe.rimanto.view.IRimantoView;
 
 import java.io.File;
@@ -67,5 +68,30 @@ public class EventProcessor implements IEventProcessor{
     {
       this.rimantoView.showErrorDialog(exception, false);
     }
+  }
+
+  @Override
+  public void projectForDetailViewSelected(IProject project) {
+    try
+    {
+      this.rimantoView.showProject(project);
+    }
+    catch (Exception exception)
+    {
+      this.rimantoView.showErrorDialog(exception, true);
+    }
+  }
+
+  @Override
+  public void riskForDetailViewSelected(IRisk risk) {
+    try
+    {
+      this.rimantoView.showRisk(risk);
+    }
+    catch(Exception exception)
+    {
+      this.rimantoView.showErrorDialog(exception, true);
+    }
+
   }
 }

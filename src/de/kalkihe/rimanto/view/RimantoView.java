@@ -121,5 +121,15 @@ public class RimantoView implements IRimantoView{
       return null;
   }
 
+  @Override
+  public void showProject(IProject project) throws Exception {
+    this.rimantoMainFrame.setJPanel(this.panelGetter.getPanelForProjectView(project));
+  }
+
+  @Override
+  public void showRisk(IRisk risk) throws Exception {
+    this.rimantoMainFrame.setJPanel(this.panelGetter.getPanelForRiskView(risk));
+  }
+
 
 }
