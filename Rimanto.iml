@@ -9,6 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="com.google.inject:guice:4.2.2" level="project" />
     <orderEntry type="library" name="com.google.guava:guava:28.1-jre" level="project" />
-    <orderEntry type="library" name="LGoodDatePicker-10.4.1" level="project" />
+    <orderEntry type="library" exported="" name="LGoodDatePicker-10.4.1" level="project" />
   </component>
 </module>
