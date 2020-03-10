@@ -1,5 +1,6 @@
 package de.kalkihe.rimanto.model.data;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Map;
 
@@ -13,6 +14,6 @@ public interface IRisk {
   int getRiskImpact();
   String getRiskMitigation();
   String getPersonInCharge();
-  Calendar getDateOfNextRiskRevision();
+  LocalDate getDateOfNextRiskRevision();
   Map<Risk, String> getImpactOfRiskOnOtherProjects();
 }

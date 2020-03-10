@@ -48,6 +48,12 @@ public class Wordbook implements IWordbook{
     words.put("rimanto project", "rimanto project");
     words.put("import project exists", "The project you wanted to import is already existing!");
     words.put("import project error", "Error while importing project");
+    words.put("no risks", "No risks yet");
+    words.put("new risk", "new risk");
+    words.put("import risk", "import risk");
+    words.put("back", "back");
+    words.put("edit project", "edit project");
+    words.put("save project", "save project");
   }
 
   /*
