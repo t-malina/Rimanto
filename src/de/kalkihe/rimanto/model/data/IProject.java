@@ -19,7 +19,6 @@ public interface IProject {
    */
   String[] getGeneralDataNames();
 
-
   /*
    * Method to get the name of the project
    */
@@ -60,5 +59,9 @@ public interface IProject {
    */
   boolean isToReview();
 
-  public UUID getUuid();
+  UUID getUuid();
+
+  void addRisk(IRisk risk);
+
+  void editProjectData(IProject projectToTakeDataFrom);
 }

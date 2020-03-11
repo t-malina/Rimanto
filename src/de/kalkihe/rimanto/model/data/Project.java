@@ -21,6 +21,22 @@ public class Project implements IProject, Serializable {
     return uuid;
   }
 
+  @Override
+  public void addRisk(IRisk risk) {
+
+  }
+
+  @Override
+  public void editProjectData(IProject projectToTakeDataFrom) {
+    this.projectName = projectToTakeDataFrom.getProjectName();
+    this.projectDescription = projectToTakeDataFrom.getProjectDescription();
+    this.dateOfProjectStart = projectToTakeDataFrom.getDateOfProjectStart();
+    this.dateOfProjectEnd = projectToTakeDataFrom.getDateOfProjectEnd();
+    this.linkedResources = projectToTakeDataFrom.getLinkedResources();
+    this.dateOfNextProjectRevision = projectToTakeDataFrom.getDateOfNextProjectRevision();
+  }
+
+
   /*
    * Constructor
    * Initializes project data with passed data
@@ -30,7 +46,14 @@ public class Project implements IProject, Serializable {
     this.projectDescription = projectDescription;
     this.dateOfProjectStart = dateOfProjectStart;
     this.dateOfProjectEnd = dateOfProjectEnd;
-    this.linkedResources = linkedResources;
+    if (linkedResources == null)
+    {
+      this.linkedResources = new ArrayList<URI>();
+    }
+    else
+    {
+      this.linkedResources = linkedResources;
+    }
     this.dateOfNextProjectRevision = dateOfNextProjectRevision;
     this.uuid = UUID.randomUUID();
     this.projectRisks = new ArrayList<IRisk>();

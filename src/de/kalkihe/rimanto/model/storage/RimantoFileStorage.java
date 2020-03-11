@@ -14,6 +14,8 @@ public class RimantoFileStorage implements IRimantoFileStorage {
   private Path pathToStorageFolder;
   private String fileFormat = ".rmt";
 
+  private List<IProject> currentProjects;
+
   public RimantoFileStorage() {
     this.pathToStorageFolder = Paths.get(System.getProperty("user.home"), "Rimanto");
     this.checkPathToStorageFolder();
@@ -29,10 +31,9 @@ public class RimantoFileStorage implements IRimantoFileStorage {
     }
   }
 
-  private void writeProjectToDisk(IProject project, String fileName, Path folder) throws IOException {
+  private void writeProjectToDisk(IProject project, File file) throws IOException {
     FileOutputStream fileOutputStream = null;
     ObjectOutputStream objectOutputStream = null;
-    File file = new File(folder.toString(), fileName + this.fileFormat);
     fileOutputStream = new FileOutputStream(file);
     objectOutputStream = new ObjectOutputStream(fileOutputStream);
     objectOutputStream.writeObject(project);
@@ -43,6 +44,11 @@ public class RimantoFileStorage implements IRimantoFileStorage {
     if (objectOutputStream != null) {
       objectOutputStream.close();
     }
+  }
+
+  private void writeProjectToDisk(IProject project, String fileName, Path folder) throws IOException {
+    File file = new File(folder.toString(), fileName + this.fileFormat);
+    this.writeProjectToDisk(project, file);
   }
 
   @Override
@@ -56,6 +62,7 @@ public class RimantoFileStorage implements IRimantoFileStorage {
         resultList.add(this.readProject(file));
       }
     }
+    this.currentProjects = resultList;
     return resultList;
   }
 
@@ -79,17 +86,35 @@ public class RimantoFileStorage implements IRimantoFileStorage {
   }
 
   @Override
-  public void importProject(File importFile) throws IOException {
-    String fileName = importFile.getName();
-    File targetFile = new File(this.pathToStorageFolder.toString(), fileName);
+  public void importProject(File importFile) throws IOException, ClassNotFoundException {
+    IProject readProject = this.readProject(importFile);
+    File targetFile = new File(this.pathToStorageFolder.toString(), readProject.getUuid() + this.fileFormat);
     if (targetFile.exists())
     {
       throw new FileAlreadyExistsException(targetFile.getAbsolutePath());
     }
     else
     {
+      for(IProject project : this.currentProjects)
+      {
+        if (project.equals(readProject))
+        {
+          throw new FileAlreadyExistsException(targetFile.getAbsolutePath());
+        }
+      }
       Files.copy(importFile.toPath(), targetFile.toPath());
     }
 
+  }
+
+  @Override
+  public void deleteProject(IProject project) {
+    File file = new File(this.pathToStorageFolder.toString(), project.getUuid() + this.fileFormat);
+    file.delete();
+  }
+
+  @Override
+  public void exportProject(IProject project, File exportFile) throws IOException {
+    this.writeProjectToDisk(project, exportFile);
   }
 }

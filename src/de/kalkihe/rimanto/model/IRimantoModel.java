@@ -27,5 +27,13 @@ public interface IRimantoModel {
 
   String getProjectFileFormat();
 
-  void importProject(File importFile) throws IOException;
+  void importProject(File importFile) throws IOException, ClassNotFoundException;
+
+  void addRiskToProject(IProject project, IRisk risk, List<IProject> furtherProjects);
+
+  void editProject(IProject oldProject, IProject newProject) throws IOException;
+
+  void deleteProject(IProject project);
+
+  void exportProject(IProject project, File exportFile) throws IOException;
 }

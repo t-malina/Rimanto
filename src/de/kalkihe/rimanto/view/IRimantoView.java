@@ -36,7 +36,7 @@ public interface IRimantoView {
 
   void startCreationOfProject();
 
-  void cancelCreationOfProject() throws Exception;
+  void showOverview() throws Exception;
 
   void projectCreated() throws Exception;
 
@@ -45,5 +45,15 @@ public interface IRimantoView {
   void showProject(IProject project) throws Exception;
 
   void showRisk(IRisk risk) throws Exception;
+
+  void startCreationOfRisk(IProject project) throws Exception;
+
+  void startEditingOfProject(IProject project);
+
+  void projectEdited(IProject project) throws Exception;
+
+  File showExportFileDialog(String allowedFileFormat);
+
+
 }
 

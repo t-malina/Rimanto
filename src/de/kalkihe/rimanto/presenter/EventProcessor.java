@@ -6,8 +6,8 @@ import de.kalkihe.rimanto.model.data.IRisk;
 import de.kalkihe.rimanto.view.IRimantoView;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
+import java.util.List;
 
 public class EventProcessor implements IEventProcessor{
   private IRimantoView rimantoView;
@@ -21,18 +21,6 @@ public class EventProcessor implements IEventProcessor{
   @Override
   public void newProjectButtonClick() {
     this.rimantoView.startCreationOfProject();
-  }
-
-  @Override
-  public void newProjectCreationCanceled() {
-    try
-    {
-      this.rimantoView.cancelCreationOfProject();
-    }
-    catch (Exception exception)
-    {
-      this.rimantoView.showErrorDialog(exception, true);
-    }
   }
 
   @Override
@@ -93,5 +81,103 @@ public class EventProcessor implements IEventProcessor{
       this.rimantoView.showErrorDialog(exception, true);
     }
 
+  }
+
+  @Override
+  public void riskImportRequested(IProject project) {
+
+  }
+
+  @Override
+  public void newRiskButtonClick(IProject project) {
+    try
+    {
+      this.rimantoView.startCreationOfRisk(project);
+    }
+    catch (Exception exception)
+    {
+      this.rimantoView.showErrorDialog(exception, false);
+    }
+  }
+
+  @Override
+  public void newRiskCreationCanceled(IProject project) {
+    try
+    {
+      this.rimantoView.showOverview();
+    }
+    catch (Exception exception)
+    {
+      this.rimantoView.showErrorDialog(exception, true);
+    }
+  }
+
+  @Override
+  public void newRiskToCreate(IProject project, IRisk newRisk, List<IProject> furtherProjects) {
+    try
+    {
+      this.rimantoModel.addRiskToProject(project, newRisk, furtherProjects);
+      this.rimantoView.showOverview();
+    }
+    catch (Exception exception)
+    {
+      this.rimantoView.showErrorDialog(exception, false);
+    }
+  }
+
+  @Override
+  public void backToOverview() {
+    try
+    {
+      this.rimantoView.showOverview();
+    }
+    catch (Exception exception)
+    {
+      this.rimantoView.showErrorDialog(exception, true);
+    }
+  }
+
+  @Override
+  public void projectEditingRequested(IProject project) {
+    this.rimantoView.startEditingOfProject(project);
+  }
+
+  @Override
+  public void editProject(IProject oldProject, IProject newProject) {
+    try
+    {
+      this.rimantoModel.editProject(oldProject, newProject);
+      this.rimantoView.showProject(oldProject);
+    }
+    catch (Exception e)
+    {
+      this.rimantoView.showErrorDialog(e, false);
+    }
+  }
+
+  @Override
+  public void deleteProject(IProject project) {
+    this.rimantoModel.deleteProject(project);
+    try
+    {
+      this.rimantoView.showOverview();
+    }
+    catch (Exception exception)
+    {
+      this.rimantoView.showErrorDialog(exception, true);
+    }
+  }
+
+  @Override
+  public void exportProject(IProject project) {
+    File exportFile = this.rimantoView.showExportFileDialog(this.rimantoModel.getProjectFileFormat());
+    try
+    {
+      this.rimantoModel.exportProject(project, exportFile);
+    }
+    catch(Exception exception)
+    {
+      this.rimantoView.showErrorDialog(exception, false);
+    }
   }
 }

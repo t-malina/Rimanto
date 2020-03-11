@@ -53,7 +53,19 @@ public class Wordbook implements IWordbook{
     words.put("import risk", "import risk");
     words.put("back", "back");
     words.put("edit project", "edit project");
+    words.put("export project", "export project");
     words.put("save project", "save project");
+    words.put("risk name", "risk name");
+    words.put("risk description", "risk description");
+    words.put("priority", "priority (1: highest; 5: lowest)");
+    words.put("impact", "level of impact (1: highest; 5: lowest)");
+    words.put("mitigation", "mitigation");
+    words.put("person in charge", "person in charge of tracking");
+    words.put("further projects", "risk also has impact on following projects:");
+    words.put("category", "category of impact in further projects");
+    words.put("delete project", "delete project");
+
+
   }
 
   /*
