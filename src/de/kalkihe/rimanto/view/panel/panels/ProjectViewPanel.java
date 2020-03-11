@@ -1,18 +1,13 @@
-package de.kalkihe.rimanto.view.panel;
+package de.kalkihe.rimanto.view.panel.panels;
 
-import com.github.lgooddatepicker.components.DatePicker;
-import com.github.lgooddatepicker.components.DatePickerSettings;
 import de.kalkihe.rimanto.model.data.IProject;
 import de.kalkihe.rimanto.model.data.IRisk;
-import de.kalkihe.rimanto.model.data.Risk;
 import de.kalkihe.rimanto.presenter.IEventProcessor;
 import de.kalkihe.rimanto.utilities.IWordbook;
 import de.kalkihe.rimanto.view.IRimantoView;
-import de.kalkihe.rimanto.view.tablemodel.ProjectTableModel;
 import de.kalkihe.rimanto.view.tablemodel.RiskTableModel;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

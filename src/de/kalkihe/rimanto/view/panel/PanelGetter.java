@@ -5,6 +5,10 @@ import de.kalkihe.rimanto.model.data.IRisk;
 import de.kalkihe.rimanto.presenter.IEventProcessor;
 import de.kalkihe.rimanto.utilities.IWordbook;
 import de.kalkihe.rimanto.view.IRimantoView;
+import de.kalkihe.rimanto.view.panel.panels.CreateProjectPanel;
+import de.kalkihe.rimanto.view.panel.panels.OverviewPanel;
+import de.kalkihe.rimanto.view.panel.panels.ProjectViewPanel;
+import de.kalkihe.rimanto.view.panel.panels.RiskViewPanel;
 
 import javax.swing.*;
 
