@@ -11,8 +11,8 @@ public interface IPanelGetter {
    */
   JPanel getPanelForOverview() throws Exception;
   JPanel getPanelForProjectView(IProject project) throws Exception;
-  JPanel getPanelForRiskView(IRisk risk) throws Exception;
-  JPanel getPanelForRiskCreation() throws Exception;
+  JPanel getPanelForRiskView(IProject project, IRisk risk) throws Exception;
+  JPanel getPanelForRiskCreation(IProject project) throws Exception;
   JPanel getPanelForProjectInput();
   JPanel getPanelForProjectEditing(IProject project);
   JPanel getPanelForErrorView();

@@ -126,7 +126,7 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
     }
     this.projectRevisionDatePicker.setDate(project.getDateOfNextProjectRevision());
 
-    this.cancelButton.addActionListener(actionEvent -> this.eventProcessor.backToOverview());
+    this.cancelButton.addActionListener(actionEvent -> this.eventProcessor.projectEditingCanceled(this.project));
     this.southPanel.add(this.cancelButton);
     this.deleteButton.addActionListener(actionEvent -> this.eventProcessor.deleteProject(project));
     this.southPanel.add(this.deleteButton);

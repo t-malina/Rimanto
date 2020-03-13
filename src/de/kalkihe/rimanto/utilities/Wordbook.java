@@ -44,7 +44,7 @@ public class Wordbook implements IWordbook{
     words.put("cancel", "cancel");
     words.put("missing project data", "At least a project name is required!");
     words.put("error", "error");
-    words.put("wrong revision date", "The revision date has to be between the start and the end date");
+    words.put("wrong revision date", "The revision date has to be between the start and the end date of the project!");
     words.put("rimanto project", "rimanto project");
     words.put("import project exists", "The project you wanted to import is already existing!");
     words.put("import project error", "Error while importing project");
@@ -57,13 +57,14 @@ public class Wordbook implements IWordbook{
     words.put("save project", "save project");
     words.put("risk name", "risk name");
     words.put("risk description", "risk description");
-    words.put("priority", "priority (1: highest; 5: lowest)");
-    words.put("impact", "level of impact (1: highest; 5: lowest)");
-    words.put("mitigation", "mitigation");
+    words.put("risk priority", "priority (1: highest; 5: lowest)");
+    words.put("risk impact", "level of impact (1: highest; 5: lowest)");
+    words.put("risk mitigation", "mitigation");
     words.put("person in charge", "person in charge of tracking");
     words.put("further projects", "risk also has impact on following projects:");
     words.put("category", "category of impact in further projects");
     words.put("delete project", "delete project");
+    words.put("missing risk data", "At least a risk name, description and mitigation is required!");
 
 
   }

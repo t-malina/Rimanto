@@ -163,7 +163,7 @@ public class ProjectViewPanel extends GeneralRimantoPanel {
           // Get selected risk
           IRisk risk = model.getRiskWithId(riskId);
 
-          eventProcessor.riskForDetailViewSelected(risk);
+          eventProcessor.riskForDetailViewSelected(project, risk);
         }
       }
     });

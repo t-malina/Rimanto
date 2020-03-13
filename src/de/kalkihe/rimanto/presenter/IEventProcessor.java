@@ -11,7 +11,7 @@ public interface IEventProcessor {
   void newProjectToCreate(IProject newProject);
   void projectImportRequested();
   void projectForDetailViewSelected(IProject project);
-  void riskForDetailViewSelected(IRisk risk);
+  void riskForDetailViewSelected(IProject project, IRisk risk);
   void riskImportRequested(IProject project);
   void newRiskButtonClick(IProject project);
   void newRiskCreationCanceled(IProject project);
@@ -20,6 +20,7 @@ public interface IEventProcessor {
 
 
   void projectEditingRequested(IProject project);
+  void projectEditingCanceled(IProject project);
   void editProject(IProject oldProject, IProject newProject);
   void deleteProject(IProject project);
   void exportProject(IProject project);

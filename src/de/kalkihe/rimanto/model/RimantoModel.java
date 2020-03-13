@@ -51,7 +51,7 @@ public class RimantoModel implements de.kalkihe.rimanto.model.IRimantoModel {
 
   @Override
   public void createNewProject(IProject project) throws IOException {
-    this.rimantoFileStorage.saveNewProject(project);
+    this.rimantoFileStorage.saveProject(project);
   }
 
   @Override
@@ -65,13 +65,23 @@ public class RimantoModel implements de.kalkihe.rimanto.model.IRimantoModel {
   }
 
   @Override
-  public void addRiskToProject(IProject project, IRisk risk, List<IProject> furtherProjects) {
+  public void addRiskToProject(IProject project, IRisk risk, List<IProject> furtherProjects) throws CloneNotSupportedException, IOException {
+    project.addRisk(risk);
+    for(IProject currentProject : furtherProjects)
+    {
+      IRisk newRisk = (IRisk) risk.clone();
+      newRisk.makeAnnotatedRisk();
+      newRisk.annotateRiskSource(project, risk.getCategoryOfImpactOnOtherProjects());
+      currentProject.addRisk(newRisk);
+      this.rimantoFileStorage.saveProject(currentProject);
+    }
+    this.rimantoFileStorage.saveProject(project);
   }
 
   @Override
   public void editProject(IProject oldProject, IProject newProject) throws IOException {
     oldProject.editProjectData(newProject);
-    this.rimantoFileStorage.saveNewProject(oldProject);
+    this.rimantoFileStorage.saveProject(oldProject);
   }
 
   @Override

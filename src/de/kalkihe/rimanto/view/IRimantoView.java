@@ -44,7 +44,7 @@ public interface IRimantoView {
 
   void showProject(IProject project) throws Exception;
 
-  void showRisk(IRisk risk) throws Exception;
+  void showRisk(IProject project, IRisk risk) throws Exception;
 
   void startCreationOfRisk(IProject project) throws Exception;
 

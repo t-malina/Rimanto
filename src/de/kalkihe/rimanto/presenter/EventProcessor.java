@@ -71,10 +71,10 @@ public class EventProcessor implements IEventProcessor{
   }
 
   @Override
-  public void riskForDetailViewSelected(IRisk risk) {
+  public void riskForDetailViewSelected(IProject project, IRisk risk) {
     try
     {
-      this.rimantoView.showRisk(risk);
+      this.rimantoView.showRisk(project, risk);
     }
     catch(Exception exception)
     {
@@ -104,7 +104,7 @@ public class EventProcessor implements IEventProcessor{
   public void newRiskCreationCanceled(IProject project) {
     try
     {
-      this.rimantoView.showOverview();
+      this.rimantoView.showProject(project);
     }
     catch (Exception exception)
     {
@@ -117,7 +117,7 @@ public class EventProcessor implements IEventProcessor{
     try
     {
       this.rimantoModel.addRiskToProject(project, newRisk, furtherProjects);
-      this.rimantoView.showOverview();
+      this.rimantoView.showProject(project);
     }
     catch (Exception exception)
     {
@@ -140,6 +140,11 @@ public class EventProcessor implements IEventProcessor{
   @Override
   public void projectEditingRequested(IProject project) {
     this.rimantoView.startEditingOfProject(project);
+  }
+
+  @Override
+  public void projectEditingCanceled(IProject project) {
+    this.projectForDetailViewSelected(project);
   }
 
   @Override
@@ -171,13 +176,16 @@ public class EventProcessor implements IEventProcessor{
   @Override
   public void exportProject(IProject project) {
     File exportFile = this.rimantoView.showExportFileDialog(this.rimantoModel.getProjectFileFormat());
-    try
+    if (exportFile != null)
     {
-      this.rimantoModel.exportProject(project, exportFile);
-    }
-    catch(Exception exception)
-    {
-      this.rimantoView.showErrorDialog(exception, false);
+      try
+      {
+        this.rimantoModel.exportProject(project, exportFile);
+      }
+      catch(Exception exception)
+      {
+        this.rimantoView.showErrorDialog(exception, false);
+      }
     }
   }
 }
