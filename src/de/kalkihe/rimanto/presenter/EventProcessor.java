@@ -28,7 +28,7 @@ public class EventProcessor implements IEventProcessor{
     try
     {
       this.rimantoModel.createNewProject(newProject);
-      this.rimantoView.projectCreated();
+      this.projectForDetailViewSelected(newProject);
     }
     catch (Exception e)
     {
@@ -85,7 +85,19 @@ public class EventProcessor implements IEventProcessor{
 
   @Override
   public void riskImportRequested(IProject project) {
-
+    try
+    {
+      File file = this.rimantoView.showImportFileDialog(this.rimantoModel.getRiskFileFormat());
+      if (file != null)
+      {
+        this.rimantoModel.importRisk(file, project);
+        this.rimantoView.showProject(project);
+      }
+    }
+    catch (Exception exception)
+    {
+      this.rimantoView.showErrorDialog(exception, false);
+    }
   }
 
   @Override
@@ -113,10 +125,10 @@ public class EventProcessor implements IEventProcessor{
   }
 
   @Override
-  public void newRiskToCreate(IProject project, IRisk newRisk, List<IProject> furtherProjects) {
+  public void newRiskToCreate(IProject project, IRisk newRisk) {
     try
     {
-      this.rimantoModel.addRiskToProject(project, newRisk, furtherProjects);
+      this.rimantoModel.addRiskToProject(project, newRisk);
       this.rimantoView.showProject(project);
     }
     catch (Exception exception)
@@ -187,5 +199,70 @@ public class EventProcessor implements IEventProcessor{
         this.rimantoView.showErrorDialog(exception, false);
       }
     }
+  }
+
+  @Override
+  public void exportRisk(IProject project, IRisk risk) {
+
+    File exportFile = this.rimantoView.showExportFileDialog(this.rimantoModel.getRiskFileFormat());
+    if (exportFile != null)
+    {
+      try
+      {
+        this.rimantoModel.exportRisk(risk, exportFile);
+      }
+      catch (Exception exception)
+      {
+        this.rimantoView.showErrorDialog(exception, false);
+      }
+    }
+  }
+
+  @Override
+  public void exportRiskAsInstruction(IProject project, IRisk risk) {
+    try
+    {
+      this.rimantoView.exportRiskAsInstruction(project, risk);
+    }
+    catch (Exception exception)
+    {
+      this.rimantoView.showErrorDialog(exception, false);
+    }
+  }
+
+  @Override
+  public void deleteRisk(IProject project, IRisk risk) {
+    try
+    {
+      this.rimantoModel.deleteRisk(project, risk);
+      this.rimantoView.showProject(project);
+    }
+    catch (Exception exception)
+    {
+      this.rimantoView.showErrorDialog(exception, false);
+    }
+  }
+
+  @Override
+  public void editRisk(IProject project, IRisk oldRisk, IRisk newRisk) {
+    try
+    {
+      this.rimantoModel.editRisk(project, oldRisk, newRisk);
+      this.rimantoView.showRisk(project, oldRisk);
+    }
+    catch (Exception exception)
+    {
+      this.rimantoView.showErrorDialog(exception, false);
+    }
+  }
+
+  @Override
+  public void exitRiskDetailView(IProject project, IRisk risk) {
+    this.projectForDetailViewSelected(project);
+  }
+
+  @Override
+  public void abortRiskAsInstruction(IProject project, IRisk risk) {
+    this.riskForDetailViewSelected(project, risk);
   }
 }

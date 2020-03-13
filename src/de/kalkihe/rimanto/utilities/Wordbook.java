@@ -1,5 +1,11 @@
 package de.kalkihe.rimanto.utilities;
 
+import de.kalkihe.rimanto.model.data.IProject;
+import de.kalkihe.rimanto.model.data.IRisk;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -65,8 +71,17 @@ public class Wordbook implements IWordbook{
     words.put("category", "category of impact in further projects");
     words.put("delete project", "delete project");
     words.put("missing risk data", "At least a risk name, description and mitigation is required!");
-
-
+    words.put("rimanto file" , "rimanto file");
+    words.put("export risk", "export risk");
+    words.put("export risk instruction", "export risk as instruction");
+    words.put("delete risk", "delete risk");
+    words.put("edit risk", "edit risk");
+    words.put("no category" , "if you select further projects this risk has an impact on, you have to give the category of the impact!");
+    words.put("recipient", "recipient");
+    words.put("due date" , "due date");
+    words.put("instruction", "instruction");
+    words.put("copy text", "copy text");
+    words.put("generate text", "generate text");
   }
 
   /*
@@ -90,4 +105,49 @@ public class Wordbook implements IWordbook{
     // return the built string
     return result;
   }
+
+  @Override
+  public String getRiskInstruction(IProject project, IRisk risk, String recipient, String dueDate, String instruction) {
+    String result = "Dear " + recipient + ",\n\n"
+      + "please take care of this risk which is part of the project " + project.getProjectName();
+    if (dueDate.trim().length() != 0)
+    {
+      result += " until " + dueDate;
+    }
+    if (instruction.trim().length() != 0)
+    {
+      result += " following this instructions: \n\n" + instruction + "\n";
+    }
+      result += "\nRisk name : " + risk.getRiskName() + "\n"
+      + "Risk description : " + risk.getRiskDescription() + "\n"
+      + "Risk priority : " + risk.getRiskPriority() + "\n"
+      + "Risk impact : " + risk.getRiskImpact() + "\n"
+      + "Risk mitigation : " + risk.getRiskMitigation() + "\n"
+      + "Risk observer : " + risk.getPersonInCharge() + "\n"
+      + "Next revision date : ";
+    LocalDate date = risk.getDateOfNextRiskRevision();
+    if (date != null) {
+      result += date.toString();
+    }
+    result += "\n"
+      + "Category of impact on further projects : " + risk.getCategoryOfImpactOnOtherProjects() + "\n"
+      + "Impact on further projects : \n ";
+    for (IProject currentProject : risk.getImpactOfRiskOnOtherProjects())
+    {
+      result += " - " + currentProject.getProjectName() + "\n ";
+    }
+    return result;
+  }
+
+  @Override
+  public String getDateTimeFormat() {
+    return "dd.MM.yyyy";
+  }
+
+  @Override
+  public DateTimeFormatter getDateTimeFormatter() {
+    return DateTimeFormatter.ISO_LOCAL_DATE;
+  }
+
+
 }

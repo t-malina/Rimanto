@@ -27,6 +27,8 @@ public interface IRimantoFileStorage {
 
   void exportProject(IProject project, File exportFile) throws IOException;
 
-  IRisk importRisk(File importFile);
+  IRisk importRisk(File importFile) throws IOException, ClassNotFoundException;
+
+  void exportRisk(IRisk risk, File exportFile) throws IOException;
 
 }

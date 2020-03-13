@@ -16,4 +16,6 @@ public interface IPanelGetter {
   JPanel getPanelForProjectInput();
   JPanel getPanelForProjectEditing(IProject project);
   JPanel getPanelForErrorView();
+
+  JPanel getPanelForExportRisk(IProject project, IRisk risk) throws Exception;
 }

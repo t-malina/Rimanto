@@ -108,6 +108,7 @@ public class RimantoView implements IRimantoView{
   @Override
   public File showImportFileDialog(String allowedFileFormat) {
     JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setAcceptAllFileFilterUsed(false);
     fileChooser.setFileFilter(new RimantoFileFIlter(allowedFileFormat, this.wordbook));
     int state = fileChooser.showOpenDialog(null);
     if (state == JFileChooser.APPROVE_OPTION)
@@ -146,6 +147,7 @@ public class RimantoView implements IRimantoView{
   @Override
   public File showExportFileDialog(String allowedFileFormat) {
     JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setAcceptAllFileFilterUsed(false);
     fileChooser.setFileFilter(new RimantoFileFIlter(allowedFileFormat, this.wordbook));
     int state = fileChooser.showSaveDialog(null);
     if (state == JFileChooser.APPROVE_OPTION)
@@ -153,6 +155,11 @@ public class RimantoView implements IRimantoView{
       return new File(fileChooser.getSelectedFile() + allowedFileFormat);
     }
     return null;
+  }
+
+  @Override
+  public void exportRiskAsInstruction(IProject project, IRisk risk) throws Exception {
+    this.rimantoMainFrame.setJPanel(this.panelGetter.getPanelForExportRisk(project, risk));
   }
 
 

@@ -36,6 +36,11 @@ public class Project implements IProject, Serializable {
     this.dateOfNextProjectRevision = projectToTakeDataFrom.getDateOfNextProjectRevision();
   }
 
+  @Override
+  public void deleteRisk(IRisk risk) {
+    this.projectRisks.remove(risk);
+  }
+
 
   /*
    * Constructor
