@@ -111,9 +111,30 @@ public class Project implements IProject, Serializable {
    */
   @Override
   public boolean isToReview() {
+    if (this.dateOfNextProjectRevision == null)
+    {
+      return false;
+    }
     LocalDate currentDate = LocalDate.now();
-    return this.dateOfNextProjectRevision.isBefore(currentDate);
+    return this.dateOfNextProjectRevision.isBefore(currentDate) || this.dateOfNextProjectRevision.isEqual(currentDate);
 
+  }
+
+  @Override
+  public boolean hasRisksToReview() {
+    for(IRisk risk : this.projectRisks)
+    {
+      if (risk.isToReview())
+      {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  @Override
+  public void resetReview() {
+    this.dateOfNextProjectRevision = null;
   }
 
   @Override

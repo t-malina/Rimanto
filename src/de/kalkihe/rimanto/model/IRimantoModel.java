@@ -46,4 +46,8 @@ public interface IRimantoModel {
   void deleteRisk(IProject project, IRisk risk) throws IOException;
 
   void exportRisk(IRisk risk, File exportFile) throws IOException;
+
+  void setProjectAsReviewed(IProject project) throws IOException;
+
+  void setRiskAsReviewed(IProject project, IRisk risk) throws IOException;
 }

@@ -178,7 +178,13 @@ public class RiskViewPanel extends GeneralRimantoPanel {
     this.saveOrEditButton.addActionListener(actionEvent -> this.editButtonClick(risk));
     this.southPanel.add(this.saveOrEditButton);
 
-
+    if (risk.isToReview())
+    {
+      JButton reviewButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("review done"));
+      reviewButton.setBackground(Color.GREEN);
+      reviewButton.addActionListener(actionEvent -> this.eventProcessor.setRiskAsReviewed(this.project, risk));
+      this.southPanel.add(reviewButton);
+    }
     this.add(this.southPanel, BorderLayout.SOUTH);
 
   }

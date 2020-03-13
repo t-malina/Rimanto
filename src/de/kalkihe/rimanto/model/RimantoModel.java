@@ -142,4 +142,16 @@ public class RimantoModel implements de.kalkihe.rimanto.model.IRimantoModel {
   public void exportRisk(IRisk risk, File exportFile) throws IOException {
     this.rimantoFileStorage.exportRisk(risk, exportFile);
   }
+
+  @Override
+  public void setProjectAsReviewed(IProject project) throws IOException {
+    project.resetReview();
+    this.rimantoFileStorage.saveProject(project);
+  }
+
+  @Override
+  public void setRiskAsReviewed(IProject project, IRisk risk) throws IOException {
+    risk.resetReview();
+    this.rimantoFileStorage.saveProject(project);
+  }
 }

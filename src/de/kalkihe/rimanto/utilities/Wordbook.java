@@ -35,7 +35,7 @@ public class Wordbook implements IWordbook{
     words.put("date of project start", "date of project start");
     words.put("date of project end", "date of project end");
     words.put("attached documents", "attached documents");
-    words.put("next date of revision", "next date of revision");
+    words.put("next date of revision", "date of next review");
     words.put("further resources", "further resources (one per line)");
     words.put("impact", "impact");
     words.put("errorlookandfeel", "Error while reading the look and feel from the system!");
@@ -50,7 +50,7 @@ public class Wordbook implements IWordbook{
     words.put("cancel", "cancel");
     words.put("missing project data", "At least a project name is required!");
     words.put("error", "error");
-    words.put("wrong revision date", "The revision date has to be between the start and the end date of the project!");
+    words.put("wrong revision date", "The review date has to be between the start and the end date of the project!");
     words.put("rimanto project", "rimanto project");
     words.put("import project exists", "The project you wanted to import is already existing!");
     words.put("import project error", "Error while importing project");
@@ -82,6 +82,10 @@ public class Wordbook implements IWordbook{
     words.put("instruction", "instruction");
     words.put("copy text", "copy text");
     words.put("generate text", "generate text");
+    words.put("project to review" , "project is to review");
+    words.put("risk to review", "risk is to review");
+    words.put("project with risks to review", "project has risks that are to review");
+    words.put("review done", "review done");
   }
 
   /*
@@ -124,7 +128,7 @@ public class Wordbook implements IWordbook{
       + "Risk impact : " + risk.getRiskImpact() + "\n"
       + "Risk mitigation : " + risk.getRiskMitigation() + "\n"
       + "Risk observer : " + risk.getPersonInCharge() + "\n"
-      + "Next revision date : ";
+      + "Next review date : ";
     LocalDate date = risk.getDateOfNextRiskRevision();
     if (date != null) {
       result += date.toString();

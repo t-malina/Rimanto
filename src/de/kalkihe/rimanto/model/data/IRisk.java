@@ -26,4 +26,8 @@ public interface IRisk {
   void makeAnnotatedRisk();
 
   void editRiskData(IRisk newRisk);
+
+  boolean isToReview();
+
+  void resetReview();
 }

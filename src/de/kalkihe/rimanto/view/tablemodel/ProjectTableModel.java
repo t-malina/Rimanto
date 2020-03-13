@@ -2,6 +2,7 @@ package de.kalkihe.rimanto.view.tablemodel;
 
 import de.kalkihe.rimanto.model.data.IProject;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,9 +79,18 @@ public class ProjectTableModel extends GeneralTableModel {
     }
   }
 
-  public Color getRowColor(int row)
-  {
-    //TODO: Implement returning of right color
-    return null;
+  @Override
+  public Color getRowColor(JTable table, int row) {
+    int projectId = super.getIdAtRow(table, row);
+    IProject project = this.projects.get(projectId);
+    if (project.isToReview())
+    {
+      return Color.RED;
+    }
+    if (project.hasRisksToReview())
+    {
+      return Color.YELLOW;
+    }
+    return Color.WHITE;
   }
 }
