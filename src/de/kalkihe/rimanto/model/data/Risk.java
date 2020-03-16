@@ -76,7 +76,6 @@ public class Risk implements IRisk, Serializable, Cloneable {
 
   @Override
   public String[] getGeneralDataNames() {
-    // TODO: remove hard coding
     String[] result = {"name", "description", "priority"};
     return result;
   }
@@ -114,7 +113,6 @@ public class Risk implements IRisk, Serializable, Cloneable {
 
   @Override
   public void annotateRiskSource(IProject project, String category) {
-    // TODO: Auslagern
     this.riskDescription += "\n\n Originally from project \"" + project.getProjectName() +"\", affects \"" + category + "\" of this project";
   }
 

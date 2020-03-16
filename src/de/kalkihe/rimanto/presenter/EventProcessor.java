@@ -5,7 +5,11 @@ import de.kalkihe.rimanto.model.data.IProject;
 import de.kalkihe.rimanto.model.data.IRisk;
 import de.kalkihe.rimanto.view.IRimantoView;
 
+import java.awt.*;
 import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URL;
 import java.nio.file.FileAlreadyExistsException;
 import java.util.List;
 
@@ -48,10 +52,6 @@ public class EventProcessor implements IEventProcessor{
       }
     }
     //TODO: Add reference to wordbook --> use error messages
-    catch(FileAlreadyExistsException exception)
-    {
-      this.rimantoView.showErrorDialog(exception, false);
-    }
     catch (Exception exception)
     {
       this.rimantoView.showErrorDialog(exception, false);
@@ -289,6 +289,51 @@ public class EventProcessor implements IEventProcessor{
     catch (Exception exception)
     {
       this.rimantoView.showErrorDialog(exception, false);
+    }
+  }
+
+  @Override
+  public void ressourceForViewRequested(String ressource) {
+    Desktop desktop = java.awt.Desktop.getDesktop();
+    try
+    {
+      boolean fileOpeningSuccessfull = this.openFile(desktop, ressource);
+      if (! fileOpeningSuccessfull)
+      {
+        this.openURL(desktop, ressource);
+      }
+    }
+    catch (Exception exception)
+    {
+      this.rimantoView.showErrorDialog(exception, false);
+    }
+  }
+
+  private boolean openURL(Desktop desktop, String ressource)
+  {
+    try
+    {
+      URI url = new URL(ressource).toURI();
+      desktop.browse(url);
+      return true;
+    }
+    catch (Exception exception)
+    {
+      return false;
+    }
+  }
+
+  private boolean openFile(Desktop desktop, String ressource)
+  {
+    try
+    {
+      File file = new File(ressource);
+      desktop.open(file);
+      return true;
+    }
+    catch (Exception exception)
+    {
+      return false;
     }
   }
 }

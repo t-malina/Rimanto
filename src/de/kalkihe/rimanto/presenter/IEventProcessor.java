@@ -38,4 +38,7 @@ public interface IEventProcessor {
   void setProjectAsReviewed(IProject project);
   void setRiskAsReviewed(IProject project, IRisk risk);
 
+
+  void ressourceForViewRequested(String ressource);
+
 }

@@ -61,12 +61,6 @@ public class RiskTableModel extends GeneralTableModel {
     }
   }
 
-  public Color getRowColor(int row)
-  {
-    //TODO: Implement returning of right color
-    return null;
-  }
-
   @Override
   public Color getRowColor(JTable table, int row) {
     int riskId = super.getIdAtRow(table, row);

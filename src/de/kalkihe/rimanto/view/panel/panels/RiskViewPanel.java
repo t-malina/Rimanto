@@ -8,6 +8,7 @@ import de.kalkihe.rimanto.model.data.Risk;
 import de.kalkihe.rimanto.presenter.IEventProcessor;
 import de.kalkihe.rimanto.utilities.IWordbook;
 import de.kalkihe.rimanto.view.IRimantoView;
+import de.kalkihe.rimanto.view.panel.keyevent.TabKeyAdapter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,7 +36,7 @@ public class RiskViewPanel extends GeneralRimantoPanel {
   private JTextField riskObservatorTextField;
   private DatePicker riskRevisionDatePicker;
   private JList<IProject> furtherProjectsList;
-  private JTextField categeoryOfImpactOnOtherProjectsTextField;
+  private JTextArea categeoryOfImpactOnOtherProjectsTextField;
 
   private JButton cancelOrBackButton;
   private JButton saveOrEditButton;
@@ -77,13 +78,13 @@ public class RiskViewPanel extends GeneralRimantoPanel {
     JLabel riskNameLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("risk name"));
     this.centerPanel.add(riskNameLabel);
     this.riskNameTextArea = new JTextArea();
-    JScrollPane riskNameScrollPane = new JScrollPane(this.riskNameTextArea);
+    JScrollPane riskNameScrollPane = super.configureAndInsertTextArea(this.riskNameTextArea);
     this.centerPanel.add(riskNameScrollPane);
 
     JLabel riskDescriptionLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("risk description"));
     this.centerPanel.add(riskDescriptionLabel);
     this.riskDescriptionTextArea = new JTextArea();
-    JScrollPane riskDescriptionScrollPane = new JScrollPane(this.riskDescriptionTextArea);
+    JScrollPane riskDescriptionScrollPane = super.configureAndInsertTextArea(this.riskDescriptionTextArea);
     this.centerPanel.add(riskDescriptionScrollPane);
 
     JLabel riskPriorityLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("risk priority"));
@@ -101,7 +102,7 @@ public class RiskViewPanel extends GeneralRimantoPanel {
     JLabel riskMitigationLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("risk mitigation"));
     this.centerPanel.add(riskMitigationLabel);
     this.riskMitigationTextArea = new JTextArea();
-    JScrollPane riskMitigationScrollPane = new JScrollPane(this.riskMitigationTextArea);
+    JScrollPane riskMitigationScrollPane = super.configureAndInsertTextArea(this.riskMitigationTextArea);
     this.centerPanel.add(riskMitigationScrollPane);
 
     JLabel riskObserverLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("person in charge"));
@@ -111,6 +112,7 @@ public class RiskViewPanel extends GeneralRimantoPanel {
 
     DatePickerSettings revisionDatePickerSettings = new DatePickerSettings();
     revisionDatePickerSettings.setAllowKeyboardEditing(false);
+    revisionDatePickerSettings.setFormatForDatesCommonEra(this.wordbook.getDateTimeFormatter());
     this.riskRevisionDatePicker = new DatePicker(revisionDatePickerSettings);
     JLabel riskRevisionDateLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("next date of revision"));
     this.centerPanel.add(riskRevisionDateLabel);
@@ -125,10 +127,21 @@ public class RiskViewPanel extends GeneralRimantoPanel {
 
     JLabel categoryOfImpactOnOtherProjectLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("category"));
     this.centerPanel.add(categoryOfImpactOnOtherProjectLabel);
-    this.categeoryOfImpactOnOtherProjectsTextField = new JTextField();
-    this.centerPanel.add(this.categeoryOfImpactOnOtherProjectsTextField);
+    this.categeoryOfImpactOnOtherProjectsTextField = new JTextArea();
+    JScrollPane categoryOfImpactOnOtherProjectsScrollPane = super.configureAndInsertTextArea(this.categeoryOfImpactOnOtherProjectsTextField);
+    this.centerPanel.add(categoryOfImpactOnOtherProjectsScrollPane);
 
     this.add(this.centerPanel, BorderLayout.CENTER);
+
+    this.riskNameTextArea.addKeyListener(new TabKeyAdapter(this.riskDescriptionTextArea));
+    this.riskDescriptionTextArea.addKeyListener(new TabKeyAdapter(this.riskPriorityComboBox));
+    this.riskPriorityComboBox.addKeyListener(new TabKeyAdapter(this.riskImpactComboBox));
+    this.riskImpactComboBox.addKeyListener(new TabKeyAdapter(this.riskMitigationTextArea));
+    this.riskMitigationTextArea.addKeyListener(new TabKeyAdapter(this.riskObservatorTextField));
+    this.riskObservatorTextField.addKeyListener(new TabKeyAdapter(this.riskRevisionDatePicker));
+    this.riskRevisionDatePicker.addKeyListener(new TabKeyAdapter(this.furtherProjectsList));
+    this.furtherProjectsList.addKeyListener(new TabKeyAdapter(this.categeoryOfImpactOnOtherProjectsTextField));
+    this.categeoryOfImpactOnOtherProjectsTextField.addKeyListener(new TabKeyAdapter(this.riskNameTextArea));
 
   }
 
@@ -191,14 +204,15 @@ public class RiskViewPanel extends GeneralRimantoPanel {
 
   private void setEditMode(boolean isEditable)
   {
-    for(Component component : this.centerPanel.getComponents())
-    {
-      component.setEnabled(isEditable);
-    }
-    this.riskNameTextArea.setEnabled(isEditable);
-    this.riskDescriptionTextArea.setEnabled(isEditable);
-    this.riskMitigationTextArea.setEnabled((isEditable));
-
+    this.riskNameTextArea.setEditable(isEditable);
+    this.riskDescriptionTextArea.setEditable(isEditable);
+    this.riskPriorityComboBox.setEnabled(isEditable);
+    this.riskImpactComboBox.setEnabled(isEditable);
+    this.riskMitigationTextArea.setEditable(isEditable);
+    this.riskObservatorTextField.setEditable(isEditable);
+    this.riskRevisionDatePicker.setEnabled(isEditable);
+    this.furtherProjectsList.setEnabled(isEditable);
+    this.categeoryOfImpactOnOtherProjectsTextField.setEditable(isEditable);
   }
 
   private void removeActionListenersFromButton(JButton button)

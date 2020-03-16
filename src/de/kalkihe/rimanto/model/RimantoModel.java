@@ -106,8 +106,7 @@ public class RimantoModel implements de.kalkihe.rimanto.model.IRimantoModel {
     IRisk risk = this.rimantoFileStorage.importRisk(importFile);
     if(project.getProjectRisks().contains(risk))
     {
-      // TODO: AUslagern
-      throw new FileAlreadyExistsException("Risk is already in project!");
+      throw new FileAlreadyExistsException(this.wordbook.getWordForWithCapitalLeadingLetter("risk already in project"));
     }
     project.addRisk(risk);
     this.rimantoFileStorage.saveProject(project);

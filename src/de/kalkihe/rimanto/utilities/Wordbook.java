@@ -86,6 +86,7 @@ public class Wordbook implements IWordbook{
     words.put("risk to review", "risk is to review");
     words.put("project with risks to review", "project has risks that are to review");
     words.put("review done", "review done");
+    words.put("risk already in project", "risk is already in poject!");
   }
 
   /*

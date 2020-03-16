@@ -81,7 +81,6 @@ public class OverviewPanel extends GeneralRimantoPanel {
           Integer projectId = Integer.valueOf(cellText);
           // Get selected project
           IProject project = model.getProjectWithId(projectId);
-          //TODO;Replace with call to view for selected project
           eventProcessor.projectForDetailViewSelected(project);
         }
       }
@@ -99,7 +98,6 @@ public class OverviewPanel extends GeneralRimantoPanel {
     });
     this.buttonPanel.add(importProjectButton);
     this.buttonPanel.add(newProjectButton);
-    //TODO: Labels
     JLabel overviewLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("current projects"));
     overviewLabel.setBorder(new EmptyBorder(10, 20, 10, 0));
     this.northPanel.add(overviewLabel);
@@ -117,12 +115,9 @@ public class OverviewPanel extends GeneralRimantoPanel {
     this.southPanel.add(this.descriptionPanel);
     this.southPanel.add(this.buttonPanel);
 
-
     // Add panels to main Panels
     this.add(this.northPanel, BorderLayout.NORTH);
     this.add(this.centerPanel, BorderLayout.CENTER);
     this.add(this.southPanel, BorderLayout.SOUTH);
-
-    //TODO: Legende
   }
 }

@@ -7,6 +7,7 @@ import de.kalkihe.rimanto.model.data.IRisk;
 import de.kalkihe.rimanto.presenter.IEventProcessor;
 import de.kalkihe.rimanto.utilities.IWordbook;
 import de.kalkihe.rimanto.view.IRimantoView;
+import de.kalkihe.rimanto.view.panel.keyevent.TabKeyAdapter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -56,7 +57,6 @@ public class InstructionGeneratorPanel extends GeneralRimantoPanel {
     JLabel instuctionLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("instruction"));
     this.northPanel.add(instuctionLabel);
     this.instructionTextArea = new JTextArea();
-    //TODO: Überall wie hier machen
     this.instructionTextArea.setWrapStyleWord(true);
     this.instructionTextArea.setLineWrap(true);
     JScrollPane scrollPane = new JScrollPane(this.instructionTextArea);
@@ -64,6 +64,8 @@ public class InstructionGeneratorPanel extends GeneralRimantoPanel {
     this.northPanel.add(scrollPane);
 
     this.outputTextArea = new JTextArea();
+    this.outputTextArea.setLineWrap(true);
+    this.outputTextArea.setWrapStyleWord(true);
     JScrollPane outputScrollPane = new JScrollPane(this.outputTextArea);
 
     this.centerPanel.add(outputScrollPane);
@@ -83,6 +85,10 @@ public class InstructionGeneratorPanel extends GeneralRimantoPanel {
     this.add(this.northPanel, BorderLayout.NORTH);
     this.add(this.centerPanel, BorderLayout.CENTER);
     this.add(this.southPanel, BorderLayout.SOUTH);
+
+    this.recipientTextField.addKeyListener(new TabKeyAdapter(this.dueDatePicker));
+    this.dueDatePicker.addKeyListener(new TabKeyAdapter(this.instructionTextArea));
+    this.instructionTextArea.addKeyListener(new TabKeyAdapter(this.outputTextArea));
 
   }
 
