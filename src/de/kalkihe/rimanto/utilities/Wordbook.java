@@ -49,7 +49,7 @@ public class Wordbook implements IWordbook{
     words.put("save", "save");
     words.put("cancel", "cancel");
     words.put("missing project data", "At least a project name is required!");
-    words.put("error", "error");
+    words.put("error", "an error occured");
     words.put("wrong revision date", "The review date has to be between the start and the end date of the project!");
     words.put("rimanto project", "rimanto project");
     words.put("import project exists", "The project you wanted to import is already existing!");
@@ -87,6 +87,16 @@ public class Wordbook implements IWordbook{
     words.put("project with risks to review", "project has risks that are to review");
     words.put("review done", "review done");
     words.put("risk already in project", "risk is already in poject!");
+    words.put("ok", "ok");
+    // Error messages
+    words.put("error project write", "project could not be written to disk. Please check target folder and write permissions.");
+    words.put("error general", "an error occured. Please try again, possibly after restarting the application.");
+    words.put("error project read", "project could not be read. Please check the file format and read permissions.");
+    words.put("error risk read", "risk could not be read. Please check the file format and read permissions.");
+    words.put("error projects read", "projects could not be read. Please check the files in folder \"Rimanto\" in your home directory and try again.");
+    words.put("error risk write", "risk could not be written to disk. Please check the target folder and your permissions.");
+    words.put("error resource opening", "the resource could not be opened. Please check, if the file or website is still available.");
+    words.put("error startup", "application could not be started! Please check the files in folder \\\"Rimanto\\\" in your home directory and try again. Backup and delete those files.\"");
   }
 
   /*

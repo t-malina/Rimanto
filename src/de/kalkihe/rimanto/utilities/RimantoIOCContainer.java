@@ -11,8 +11,6 @@ import de.kalkihe.rimanto.presenter.IEventProcessor;
 import de.kalkihe.rimanto.presenter.IRimantoPresenter;
 import de.kalkihe.rimanto.view.IRimantoView;
 import de.kalkihe.rimanto.view.RimantoView;
-import de.kalkihe.rimanto.view.error.ErrorDialog;
-import de.kalkihe.rimanto.view.error.IErrorDialog;
 import de.kalkihe.rimanto.view.panel.IPanelGetter;
 import de.kalkihe.rimanto.view.panel.PanelGetter;
 
@@ -48,7 +46,7 @@ public class RimantoIOCContainer {
     this.rimantoModel = new RimantoModel();
     this.rimantoView = new RimantoView();
     this.wordbook = new Wordbook();
-    this.eventProcessor = new EventProcessor(this.rimantoView, this.rimantoModel);
+    this.eventProcessor = new EventProcessor(this.rimantoView, this.rimantoModel, this.wordbook);
     this.panelGetter = new PanelGetter(this.wordbook, this.eventProcessor, this.rimantoView);
     this.rimantoFileStorage = new RimantoFileStorage();
   }
@@ -85,10 +83,6 @@ public class RimantoIOCContainer {
     else if (wantedClass == IRimantoFileStorage.class)
     {
       return this.rimantoFileStorage;
-    }
-    else if (wantedClass == IErrorDialog.class)
-    {
-      return new ErrorDialog();
     }
     else
     {

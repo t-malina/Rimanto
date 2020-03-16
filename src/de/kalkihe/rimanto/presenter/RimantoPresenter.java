@@ -3,6 +3,7 @@ package de.kalkihe.rimanto.presenter;
 import de.kalkihe.rimanto.model.IRimantoModel;
 import de.kalkihe.rimanto.model.data.IProject;
 import de.kalkihe.rimanto.model.data.IRisk;
+import de.kalkihe.rimanto.utilities.IWordbook;
 import de.kalkihe.rimanto.utilities.RimantoIOCContainer;
 import de.kalkihe.rimanto.view.IRimantoView;
 
@@ -13,6 +14,7 @@ public class RimantoPresenter implements IRimantoPresenter{
   private IRimantoView rimantoView;
   private IRimantoModel rimantoModel;
   private RimantoIOCContainer rimantoIOCContainer;
+  private IWordbook wordbook;
 
   public RimantoPresenter() {
     super();
@@ -29,6 +31,8 @@ public class RimantoPresenter implements IRimantoPresenter{
     this.rimantoView.setPresenter(this);
 
     this.rimantoModel = (IRimantoModel) this.rimantoIOCContainer.getInstanceFor(IRimantoModel.class);
+
+    this.wordbook = (IWordbook) this.rimantoIOCContainer.getInstanceFor(IWordbook.class);
   }
 
   /*
@@ -48,7 +52,7 @@ public class RimantoPresenter implements IRimantoPresenter{
     {
       exception.printStackTrace();
       // Show error dialog and shutdown application
-      rimantoView.showErrorDialog(exception, true);
+      rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error startup"), exception, true);
     }
   }
 
@@ -74,11 +78,15 @@ public class RimantoPresenter implements IRimantoPresenter{
     {
       return this.rimantoModel.getProjectList();
     }
+    catch (IOException exception)
+    {
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error projects read"), exception, true);
+    }
     catch (Exception exception)
     {
-      this.rimantoView.showErrorDialog(exception, true);
-      return null;
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error general"), exception, true);
     }
+    return null;
   }
 
   /*
