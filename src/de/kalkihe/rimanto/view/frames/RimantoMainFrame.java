@@ -1,9 +1,12 @@
 package de.kalkihe.rimanto.view.frames;
 
-import de.kalkihe.rimanto.utilities.IWordbook;
+import de.kalkihe.rimanto.model.wordbook.IWordbook;
+import de.kalkihe.rimanto.presenter.IEventProcessor;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class RimantoMainFrame extends JFrame {
   /*
@@ -17,15 +20,18 @@ public class RimantoMainFrame extends JFrame {
   private JPanel shownPanel;
   private JMenuBar mainMenuBar;
 
+  private IEventProcessor eventProcessor;
+
   /*
    * Constructor
    * Initializes the wordbook.
    * Starts initializing the Application
    */
-  public RimantoMainFrame(IWordbook wordbook) {
+  public RimantoMainFrame(IWordbook wordbook, IEventProcessor eventProcessor) {
     this.shownPanel = new JPanel(new BorderLayout());
     this.add(shownPanel);
     this.wordbook = wordbook;
+    this.eventProcessor = eventProcessor;
     init();
   }
 
@@ -50,9 +56,25 @@ public class RimantoMainFrame extends JFrame {
   private void initializeMenuBar() {
     mainMenuBar = new JMenuBar();
     JMenu fileMenu = new JMenu(wordbook.getWordForWithCapitalLeadingLetter("file"));
+    JMenuItem exitMenu = new JMenuItem(wordbook.getWordForWithCapitalLeadingLetter("exit"));
+    exitMenu.addActionListener(actionEvent -> System.exit(0));
+    JMenu optionMenu = new JMenu(wordbook.getWordForWithCapitalLeadingLetter("options"));
+    JMenu languageMenu = new JMenu(wordbook.getWordForWithCapitalLeadingLetter("language"));
+    JMenuItem germanMenu = new JMenuItem(wordbook.getWordForWithCapitalLeadingLetter("german"));
+    germanMenu.addActionListener(actionEvent -> this.eventProcessor.languageChanged("de", "DE"));
+    JMenuItem englishMenu = new JMenuItem(wordbook.getWordForWithCapitalLeadingLetter("english"));
+    englishMenu.addActionListener(actionEvent -> this.eventProcessor.languageChanged("en", "US"));
     JMenu helpMenu = new JMenu(wordbook.getWordForWithCapitalLeadingLetter("help"));
+    JMenuItem aboutItem = new JMenuItem(wordbook.getWordForWithCapitalLeadingLetter("about"));
+    aboutItem.addActionListener(actionEvent -> this.showAbout());
     mainMenuBar.add(fileMenu);
+    fileMenu.add(exitMenu);
+    mainMenuBar.add(optionMenu);
+    optionMenu.add(languageMenu);
+    languageMenu.add(germanMenu);
+    languageMenu.add(englishMenu);
     mainMenuBar.add(helpMenu);
+    helpMenu.add(aboutItem);
     this.setJMenuBar(mainMenuBar);
   }
 
@@ -65,5 +87,11 @@ public class RimantoMainFrame extends JFrame {
     this.shownPanel.add(panel);
     this.shownPanel.revalidate();
     this.shownPanel.repaint();
+  }
+
+  private void showAbout()
+  {
+    String message = this.wordbook.getWordForWithCapitalLeadingLetter("rimanto") + "\n\n" + this.wordbook.getWordForWithCapitalLeadingLetter("icon");
+    JOptionPane.showMessageDialog(this, message, this.wordbook.getWordForWithCapitalLeadingLetter("about"), 0, new ImageIcon("./images/danger.png"));
   }
 }

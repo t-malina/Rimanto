@@ -1,6 +1,6 @@
 package de.kalkihe.rimanto.view.frames;
 
-import de.kalkihe.rimanto.utilities.IWordbook;
+import de.kalkihe.rimanto.model.wordbook.IWordbook;
 
 import javax.swing.*;
 import java.awt.*;
@@ -55,7 +55,7 @@ public class ShowErrorFrame extends JDialog {
     JButton okButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("ok"));
     okButton.addActionListener(actionEvent -> this.closeFrame());
     southPanel.add(okButton);
-    JButton copyMessageButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("copy text"));
+    JButton copyMessageButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("copy_text"));
     copyMessageButton.addActionListener(actionEvent -> this.copyErrorMessage());
     southPanel.add(copyMessageButton);
     this.add(southPanel, BorderLayout.SOUTH);

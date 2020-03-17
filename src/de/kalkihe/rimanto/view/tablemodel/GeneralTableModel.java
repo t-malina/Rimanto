@@ -1,7 +1,6 @@
 package de.kalkihe.rimanto.view.tablemodel;
 
-import de.kalkihe.rimanto.model.data.IProject;
-import de.kalkihe.rimanto.utilities.IWordbook;
+import de.kalkihe.rimanto.model.wordbook.IWordbook;
 import de.kalkihe.rimanto.utilities.RimantoIOCContainer;
 
 import javax.swing.*;

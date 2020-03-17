@@ -2,13 +2,14 @@ package de.kalkihe.rimanto.view;
 
 import de.kalkihe.rimanto.model.data.IProject;
 import de.kalkihe.rimanto.model.data.IRisk;
+import de.kalkihe.rimanto.presenter.IEventProcessor;
 import de.kalkihe.rimanto.presenter.IRimantoPresenter;
 import de.kalkihe.rimanto.utilities.RimantoIOCContainer;
 import de.kalkihe.rimanto.view.filefilters.RimantoFileFIlter;
 import de.kalkihe.rimanto.view.frames.RimantoMainFrame;
 import de.kalkihe.rimanto.view.frames.ShowErrorFrame;
 import de.kalkihe.rimanto.view.panel.IPanelGetter;
-import de.kalkihe.rimanto.utilities.IWordbook;
+import de.kalkihe.rimanto.model.wordbook.IWordbook;
 
 import javax.swing.*;
 import java.io.File;
@@ -20,6 +21,7 @@ public class RimantoView implements IRimantoView{
   private IRimantoPresenter presenter;
   private IWordbook wordbook;
   private IPanelGetter panelGetter;
+  private IEventProcessor eventProcessor;
 
   private RimantoMainFrame rimantoMainFrame;
 
@@ -30,6 +32,7 @@ public class RimantoView implements IRimantoView{
     this.rimantoIOCContainer = RimantoIOCContainer.getInstance();
     this.wordbook = (IWordbook) this.rimantoIOCContainer.getInstanceFor(IWordbook.class);
     this.panelGetter = (IPanelGetter) this.rimantoIOCContainer.getInstanceFor(IPanelGetter.class);
+    this.eventProcessor = (IEventProcessor) this.rimantoIOCContainer.getInstanceFor(IEventProcessor.class);
   }
 
   /*
@@ -67,7 +70,7 @@ public class RimantoView implements IRimantoView{
       throw new Exception(wordbook.getWordFor("errorlookandfell"), exception);
     }
     // Create new main frame and pass reference to workbook
-    this.rimantoMainFrame = new RimantoMainFrame(this.wordbook);
+    this.rimantoMainFrame = new RimantoMainFrame(this.wordbook, this.eventProcessor);
     // set the panel to display
     this.rimantoMainFrame.setJPanel(this.panelGetter.getPanelForOverview());
     // Set the main frame to be visible

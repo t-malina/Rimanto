@@ -1,5 +1,8 @@
 package de.kalkihe.rimanto.model.data;
 
+import de.kalkihe.rimanto.model.wordbook.IWordbook;
+import de.kalkihe.rimanto.utilities.RimantoIOCContainer;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
@@ -112,8 +115,10 @@ public class Risk implements IRisk, Serializable, Cloneable {
   }
 
   @Override
-  public void annotateRiskSource(IProject project, String category) {
-    this.riskDescription += "\n\n Originally from project \"" + project.getProjectName() +"\", affects \"" + category + "\" of this project";
+  public void annotateRiskSource(IProject project, String category) throws Exception {
+    IWordbook wordbook = (IWordbook) RimantoIOCContainer.getInstance().getInstanceFor(IWordbook.class);
+    this.riskDescription += "\n\n " + wordbook.getWordForWithCapitalLeadingLetter("original_project") +  " \"" + project.getProjectName() +"\", " + wordbook.getWordFor("affects")
+  + " \"" + category + "\" " + wordbook.getWordFor("this_project");
   }
 
   @Override

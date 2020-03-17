@@ -1,6 +1,6 @@
 package de.kalkihe.rimanto.view.filefilters;
 
-import de.kalkihe.rimanto.utilities.IWordbook;
+import de.kalkihe.rimanto.model.wordbook.IWordbook;
 
 import javax.swing.filechooser.FileFilter;
 import java.io.File;
@@ -24,7 +24,7 @@ public class RimantoFileFIlter extends FileFilter {
   @Override
   public String getDescription()
   {
-    return this.wordbook.getWordForWithCapitalLeadingLetter("rimanto file");
+    return this.wordbook.getWordForWithCapitalLeadingLetter("rimanto_file");
   }
 
 

@@ -41,4 +41,6 @@ public interface IEventProcessor {
 
   void ressourceForViewRequested(String ressource);
 
+  void languageChanged(String language, String country);
+
 }

@@ -2,6 +2,7 @@ package de.kalkihe.rimanto.model.storage;
 
 import de.kalkihe.rimanto.model.data.IProject;
 import de.kalkihe.rimanto.model.data.IRisk;
+import de.kalkihe.rimanto.model.wordbook.IWordbook;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,5 +31,9 @@ public interface IRimantoFileStorage {
   IRisk importRisk(File importFile) throws IOException, ClassNotFoundException;
 
   void exportRisk(IRisk risk, File exportFile) throws IOException;
+
+  void saveWordbook(IWordbook wordbook) throws IOException;
+
+  IWordbook readWordbook() throws IOException, ClassNotFoundException;
 
 }

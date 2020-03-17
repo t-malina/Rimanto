@@ -1,4 +1,4 @@
-package de.kalkihe.rimanto.utilities;
+package de.kalkihe.rimanto.model.wordbook;
 
 import de.kalkihe.rimanto.model.data.IProject;
 import de.kalkihe.rimanto.model.data.IRisk;
@@ -19,7 +19,7 @@ public interface IWordbook {
 
   String getRiskInstruction(IProject project, IRisk risk, String recipient, String dueDate, String instruction);
 
-  String getDateTimeFormat();
-
   DateTimeFormatter getDateTimeFormatter();
+
+  void setLocale(String language, String country);
 }
