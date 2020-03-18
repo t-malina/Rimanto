@@ -30,7 +30,7 @@ public class ShowErrorFrame extends JDialog {
     // Set Title of Main window
     this.setTitle(this.wordbook.getWordForWithCapitalLeadingLetter("error"));
     // Set icon of the main window
-    ImageIcon icon = new ImageIcon("./images/danger.png");
+    ImageIcon icon = new ImageIcon(getClass().getResource("/danger.png"));
     this.setIconImage(icon.getImage());
     this.setMinimumSize(new Dimension(300, 200));
 

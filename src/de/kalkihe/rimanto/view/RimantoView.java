@@ -115,7 +115,7 @@ public class RimantoView implements IRimantoView{
     JFileChooser fileChooser = new JFileChooser();
     fileChooser.setAcceptAllFileFilterUsed(false);
     fileChooser.setFileFilter(new RimantoFileFIlter(allowedFileFormat, this.wordbook));
-    int state = fileChooser.showOpenDialog(null);
+    int state = fileChooser.showOpenDialog(this.rimantoMainFrame);
     if (state == JFileChooser.APPROVE_OPTION)
     {
       return fileChooser.getSelectedFile();
@@ -154,7 +154,7 @@ public class RimantoView implements IRimantoView{
     JFileChooser fileChooser = new JFileChooser();
     fileChooser.setAcceptAllFileFilterUsed(false);
     fileChooser.setFileFilter(new RimantoFileFIlter(allowedFileFormat, this.wordbook));
-    int state = fileChooser.showSaveDialog(null);
+    int state = fileChooser.showSaveDialog(this.rimantoMainFrame);
     if (state == JFileChooser.APPROVE_OPTION)
     {
       return new File(fileChooser.getSelectedFile() + allowedFileFormat);
