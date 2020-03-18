@@ -3,12 +3,8 @@ package de.kalkihe.rimanto.view.frames;
 import de.kalkihe.rimanto.model.wordbook.IWordbook;
 import de.kalkihe.rimanto.presenter.IEventProcessor;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.File;
 
 public class RimantoMainFrame extends JFrame {
   /*
@@ -41,7 +37,7 @@ public class RimantoMainFrame extends JFrame {
     // Set Title of Main window
     this.setTitle("Rimanto");
     // Set icon of the main window
-    ImageIcon icon = ImageIO.read(new File("/resources/icons/danger.png"));
+    ImageIcon icon = new ImageIcon("./images/danger.png");
     this.setIconImage(icon.getImage());
     // Set initial size of the current window
     // this.setSize(800, 700);
