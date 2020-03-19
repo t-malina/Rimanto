@@ -7,9 +7,11 @@ import de.kalkihe.rimanto.model.data.Project;
 import de.kalkihe.rimanto.presenter.IEventProcessor;
 import de.kalkihe.rimanto.model.wordbook.IWordbook;
 import de.kalkihe.rimanto.view.IRimantoView;
+import de.kalkihe.rimanto.view.filefilters.RimantoFileFIlter;
 import de.kalkihe.rimanto.view.panel.keyevent.TabKeyAdapter;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.net.URI;
 import java.time.LocalDate;
@@ -38,6 +40,7 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
 
   private JLabel furtherResourcesLabel;
   private JTextArea furtherResourcesTextArea;
+  private JButton furtherResourcesButton;
 
   private JLabel projectRevisionLabel;
   private DatePicker projectRevisionDatePicker;
@@ -95,11 +98,16 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
     this.centerPanel.add(this.projectEndDatePicker);
 
     this.furtherResourcesLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("further_resources"));
+    JPanel furtherResourcesPanel = new JPanel(new BorderLayout());
+    this.furtherResourcesButton = new JButton("+");
+    this.furtherResourcesButton.addActionListener(actionEvent -> this.addFileToProject());
     this.furtherResourcesTextArea = new JTextArea();
-    this.furtherResourcesScrollPane = super.configureAndInsertTextArea(this.furtherResourcesTextArea);
+    this.furtherResourcesScrollPane = new JScrollPane(this.furtherResourcesTextArea);
+    furtherResourcesPanel.add(this.furtherResourcesScrollPane, BorderLayout.CENTER);
+    furtherResourcesPanel.add(this.furtherResourcesButton, BorderLayout.EAST);
 
     this.centerPanel.add(this.furtherResourcesLabel);
-    this.centerPanel.add(this.furtherResourcesScrollPane);
+    this.centerPanel.add(furtherResourcesPanel);
 
     DatePickerSettings revisionDatePickerSettings = new DatePickerSettings();
     revisionDatePickerSettings.setAllowKeyboardEditing(false);
@@ -156,7 +164,6 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
     this.southPanel.add(this.cancelButton);
     this.saveButton.addActionListener(actionEvent -> this.saveButtonClick());
     this.southPanel.add(this.saveButton);
-
 
     this.add(this.southPanel, BorderLayout.SOUTH);
   }
@@ -220,5 +227,18 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
     }
     IProject project = new Project(projectName, projectDescription, startDate, endDate, furtherResources, revisionDate);
     return project;
+  }
+
+  void addFileToProject()
+  {
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setAcceptAllFileFilterUsed(true);
+    int state = fileChooser.showOpenDialog(this);
+    if (state == JFileChooser.APPROVE_OPTION)
+    {
+      String resources = this.furtherResourcesTextArea.getText();
+      String file = fileChooser.getSelectedFile().toURI().toString();
+      this.furtherResourcesTextArea.setText(resources + "\n" + file);
+    }
   }
 }
