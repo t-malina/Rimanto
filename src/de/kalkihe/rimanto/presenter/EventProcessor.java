@@ -379,6 +379,7 @@ public class EventProcessor implements IEventProcessor{
   @Override
   public void languageChanged(String language, String country) {
     this.wordbook.setLocale(language, country);
+    this.rimantoView.languageChanged();
     this.backToOverview();
     try
     {

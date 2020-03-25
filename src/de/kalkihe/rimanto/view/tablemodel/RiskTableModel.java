@@ -69,6 +69,11 @@ public class RiskTableModel extends GeneralTableModel {
     {
       return Color.RED;
     }
+    boolean isSelectedRow = row == table.getSelectedRow();
+    if (isSelectedRow)
+    {
+      return Color.LIGHT_GRAY;
+    }
     return Color.WHITE;
 
   }

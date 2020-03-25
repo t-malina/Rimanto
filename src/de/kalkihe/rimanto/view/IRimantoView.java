@@ -56,6 +56,7 @@ public interface IRimantoView {
 
   void exportRiskAsInstruction(IProject project, IRisk risk) throws Exception;
 
+  void languageChanged();
 
 }
 

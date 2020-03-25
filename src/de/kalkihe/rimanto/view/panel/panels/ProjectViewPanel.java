@@ -113,6 +113,7 @@ public class ProjectViewPanel extends GeneralRimantoPanel {
     JLabel furtherResourcesLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("further_resources"));
 
     JList furtherRessoucesList = new JList(this.project.getLinkedResources().toArray());
+    furtherRessoucesList.setBackground(this.getBackground());
     furtherRessoucesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     furtherRessoucesList.addMouseListener(new MouseAdapter() {
       @Override

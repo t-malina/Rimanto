@@ -91,6 +91,11 @@ public class ProjectTableModel extends GeneralTableModel {
     {
       return Color.YELLOW;
     }
+    boolean isSelectedRow = row == table.getSelectedRow();
+    if (isSelectedRow)
+    {
+      return Color.LIGHT_GRAY;
+    }
     return Color.WHITE;
   }
 }

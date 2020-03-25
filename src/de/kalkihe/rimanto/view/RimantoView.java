@@ -167,5 +167,10 @@ public class RimantoView implements IRimantoView{
     this.rimantoMainFrame.setJPanel(this.panelGetter.getPanelForExportRisk(project, risk));
   }
 
+  @Override
+  public void languageChanged() {
+    this.rimantoMainFrame.initializeMenuBar();
+  }
+
 
 }
