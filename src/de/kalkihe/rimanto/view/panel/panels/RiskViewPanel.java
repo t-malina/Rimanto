@@ -16,6 +16,9 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Panel for creation or view of risk
+ */
 public class RiskViewPanel extends GeneralRimantoPanel {
   private IProject project;
   private IRisk risk;
@@ -43,6 +46,14 @@ public class RiskViewPanel extends GeneralRimantoPanel {
   private DefaultListModel<IProject> furtherProjectListModel;
 
 
+  /**
+   * Constructor for initialization for creating new risk
+   * @param wordbook Wordbook for labels etc
+   * @param eventProcessor Eventhandler to pass events to
+   * @param rimantoView reference to view
+   * @param project Project the risk is to be created for
+   * @throws Exception
+   */
   public RiskViewPanel(IWordbook wordbook, IEventProcessor eventProcessor, IRimantoView rimantoView, IProject project) throws Exception {
     super(wordbook, eventProcessor, rimantoView);
     this.project = project;
@@ -52,6 +63,15 @@ public class RiskViewPanel extends GeneralRimantoPanel {
   }
 
 
+  /**
+   * Constructor for initialization for viewing and possibly editing risk
+   * @param wordbook Wordbook for labels etc
+   * @param eventProcessor Eventhandler to pass events to
+   * @param rimantoView reference to view
+   * @param project Project the risk belongs to
+   * @param risk The risk that is to be viewed and possibly edited
+   * @throws Exception
+   */
   public RiskViewPanel(IWordbook wordbook, IEventProcessor eventProcessor, IRimantoView rimantoView, IProject project, IRisk risk) throws Exception {
     super(wordbook, eventProcessor, rimantoView);
     this.project = project;
@@ -61,6 +81,10 @@ public class RiskViewPanel extends GeneralRimantoPanel {
     this.setEditMode(false);
   }
 
+  /**
+   * Fills a combobox with values from 1 to 5
+   * @param comboBox
+   */
   private void fillCombBox(JComboBox<Integer> comboBox)
   {
     for (int index = 1; index < 6; index++)
@@ -69,6 +93,10 @@ public class RiskViewPanel extends GeneralRimantoPanel {
     }
   }
 
+  /**
+   * Builds the elements of the panel
+   * @throws Exception
+   */
   @Override
   protected void buildPanel() throws Exception {
     this.centerPanel = new JPanel(new GridLayout(0, 2, 20, 20));
@@ -145,6 +173,9 @@ public class RiskViewPanel extends GeneralRimantoPanel {
 
   }
 
+  /**
+   * Initializes the ui elements for creation of new risk
+   */
   private void initialize()
   {
     this.cancelOrBackButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("cancel"));
@@ -157,6 +188,10 @@ public class RiskViewPanel extends GeneralRimantoPanel {
     this.add(this.southPanel, BorderLayout.SOUTH);
   }
 
+  /**
+   * Initializes the ui for viewing and editing existing risk
+   * @param risk The risk to initialize the ui element with
+   */
   private void initialize(IRisk risk)
   {
     // Fill Elements with Data
@@ -202,6 +237,11 @@ public class RiskViewPanel extends GeneralRimantoPanel {
 
   }
 
+  /**
+   * Sets if the contents of the ui elements can be edited.
+   * Also changes the background color of the elements due to their editability
+   * @param isEditable
+   */
   private void setEditMode(boolean isEditable)
   {
     this.riskNameTextArea.setEditable(isEditable);
@@ -230,6 +270,10 @@ public class RiskViewPanel extends GeneralRimantoPanel {
     this.categeoryOfImpactOnOtherProjectsTextField.setBackground(newBackgroundColor);
   }
 
+  /**
+   * Removes an action listener from a button
+   * @param button
+   */
   private void removeActionListenersFromButton(JButton button)
   {
     for(ActionListener listener: button.getActionListeners())
@@ -238,6 +282,10 @@ public class RiskViewPanel extends GeneralRimantoPanel {
     }
   }
 
+  /**
+   * Event for click on edit button. Initializes ui elements for edit mode
+   * @param risk The risk that is to be edited
+   */
   private void editButtonClick(IRisk risk)
   {
     this.removeActionListenersFromButton(this.saveOrEditButton);
@@ -263,6 +311,10 @@ public class RiskViewPanel extends GeneralRimantoPanel {
     this.setEditMode(true);
   }
 
+  /**
+   * Initializes a List Model with all projects except the one the shown risk belongs to
+   * @param model
+   */
   private void initializeWithAllProjectsExceptOwn(DefaultListModel<IProject> model)
   {
     List<IProject> projectList = this.rimantoView.requestProjects();
@@ -270,6 +322,10 @@ public class RiskViewPanel extends GeneralRimantoPanel {
     model.addAll(projectList);
   }
 
+  /**
+   * Eventhandler for click on cancel button. Re-intializes the panel for showing the risk which editiing was canceled
+   * @param risk
+   */
   private void cancelButtonClick(IRisk risk)
   {
     this.southPanel.removeAll();
@@ -279,6 +335,9 @@ public class RiskViewPanel extends GeneralRimantoPanel {
   }
 
 
+  /**
+   * Eventhandler for saving new created risk
+   */
   private void saveButtonClick()
   {
     IRisk risk = this.generateRiskFromInput();
@@ -288,6 +347,10 @@ public class RiskViewPanel extends GeneralRimantoPanel {
     }
   }
 
+  /**
+   * Event handler for editing risk
+   * @param risk
+   */
   private void saveButtonClick(IRisk risk)
   {
     IRisk newRisk = this.generateRiskFromInput();
@@ -297,6 +360,10 @@ public class RiskViewPanel extends GeneralRimantoPanel {
     }
   }
 
+  /**
+   * Checks the input and returns a risk, if applicable.
+   * @return Risk from input data. Null, if necessary data missing
+   */
   private IRisk generateRiskFromInput()
   {
     String riskName = this.riskNameTextArea.getText();

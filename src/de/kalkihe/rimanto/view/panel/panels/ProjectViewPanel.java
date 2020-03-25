@@ -15,6 +15,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 
+/**
+ * View for Overview of Projects
+ */
 public class ProjectViewPanel extends GeneralRimantoPanel {
   private IProject project;
 
@@ -27,12 +30,24 @@ public class ProjectViewPanel extends GeneralRimantoPanel {
   private JTable riskTable;
   private JScrollPane riskTableScrollPane;
 
+  /**
+   * Constructor. Initializes needed references
+   * @param wordbook Wordbook for labels etc
+   * @param eventProcessor Eventhandler to pass events to
+   * @param rimantoView reference to view
+   * @param project The project that is to view
+   * @throws Exception
+   */
   public ProjectViewPanel(IWordbook wordbook, IEventProcessor eventProcessor, IRimantoView rimantoView, IProject project) throws Exception {
     super(wordbook, eventProcessor, rimantoView);
     this.project = project;
     this.buildPanel();
   }
 
+  /**
+   * Builds the content of the panel
+   * @throws Exception
+   */
   @Override
   protected void buildPanel() throws Exception {
     // Create Panels
@@ -85,6 +100,9 @@ public class ProjectViewPanel extends GeneralRimantoPanel {
     this.add(this.southPanel, BorderLayout.SOUTH);
   }
 
+  /**
+   * Builds the panel with the data of the project
+   */
   private void buildProjectPanel()
   {
     JLabel nameLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("project_name"));
@@ -150,6 +168,10 @@ public class ProjectViewPanel extends GeneralRimantoPanel {
   }
 
 
+  /**
+   * Builds the panel with the risks
+   * @throws Exception
+   */
   private void buildRiskPanel() throws Exception {
     // Create new Table
     this.riskTable = new JTable();

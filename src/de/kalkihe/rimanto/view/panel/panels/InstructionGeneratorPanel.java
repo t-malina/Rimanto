@@ -14,6 +14,9 @@ import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 
+/**
+ * Panel for creation of a instruction out of a risk
+ */
 public class InstructionGeneratorPanel extends GeneralRimantoPanel {
   private IProject project;
   private IRisk risk;
@@ -28,6 +31,15 @@ public class InstructionGeneratorPanel extends GeneralRimantoPanel {
 
   private JTextArea outputTextArea;
 
+  /**
+   * Constructor. Initializes needed references
+   * @param wordbook Wordbook for labels etc
+   * @param eventProcessor Eventhandler to pass events to
+   * @param rimantoView reference to view
+   * @param project The project the exported risk is part of
+   * @param risk The risk that is to export
+   * @throws Exception
+   */
   public InstructionGeneratorPanel(IWordbook wordbook, IEventProcessor eventProcessor, IRimantoView rimantoView, IProject project, IRisk risk) throws Exception {
     super(wordbook, eventProcessor, rimantoView);
     this.project = project;
@@ -35,6 +47,10 @@ public class InstructionGeneratorPanel extends GeneralRimantoPanel {
     this.buildPanel();
   }
 
+  /**
+   * Builds the content of the panel
+   * @throws Exception
+   */
   @Override
   protected void buildPanel() throws Exception {
     this.northPanel = new JPanel(new GridLayout(0, 2, 5, 5));
@@ -89,9 +105,11 @@ public class InstructionGeneratorPanel extends GeneralRimantoPanel {
     this.recipientTextField.addKeyListener(new TabKeyAdapter(this.dueDatePicker));
     this.dueDatePicker.addKeyListener(new TabKeyAdapter(this.instructionTextArea));
     this.instructionTextArea.addKeyListener(new TabKeyAdapter(this.outputTextArea));
-
   }
 
+  /**
+   * Copies the generated output to the clipboard
+   */
   private void copyOutput()
   {
     StringSelection selection = new StringSelection(this.outputTextArea.getText());
@@ -100,6 +118,9 @@ public class InstructionGeneratorPanel extends GeneralRimantoPanel {
 
   }
 
+  /**
+   * Generates the output and displays in the text area
+   */
   private void generateOutput()
   {
     String outputText = this.wordbook.getRiskInstruction(this.project, this.risk, this.recipientTextField.getText(), this.dueDatePicker.toString(), this.instructionTextArea.getText());
