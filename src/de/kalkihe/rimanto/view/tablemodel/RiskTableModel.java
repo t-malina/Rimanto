@@ -7,9 +7,17 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Table model for risks
+ */
 public class RiskTableModel extends GeneralTableModel {
   private List<IRisk> risks;
 
+  /**
+   * Constructor. Initializes table.
+   * @param risks List of risks to display
+   * @throws Exception
+   */
   public RiskTableModel(List<IRisk> risks) throws Exception {
     super();
     this.risks = risks;
@@ -17,11 +25,19 @@ public class RiskTableModel extends GeneralTableModel {
     this.readData();
   }
 
+  /**
+   *
+   * @param id
+   * @return Risk to the given id
+   */
   public IRisk getRiskWithId(int id)
   {
     return this.risks.get(id);
   }
 
+  /**
+   * Reads the names of the column in the corresponding objects
+   */
   private void readColumnNames() {
     // Check if there is at least one project existing
     if (this.risks.size() > 0) {
@@ -42,6 +58,9 @@ public class RiskTableModel extends GeneralTableModel {
     }
   }
 
+  /**
+   * Reads the data from the risks into the corresponding objects
+   */
   private void readData()
   {
     // Iterate over every project in list
@@ -61,6 +80,12 @@ public class RiskTableModel extends GeneralTableModel {
     }
   }
 
+  /**
+   * Returns the background color of the passed table in the passed row
+   * @param table
+   * @param row
+   * @return Color of the table in the row
+   */
   @Override
   public Color getRowColor(JTable table, int row) {
     int riskId = super.getIdAtRow(table, row);

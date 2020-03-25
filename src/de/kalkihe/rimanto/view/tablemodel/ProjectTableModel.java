@@ -7,14 +7,18 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Table Model for Projects
+ */
 public class ProjectTableModel extends GeneralTableModel {
   // List of projects
   List<IProject> projects;
 
-  /*
-   * Constructor
-   * Takes a list of projects to display in the table
-   * Initializes needed variables and initiates reading of data for displaying in table
+  /**
+   *
+   * Constructor. Initializes needed variables and initiates reading of data for displaying in table
+   * @param projects List of projects to display in the table
+   * @throws Exception
    */
   public ProjectTableModel(List<IProject> projects) throws Exception {
     super();
@@ -22,15 +26,18 @@ public class ProjectTableModel extends GeneralTableModel {
     this.readColumnNames();
     this.readData();
   }
-  /*
-   * Returns the project to the given id
+
+  /**
+   *
+   * @param id
+   * @return Project to the given id
    */
   public IProject getProjectWithId(int id)
   {
     return this.projects.get(id);
   }
 
-  /*
+  /**
    * Reads the names of the column in the corresponding objects
    */
   private void readColumnNames()
@@ -57,7 +64,7 @@ public class ProjectTableModel extends GeneralTableModel {
     }
   }
 
-  /*
+  /**
    * Reads the data from the projects into the corresponding objects
    */
   private void readData()
@@ -79,6 +86,12 @@ public class ProjectTableModel extends GeneralTableModel {
     }
   }
 
+  /**
+   * Returns the background color of the passed table in the passed row
+   * @param table
+   * @param row
+   * @return Color of the table in the row
+   */
   @Override
   public Color getRowColor(JTable table, int row) {
     int projectId = super.getIdAtRow(table, row);
