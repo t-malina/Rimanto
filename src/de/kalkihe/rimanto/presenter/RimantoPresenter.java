@@ -62,12 +62,13 @@ public class RimantoPresenter implements IRimantoPresenter{
         // Set wordbook without any saved object
         this.rimantoIOCContainer.setWordbook();
       }
+      // Initialize reference to wordbook
+      this.wordbook = (IWordbook) this.rimantoIOCContainer.getInstanceFor(IWordbook.class);
       // Initialize main application window and show it
       rimantoView.initializeApplicationWindow();
     }
     catch(Exception exception)
     {
-      exception.printStackTrace();
       // Show error dialog and shutdown application
       rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_startup"), exception, true);
     }

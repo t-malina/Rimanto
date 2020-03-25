@@ -13,15 +13,10 @@ import java.util.List;
 
 public class RimantoModel implements de.kalkihe.rimanto.model.IRimantoModel {
   /**
-    * List with all projects existing
-    */
-  private List<IProject> projectList;
-  /**
     * Needed references to objects
     */
   private RimantoIOCContainer rimantoIOCContainer;
   private IRimantoFileStorage rimantoFileStorage;
-  private IWordbook wordbook;
 
   /**
    * Method to initialize model and data
@@ -33,10 +28,6 @@ public class RimantoModel implements de.kalkihe.rimanto.model.IRimantoModel {
     this.rimantoIOCContainer = RimantoIOCContainer.getInstance();
     // Get instance for file storage
     this.rimantoFileStorage = (IRimantoFileStorage) this.rimantoIOCContainer.getInstanceFor(IRimantoFileStorage.class);
-    // Read projects and save them in list
-    this.projectList = this.rimantoFileStorage.readProjects();
-    // Get reference to wordbook
-    this.wordbook = (IWordbook) this.rimantoIOCContainer.getInstanceFor(IWordbook.class);
   }
 
   /**
@@ -175,7 +166,7 @@ public class RimantoModel implements de.kalkihe.rimanto.model.IRimantoModel {
     // If projects already contains that risk, throw exception
     if(project.getProjectRisks().contains(risk))
     {
-      throw new FileAlreadyExistsException(this.wordbook.getWordForWithCapitalLeadingLetter("risk_already_in_project"));
+      throw new FileAlreadyExistsException(importFile.toString());
     }
     // Add risk to project
     project.addRisk(risk);
