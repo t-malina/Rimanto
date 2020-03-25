@@ -134,7 +134,7 @@ public class ProjectViewPanel extends GeneralRimantoPanel {
     this.northPanel.add(scrollPane);
 
     JLabel revisionLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("next_date_of_revision"));
-    LocalDate date = this.project.getDateOfNextProjectRevision();
+    LocalDate date = this.project.getDateOfNextProjectReview();
     JLabel projectRevisionLabel;
     if (date == null)
     {
@@ -142,7 +142,7 @@ public class ProjectViewPanel extends GeneralRimantoPanel {
     }
     else
     {
-      projectRevisionLabel = new JLabel(this.project.getDateOfNextProjectRevision().toString());
+      projectRevisionLabel = new JLabel(this.project.getDateOfNextProjectReview().toString());
     }
 
     this.northPanel.add(revisionLabel);

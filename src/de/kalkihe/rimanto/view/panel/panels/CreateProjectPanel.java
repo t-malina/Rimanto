@@ -7,11 +7,9 @@ import de.kalkihe.rimanto.model.data.Project;
 import de.kalkihe.rimanto.presenter.IEventProcessor;
 import de.kalkihe.rimanto.model.wordbook.IWordbook;
 import de.kalkihe.rimanto.view.IRimantoView;
-import de.kalkihe.rimanto.view.filefilters.RimantoFileFIlter;
 import de.kalkihe.rimanto.view.panel.keyevent.TabKeyAdapter;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.net.URI;
 import java.time.LocalDate;
@@ -144,7 +142,7 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
     {
       this.furtherResourcesTextArea.append(uri.toString() + "\n");
     }
-    this.projectRevisionDatePicker.setDate(project.getDateOfNextProjectRevision());
+    this.projectRevisionDatePicker.setDate(project.getDateOfNextProjectReview());
 
     this.cancelButton.addActionListener(actionEvent -> this.eventProcessor.projectEditingCanceled(this.project));
     this.southPanel.add(this.cancelButton);
