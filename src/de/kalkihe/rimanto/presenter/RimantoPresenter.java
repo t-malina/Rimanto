@@ -10,31 +10,37 @@ import de.kalkihe.rimanto.view.IRimantoView;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Implementation of the interface of the presenter
+ */
 public class RimantoPresenter implements IRimantoPresenter{
+  /**
+   * Needed references
+   */
   private IRimantoView rimantoView;
   private IRimantoModel rimantoModel;
   private RimantoIOCContainer rimantoIOCContainer;
   private IWordbook wordbook;
 
+  /**
+   * Constructor.
+   */
   public RimantoPresenter() {
     super();
   }
 
-  /*
+  /**
    * Gets all needed dependencies from ioc-container
+   * @throws Exception
    */
   private void resolveDependencies() throws Exception {
     this.rimantoIOCContainer = RimantoIOCContainer.getInstance();
-
     this.rimantoView = (IRimantoView) this.rimantoIOCContainer.getInstanceFor(IRimantoView.class);
-
     this.rimantoView.setPresenter(this);
-
     this.rimantoModel = (IRimantoModel) this.rimantoIOCContainer.getInstanceFor(IRimantoModel.class);
-
   }
 
-  /*
+  /**
    * Initializes the application for the user to work with
    */
   private void initializeApplication()
@@ -44,17 +50,18 @@ public class RimantoPresenter implements IRimantoPresenter{
       this.resolveDependencies();
       // Initialize the model
       this.rimantoModel.initializeModel();
-
       try
       {
+        // Read wordbook
         IWordbook wordbook = this.rimantoModel.readWordbook();
         this.rimantoIOCContainer.setWordbook(wordbook);
       }
+      // If reading of wordbook was not possible
       catch (Exception exception)
       {
+        // Set wordbook without any saved object
         this.rimantoIOCContainer.setWordbook();
       }
-
       // Initialize main application window and show it
       rimantoView.initializeApplicationWindow();
     }
@@ -66,6 +73,10 @@ public class RimantoPresenter implements IRimantoPresenter{
     }
   }
 
+  /**
+   * Main method. Creates a presenter and tells it to initialize the application
+   * @param args
+   */
   public static void main(String[] args) {
     // create presenter with dependency to view
     RimantoPresenter rimantoPresenter = new RimantoPresenter();
@@ -79,8 +90,9 @@ public class RimantoPresenter implements IRimantoPresenter{
     }
   }
 
-  /*
-   * Method to request list of all projects at model
+  /**
+   * Method to request list of all projects in model
+   * @return List of all current projects
    */
   @Override
   public List<IProject> fetchProjects() {
@@ -99,8 +111,10 @@ public class RimantoPresenter implements IRimantoPresenter{
     return null;
   }
 
-  /*
-   * Method to request list of all risks of a given project
+  /**
+   * Method to request list of all risks for a given project
+   * @param project Project to fetch risks for
+   * @return List of all risks of the passed project
    */
   @Override
   public List<IRisk> fetchRisksOfProject(IProject project) {

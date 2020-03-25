@@ -13,22 +13,41 @@ import java.net.URI;
 import java.net.URL;
 import java.nio.file.FileAlreadyExistsException;
 
+/**
+ * Implementation of Interface for event handling
+ */
 public class EventProcessor implements IEventProcessor{
+  /**
+   * Needed references
+   */
   private IRimantoView rimantoView;
   private IRimantoModel rimantoModel;
   private IWordbook wordbook;
 
+  /**
+   * Constructor, Initializes passed references
+   * @param rimantoView Reference to view
+   * @param rimantoModel Reference to model
+   * @param wordbook Reference to wordbook
+   */
   public EventProcessor(IRimantoView rimantoView, IRimantoModel rimantoModel, IWordbook wordbook) {
     this.rimantoView = rimantoView;
     this.rimantoModel = rimantoModel;
     this.wordbook = wordbook;
   }
 
+  /**
+   * Event, when creation of new project is started
+   */
   @Override
   public void newProjectButtonClick() {
     this.rimantoView.startCreationOfProject();
   }
 
+  /**
+   * Event, when new project is to create
+   * @param newProject Project that is to create
+   */
   @Override
   public void newProjectToCreate(IProject newProject) {
     try
@@ -46,6 +65,9 @@ public class EventProcessor implements IEventProcessor{
     }
   }
 
+  /**
+   * Event, when import of project is started
+   */
   @Override
   public void projectImportRequested() {
     try
@@ -71,6 +93,10 @@ public class EventProcessor implements IEventProcessor{
     }
   }
 
+  /**
+   * Event, when project is selected for detailed view
+   * @param project Project that is selected for detail view
+   */
   @Override
   public void projectForDetailViewSelected(IProject project) {
     try
@@ -83,6 +109,11 @@ public class EventProcessor implements IEventProcessor{
     }
   }
 
+  /**
+   * Event, wehen risk is selected for detail view
+   * @param project project the risk belongs to
+   * @param risk Risk that is selected for detail view
+   */
   @Override
   public void riskForDetailViewSelected(IProject project, IRisk risk) {
     try
@@ -95,6 +126,10 @@ public class EventProcessor implements IEventProcessor{
     }
   }
 
+  /**
+   * Event when import of a risk is started
+   * @param project The project the imported risk should belong to
+   */
   @Override
   public void riskImportRequested(IProject project) {
     try
@@ -120,6 +155,10 @@ public class EventProcessor implements IEventProcessor{
     }
   }
 
+  /**
+   * Event, when creation of risk is started
+   * @param project The project the new risk should belong to
+   */
   @Override
   public void newRiskButtonClick(IProject project) {
     try
@@ -136,6 +175,10 @@ public class EventProcessor implements IEventProcessor{
     }
   }
 
+  /**
+   * Event, when creation of risk is canceled
+   * @param project The project, that risk creation was canceled for
+   */
   @Override
   public void newRiskCreationCanceled(IProject project) {
     try
@@ -148,6 +191,11 @@ public class EventProcessor implements IEventProcessor{
     }
   }
 
+  /**
+   * Event, when new risk is to create
+   * @param project The project the risk is created for
+   * @param newRisk The risk that is to be created
+   */
   @Override
   public void newRiskToCreate(IProject project, IRisk newRisk) {
     try
@@ -165,6 +213,10 @@ public class EventProcessor implements IEventProcessor{
     }
   }
 
+  /**
+   * Event, when editing of a project is requested
+   * @param project The project that should be edited
+   */
   @Override
   public void backToOverview() {
     try
@@ -181,16 +233,29 @@ public class EventProcessor implements IEventProcessor{
     }
   }
 
+  /**
+   * Event, when editing of project is canceled
+   * @param project The project whose editing was canceled
+   */
   @Override
   public void projectEditingRequested(IProject project) {
     this.rimantoView.startEditingOfProject(project);
   }
 
+  /**
+   * Event, when editing of project is canceled
+   * @param project The project whose editing was canceled
+   */
   @Override
   public void projectEditingCanceled(IProject project) {
     this.projectForDetailViewSelected(project);
   }
 
+  /**
+   * Event, when a project is to edit
+   * @param oldProject The project that is to be edited
+   * @param newProject A new project with the data to adopt
+   */
   @Override
   public void editProject(IProject oldProject, IProject newProject) {
     try
@@ -208,6 +273,10 @@ public class EventProcessor implements IEventProcessor{
     }
   }
 
+  /**
+   * Event, when a project is to be deleted
+   * @param project The project that is to delete
+   */
   @Override
   public void deleteProject(IProject project) {
     this.rimantoModel.deleteProject(project);
@@ -225,6 +294,10 @@ public class EventProcessor implements IEventProcessor{
     }
   }
 
+  /**
+   * Event, when the export of a project is started
+   * @param project The project that is to be exported
+   */
   @Override
   public void exportProject(IProject project) {
     File exportFile = this.rimantoView.showExportFileDialog(this.rimantoModel.getProjectFileFormat());
@@ -244,6 +317,11 @@ public class EventProcessor implements IEventProcessor{
     }
   }
 
+  /**
+   * Event, the export of a risk is started
+   * @param project The project the risk belongs to
+   * @param risk The risk that is to be exported
+   */
   @Override
   public void exportRisk(IProject project, IRisk risk) {
 
@@ -265,6 +343,11 @@ public class EventProcessor implements IEventProcessor{
     }
   }
 
+  /**
+   * Event, when the export of a risk as work instruction is started
+   * @param project The project the risk belongs to
+   * @param risk The risk that is to be exported
+   */
   @Override
   public void exportRiskAsInstruction(IProject project, IRisk risk) {
     try
@@ -277,6 +360,11 @@ public class EventProcessor implements IEventProcessor{
     }
   }
 
+  /**
+   * Event, when a risk of a project is to be deleted
+   * @param project The project the risk belongs to
+   * @param risk The risk that is to be deleted
+   */
   @Override
   public void deleteRisk(IProject project, IRisk risk) {
     try
@@ -294,6 +382,12 @@ public class EventProcessor implements IEventProcessor{
     }
   }
 
+  /**
+   * Event, when a risk is to be edited
+   * @param project The project the risk belongs to
+   * @param oldRisk The risk that is to be edited
+   * @param newRisk A new risk with all data to be adopted
+   */
   @Override
   public void editRisk(IProject project, IRisk oldRisk, IRisk newRisk) {
     try
@@ -311,16 +405,30 @@ public class EventProcessor implements IEventProcessor{
     }
   }
 
+  /**
+   * Event, when the detail view of a risk is leaved
+   * @param project The project the risk belongs to
+   * @param risk The risk which detail view is leaved
+   */
   @Override
   public void exitRiskDetailView(IProject project, IRisk risk) {
     this.projectForDetailViewSelected(project);
   }
 
+  /**
+   * Event, when the export of a risk as instruction is canceled
+   * @param project The project the risk belongs to
+   * @param risk The risk that was being exported
+   */
   @Override
   public void abortRiskAsInstruction(IProject project, IRisk risk) {
     this.riskForDetailViewSelected(project, risk);
   }
 
+  /**
+   * Event, when a project has ben reviewed
+   * @param project The project that has been reviewed
+   */
   @Override
   public void setProjectAsReviewed(IProject project) {
     try
@@ -338,6 +446,11 @@ public class EventProcessor implements IEventProcessor{
     }
   }
 
+  /**
+   * Event, when a risk has been reviewed
+   * @param project The project the reviewed risk belongs to
+   * @param risk The reviewed risk
+   */
   @Override
   public void setRiskAsReviewed(IProject project, IRisk risk) {
     try
@@ -355,6 +468,10 @@ public class EventProcessor implements IEventProcessor{
     }
   }
 
+  /**
+   * Event, when a attached resource has been requested for view
+   * @param ressource Path to the resource
+   */
   @Override
   public void ressourceForViewRequested(String ressource) {
     Desktop desktop = java.awt.Desktop.getDesktop();
@@ -376,6 +493,12 @@ public class EventProcessor implements IEventProcessor{
     }
   }
 
+
+  /**
+   * Event when the language has been changed
+   * @param language language string
+   * @param country country string
+   */
   @Override
   public void languageChanged(String language, String country) {
     this.wordbook.setLocale(language, country);
@@ -395,6 +518,12 @@ public class EventProcessor implements IEventProcessor{
     }
   }
 
+  /**
+   * Opens an URL
+   * @param desktop Current desktop
+   * @param ressource The path to the url
+   * @return
+   */
   private boolean openURL(Desktop desktop, String ressource)
   {
     try
@@ -409,6 +538,12 @@ public class EventProcessor implements IEventProcessor{
     }
   }
 
+  /**
+   * Opens an file
+   * @param desktop Current desktop
+   * @param ressource The path to the file
+   * @return
+   */
   private boolean openFile(Desktop desktop, String ressource)
   {
     try
