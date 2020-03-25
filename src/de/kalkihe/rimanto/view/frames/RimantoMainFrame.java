@@ -6,35 +6,43 @@ import de.kalkihe.rimanto.presenter.IEventProcessor;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The main application window
+ */
 public class RimantoMainFrame extends JFrame {
-  /*
+  /**
    * Other needed classes
    */
   private IWordbook wordbook;
+  private IEventProcessor eventProcessor;
 
-  /*
+  /**
    * UI-elements
    */
   private JPanel shownPanel;
   private JMenuBar mainMenuBar;
-
-  private IEventProcessor eventProcessor;
-
   private ImageIcon icon;
 
-  /*
-   * Constructor
-   * Initializes the wordbook.
-   * Starts initializing the Application
+  /**
+   * Constructor. Initializes needed references and starts initializing the application window
+   * @param wordbook The wordbook to use
+   * @param eventProcessor The event processor to give events to
    */
   public RimantoMainFrame(IWordbook wordbook, IEventProcessor eventProcessor) {
+    // Initialize main panel
     this.shownPanel = new JPanel(new BorderLayout());
+    // Add main panel to frame
     this.add(shownPanel);
+    // Set references
     this.wordbook = wordbook;
     this.eventProcessor = eventProcessor;
+    // Start initialization of the window
     init();
   }
 
+  /**
+   * Initialize the main application window
+   */
   private void init() {
     // Set Title of Main window
     this.setTitle("Rimanto");
@@ -50,7 +58,8 @@ public class RimantoMainFrame extends JFrame {
     // Initialize menu bar
     this.initializeMenuBar();
   }
-  /*
+
+  /**
    * Creates all needed items for the menu bar of the main window
    */
   public void initializeMenuBar() {
@@ -78,8 +87,9 @@ public class RimantoMainFrame extends JFrame {
     this.setJMenuBar(mainMenuBar);
   }
 
-  /*
-   * Sets the Panel that is to use
+  /**
+   * Sets the panel that is to show
+   * @param panel The panel that is to show
    */
   public void setJPanel(JPanel panel)
   {
@@ -89,6 +99,9 @@ public class RimantoMainFrame extends JFrame {
     this.shownPanel.repaint();
   }
 
+  /**
+   * Shows the about message window
+   */
   private void showAbout()
   {
     String message = this.wordbook.getWordForWithCapitalLeadingLetter("rimanto") + "\n\n" + this.wordbook.getWordForWithCapitalLeadingLetter("icon");
