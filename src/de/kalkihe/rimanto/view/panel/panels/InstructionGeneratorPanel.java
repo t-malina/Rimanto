@@ -82,6 +82,9 @@ public class InstructionGeneratorPanel extends GeneralRimantoPanel {
     this.outputTextArea = new JTextArea();
     this.outputTextArea.setLineWrap(true);
     this.outputTextArea.setWrapStyleWord(true);
+    this.outputTextArea.setBackground(this.getBackground());
+    this.outputTextArea.setEditable(false);
+    this.outputTextArea.setText(this.wordbook.getWordForWithCapitalLeadingLetter("instruction_here"));
     JScrollPane outputScrollPane = new JScrollPane(this.outputTextArea);
 
     this.centerPanel.add(outputScrollPane);
