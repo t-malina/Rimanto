@@ -112,6 +112,12 @@ public class OverviewPanel extends GeneralRimantoPanel {
     overviewLabel.setBorder(new EmptyBorder(10, 20, 10, 0));
     this.northPanel.add(overviewLabel);
 
+    JLabel legendLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("legend"));
+    this.descriptionPanel.add(legendLabel);
+
+    this.descriptionPanel.add(Box.createVerticalGlue());
+
+
     JLabel projectReviewLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("project_to_review"));
     projectReviewLabel.setOpaque(true);
     projectReviewLabel.setBackground(Color.RED);
