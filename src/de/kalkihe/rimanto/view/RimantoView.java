@@ -1,6 +1,5 @@
 package de.kalkihe.rimanto.view;
 
-import com.google.inject.Injector;
 import de.kalkihe.rimanto.model.data.IProject;
 import de.kalkihe.rimanto.model.data.IRisk;
 import de.kalkihe.rimanto.presenter.IRimantoPresenter;
@@ -80,6 +79,11 @@ public class RimantoView implements IRimantoView{
   @Override
   public List<IRisk> requestRisksForProject(IProject project) {
     return this.presenter.fetchRisksOfProject(project);
+  }
+
+  @Override
+  public void startCreationOfProject() {
+
   }
 
 
