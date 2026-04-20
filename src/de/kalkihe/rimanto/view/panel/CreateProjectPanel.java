@@ -2,13 +2,17 @@ package de.kalkihe.rimanto.view.panel;
 
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
+import de.kalkihe.rimanto.model.data.IProject;
+import de.kalkihe.rimanto.model.data.Project;
 import de.kalkihe.rimanto.presenter.IEventProcessor;
 import de.kalkihe.rimanto.utilities.IWordbook;
 import de.kalkihe.rimanto.view.IRimantoView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.URI;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Properties;
 import java.util.*;
 
@@ -20,6 +24,10 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
   private JLabel projectStartDateLabel;
   private JLabel projectEndDateLabel;
   private JLabel nextRevisionLabel;
+
+  private JScrollPane projectNameScrollPane;
+  private JScrollPane projectDescriptionScrollPane;
+  private JScrollPane furtherResourcesScrollPane;
 
   private JTextArea projectNameTextField;
   private JTextArea projectDescriptionTextArea;
@@ -48,11 +56,13 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
     this.projectNameLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("project name"));
     this.projectDescriptionLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("project description"));
     this.projectNameTextField = new JTextArea();
+    this.projectNameScrollPane = new JScrollPane(this.projectNameTextField);
     this.projectDescriptionTextArea = new JTextArea();
+    this.projectDescriptionScrollPane = new JScrollPane(this.projectDescriptionTextArea);
     this.centerPanel.add(this.projectNameLabel);
-    this.centerPanel.add(this.projectNameTextField);
+    this.centerPanel.add(this.projectNameScrollPane);
     this.centerPanel.add(this.projectDescriptionLabel);
-    this.centerPanel.add(this.projectDescriptionTextArea);
+    this.centerPanel.add(this.projectDescriptionScrollPane);
 
     this.projectStartDateLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("date of project start"));
     this.projectEndDateLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("date of project end"));
@@ -73,9 +83,10 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
 
     this.furtherResourcesLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("further resources"));
     this.furtherResourcesTextArea = new JTextArea();
+    this.furtherResourcesScrollPane = new JScrollPane(this.furtherResourcesTextArea);
 
     this.centerPanel.add(this.furtherResourcesLabel);
-    this.centerPanel.add(this.furtherResourcesTextArea);
+    this.centerPanel.add(this.furtherResourcesScrollPane);
 
     DatePickerSettings revisionDatePickerSettings = new DatePickerSettings();
     revisionDatePickerSettings.setAllowKeyboardEditing(false);
@@ -94,6 +105,7 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
       this.eventProcessor.newProjectCreationCanceled();
     });
 
+    //TODO: Buttons in Southpanel
     this.saveButton.addActionListener(actionEvent -> this.saveButtonClick());
     this.centerPanel.add(this.cancelButton);
     this.centerPanel.add(this.saveButton);
@@ -102,7 +114,8 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
 
   private void saveButtonClick()
   {
-    boolean noProjectName = this.projectNameTextField.getText().trim().length() == 0;
+    String projectName = this.projectNameTextField.getText();
+    boolean noProjectName = projectName.trim().length() == 0;
     if (noProjectName)
     {
       JOptionPane.showMessageDialog(this, this.wordbook.getWordFor("missing project data"), this.wordbook.getWordForWithCapitalLeadingLetter("error"), 0);
@@ -120,7 +133,24 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
         return;
       }
     }
-
+    String projectDescription = this.projectDescriptionTextArea.getText();
+    String resourcesTextArea = this.furtherResourcesTextArea.getText();
+    List<URI> furtherResources = null;
+    boolean noFurtherResources = resourcesTextArea.trim().length() == 0;
+    if (!noFurtherResources)
+    {
+      String[] attachedResources = this.furtherResourcesTextArea.getText().split("\\r?\\n|\\r");
+      furtherResources = new ArrayList<URI>();
+      for(String resource : attachedResources)
+      {
+        resource = resource.trim();
+        if (resource.length() == 0)
+        {
+          furtherResources.add(URI.create(resource));
+        }
+      }
+    }
+    IProject project = new Project(projectName, projectDescription, startDate, endDate, furtherResources, revisionDate);
+    this.eventProcessor.newProjectToCreate(project);
   }
-
 }

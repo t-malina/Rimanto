@@ -3,6 +3,7 @@ package de.kalkihe.rimanto.presenter;
 import de.kalkihe.rimanto.model.data.IProject;
 import de.kalkihe.rimanto.model.data.IRisk;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface IRimantoPresenter {

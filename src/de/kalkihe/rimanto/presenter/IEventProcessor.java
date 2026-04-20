@@ -6,4 +6,5 @@ public interface IEventProcessor {
   void newProjectButtonClick();
   void newProjectCreationCanceled();
   void newProjectToCreate(IProject newProject);
+  void projectImportRequested();
 }

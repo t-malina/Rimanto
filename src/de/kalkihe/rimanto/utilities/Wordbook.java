@@ -45,6 +45,7 @@ public class Wordbook implements IWordbook{
     words.put("missing project data", "At least a project name is required!");
     words.put("error", "error");
     words.put("wrong revision date", "The revision date has to be between the start and the end date");
+    words.put("rimanto project", "rimanto project");
   }
 
   /*

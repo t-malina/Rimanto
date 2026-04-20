@@ -4,8 +4,8 @@ import de.kalkihe.rimanto.model.IRimantoModel;
 import de.kalkihe.rimanto.model.RimantoModel;
 import de.kalkihe.rimanto.model.data.IProject;
 import de.kalkihe.rimanto.model.data.Project;
-import de.kalkihe.rimanto.model.storage.DummyDataFileStorage;
 import de.kalkihe.rimanto.model.storage.IRimantoFileStorage;
+import de.kalkihe.rimanto.model.storage.RimantoFileStorage;
 import de.kalkihe.rimanto.presenter.EventProcessor;
 import de.kalkihe.rimanto.presenter.IEventProcessor;
 import de.kalkihe.rimanto.presenter.IRimantoPresenter;
@@ -18,7 +18,6 @@ import de.kalkihe.rimanto.view.panel.PanelGetter;
 
 import java.net.URI;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 // Singleton
@@ -49,9 +48,9 @@ public class RimantoIOCContainer {
     this.rimantoModel = new RimantoModel();
     this.rimantoView = new RimantoView();
     this.wordbook = new Wordbook();
-    this.eventProcessor = new EventProcessor(this.rimantoView);
+    this.eventProcessor = new EventProcessor(this.rimantoView, this.rimantoModel);
     this.panelGetter = new PanelGetter(this.wordbook, this.eventProcessor, this.rimantoView);
-    this.rimantoFileStorage = new DummyDataFileStorage();
+    this.rimantoFileStorage = new RimantoFileStorage();
   }
 
   /*
