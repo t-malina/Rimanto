@@ -19,13 +19,17 @@ public abstract class GeneralTableModel extends AbstractTableModel {
   // Reference to the ioc container
   RimantoIOCContainer rimantoIOCContainer;
 
+  /**
+   * Base constructor. Initalizes needed lists and references
+   * @throws Exception
+   */
   protected GeneralTableModel() throws Exception {
     this.columnNames = new ArrayList<String>();
     this.tableData = new ArrayList<List<String>>();
     this.resolveDependencies();
   }
 
-  /*
+  /**
    * Resolves all needed dependencies using the ioc container
    */
   private void resolveDependencies() throws Exception {
@@ -33,57 +37,81 @@ public abstract class GeneralTableModel extends AbstractTableModel {
     this.wordbook = (IWordbook) rimantoIOCContainer.getInstanceFor(IWordbook.class);
   }
 
-  /*
-   * Returns the number of rows
+  /**
+   *
+   * @return Nummer of rows
    */
   @Override
   public int getRowCount() {
     return this.tableData.size();
   }
 
-  /*
-   * Returns the number of columns
+  /**
+   *
+   * @return Number of columns
    */
   @Override
   public int getColumnCount() {
     return this.columnNames.size();
   }
 
-  /*
-   * Returns the Value at the given column and row
+
+  /**
+   *
+   * @param row
+   * @param column
+   * @return Value at given row and column
    */
   @Override
   public Object getValueAt(int row, int column) {
     return this.tableData.get(row).get(column);
   }
 
-  /*
-   * Returns the heading of a given column
+  /**
+   *
+   * @param column
+   * @return Heading of the passed column
    */
   @Override
   public String getColumnName(int column) {
     return this.columnNames.get(column);
   }
 
-  /*
+  /**
    * Makes all cells not editable
+   * @param rowIndex
+   * @param columnIndex
+   * @return True, if cell in given row and column is editable
    */
   @Override
   public boolean isCellEditable(int rowIndex, int columnIndex) {
     return false;
   }
 
-  /*
-   * Returns the number of the column where the project id is in
+  /**
+   *
+   * @return Returns the number of the column in which the referencing id for the displayed object is
    */
   public int getColumnWithId()
   {
     return 0;
   }
 
+  /**
+   * Returns the background color of the passed table in the passed row
+   * @param table
+   * @param row
+   * @return Color of the table in the row
+   */
   abstract public Color getRowColor(JTable table, int row);
 
 
+  /**
+   * Returns the id at the passed row
+   * @param table
+   * @param row
+   * @return Id in the passed table in the passed row1
+   */
   protected int getIdAtRow(JTable table, int row)
   {
     Object cellContent = table.getValueAt(row, this.getColumnWithId());
