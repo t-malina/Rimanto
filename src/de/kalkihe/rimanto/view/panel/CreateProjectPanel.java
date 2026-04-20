@@ -7,6 +7,7 @@ import de.kalkihe.rimanto.model.data.Project;
 import de.kalkihe.rimanto.presenter.IEventProcessor;
 import de.kalkihe.rimanto.utilities.IWordbook;
 import de.kalkihe.rimanto.view.IRimantoView;
+import de.kalkihe.rimanto.view.error.IErrorDialog;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +19,7 @@ import java.util.*;
 
 public class CreateProjectPanel extends GeneralRimantoPanel {
   private JPanel centerPanel;
+  private JPanel southPanel;
 
   private JLabel projectNameLabel;
   private JLabel projectDescriptionLabel;
@@ -43,16 +45,28 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
 
   private JButton saveButton;
   private JButton cancelButton;
+  private JButton deleteButton;
 
+  private IProject project;
+
+  public CreateProjectPanel(IWordbook wordbook, IEventProcessor eventProcessor, IRimantoView rimantoView, IProject project)
+  {
+    super(wordbook, eventProcessor, rimantoView);
+    this.project = project;
+    this.buildPanel();
+    this.initialize(project);
+  }
 
   public CreateProjectPanel(IWordbook wordbook, IEventProcessor eventProcessor, IRimantoView rimantoView) {
     super(wordbook, eventProcessor, rimantoView);
     this.buildPanel();
+    this.initialize();
   }
 
   protected void buildPanel()
   {
     this.centerPanel = new JPanel(new GridLayout(0, 2, 20, 20));
+    this.southPanel = new JPanel(new FlowLayout());
     this.projectNameLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("project name"));
     this.projectDescriptionLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("project description"));
     this.projectNameTextField = new JTextArea();
@@ -96,30 +110,71 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
     this.centerPanel.add(this.projectRevisionLabel);
     this.centerPanel.add(this.projectRevisionDatePicker);
 
+    this.add(this.centerPanel, BorderLayout.CENTER);
 
-    this.cancelButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("cancel"));
     this.saveButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("save"));
+    this.cancelButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("cancel"));
+    this.deleteButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("delete project"));
+  }
 
-    this.cancelButton.addActionListener(actionEvent ->
+  private void initialize(IProject project)  {
+    this.projectNameTextField.setText(project.getProjectName());
+    this.projectDescriptionTextArea.setText(project.getProjectDescription());
+    this.projectStartDatePicker.setDate(project.getDateOfProjectStart());
+    this.projectEndDatePicker.setDate(project.getDateOfProjectEnd());
+    for(URI uri : project.getLinkedResources())
     {
-      this.eventProcessor.newProjectCreationCanceled();
-    });
+      this.furtherResourcesTextArea.append(uri.toString() + "\n");
+    }
+    this.projectRevisionDatePicker.setDate(project.getDateOfNextProjectRevision());
 
-    //TODO: Buttons in Southpanel
+    this.cancelButton.addActionListener(actionEvent -> this.eventProcessor.backToOverview());
+    this.southPanel.add(this.cancelButton);
+    this.deleteButton.addActionListener(actionEvent -> this.eventProcessor.deleteProject(project));
+    this.southPanel.add(this.deleteButton);
+    this.saveButton.addActionListener(actionEvent -> this.saveButtonClick(project));
+    this.southPanel.add(this.saveButton);
+
+    this.add(this.southPanel, BorderLayout.SOUTH);
+  }
+
+  private void initialize()
+  {
+    this.cancelButton.addActionListener(actionEvent -> this.eventProcessor.backToOverview());
+    this.southPanel.add(this.cancelButton);
     this.saveButton.addActionListener(actionEvent -> this.saveButtonClick());
-    this.centerPanel.add(this.cancelButton);
-    this.centerPanel.add(this.saveButton);
-    this.add(this.centerPanel);
+    this.southPanel.add(this.saveButton);
+
+
+    this.add(this.southPanel, BorderLayout.SOUTH);
   }
 
   private void saveButtonClick()
   {
+    IProject project = this.generateProjectFromInput();
+    if (project != null)
+    {
+      this.eventProcessor.newProjectToCreate(project);
+    }
+  }
+
+
+  private void saveButtonClick(IProject project)
+  {
+    IProject editedProject = this.generateProjectFromInput();
+    if (editedProject != null)
+    {
+      this.eventProcessor.editProject(project, editedProject);
+    }
+  }
+
+  private IProject generateProjectFromInput(){
     String projectName = this.projectNameTextField.getText();
     boolean noProjectName = projectName.trim().length() == 0;
     if (noProjectName)
     {
       JOptionPane.showMessageDialog(this, this.wordbook.getWordFor("missing project data"), this.wordbook.getWordForWithCapitalLeadingLetter("error"), 0);
-      return;
+      return null;
     }
     LocalDate startDate = this.projectStartDatePicker.getDate();
     LocalDate endDate = this.projectEndDatePicker.getDate();
@@ -130,7 +185,7 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
       if (!inBetween)
       {
         JOptionPane.showMessageDialog(this, this.wordbook.getWordFor("wrong revision date"), this.wordbook.getWordForWithCapitalLeadingLetter("error"), 0);
-        return;
+        return null;
       }
     }
     String projectDescription = this.projectDescriptionTextArea.getText();
@@ -144,13 +199,13 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
       for(String resource : attachedResources)
       {
         resource = resource.trim();
-        if (resource.length() == 0)
+        if (resource.length() != 0)
         {
           furtherResources.add(URI.create(resource));
         }
       }
     }
     IProject project = new Project(projectName, projectDescription, startDate, endDate, furtherResources, revisionDate);
-    this.eventProcessor.newProjectToCreate(project);
+    return project;
   }
 }

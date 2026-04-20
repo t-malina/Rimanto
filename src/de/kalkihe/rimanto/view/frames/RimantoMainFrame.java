@@ -38,7 +38,7 @@ public class RimantoMainFrame extends JFrame {
     // Set initial size of the current window
     // this.setSize(800, 700);
     // Set minimum size of the window
-    this.setMinimumSize(new Dimension(700, 500));
+    this.setMinimumSize(new Dimension(1000, 800));
     // Set default close operation
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     // Initialize menu bar

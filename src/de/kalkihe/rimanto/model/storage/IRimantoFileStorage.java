@@ -18,6 +18,10 @@ public interface IRimantoFileStorage {
 
   String getProjectFileFormat();
 
-  void importProject(File importFile) throws IOException;
+  void importProject(File importFile) throws IOException, ClassNotFoundException;
+
+  void deleteProject(IProject project);
+
+  void exportProject(IProject project, File exportFile) throws IOException;
 
 }

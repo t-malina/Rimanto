@@ -16,6 +16,9 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.URI;
+import java.time.LocalDate;
 
 public class ProjectViewPanel extends GeneralRimantoPanel {
   private IProject project;
@@ -27,28 +30,6 @@ public class ProjectViewPanel extends GeneralRimantoPanel {
   private JTable riskTable;
   private JScrollPane riskTableScrollPane;
 
-  private JLabel projectNameLabel;
-  private JLabel projectDescriptionLabel;
-  private JLabel projectStartDateLabel;
-  private JLabel projectEndDateLabel;
-  private JLabel nextRevisionLabel;
-
-  private JScrollPane projectNameScrollPane;
-  private JScrollPane projectDescriptionScrollPane;
-  private JScrollPane furtherResourcesScrollPane;
-
-  private JTextArea projectNameTextField;
-  private JTextArea projectDescriptionTextArea;
-
-  private DatePicker projectStartDatePicker;
-  private DatePicker projectEndDatePicker;
-
-  private JLabel furtherResourcesLabel;
-  private JTextArea furtherResourcesTextArea;
-
-  private JLabel projectRevisionLabel;
-  private DatePicker projectRevisionDatePicker;
-
   public ProjectViewPanel(IWordbook wordbook, IEventProcessor eventProcessor, IRimantoView rimantoView, IProject project) throws Exception {
     super(wordbook, eventProcessor, rimantoView);
     this.project = project;
@@ -58,16 +39,31 @@ public class ProjectViewPanel extends GeneralRimantoPanel {
   @Override
   protected void buildPanel() throws Exception {
     // Create Panels
-    this.northPanel = new JPanel(new GridLayout(0, 2, 5, 5));
+    this.northPanel = new JPanel(new GridLayout(0, 2, 0, 0));
     this.centerPanel = new JPanel(new BorderLayout());
     this.southPanel = new JPanel(new FlowLayout());
 
     this.buildProjectPanel();
-    this.switchEditiingOfProjectData(false);
 
     this.buildRiskPanel();
 
     // Buttons
+    JButton backButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("back"));
+    backButton.addActionListener(actionEvent -> this.eventProcessor.backToOverview());
+    JButton editProjectButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("edit project"));
+    editProjectButton.addActionListener(actionEvent -> this.eventProcessor.projectEditingRequested(this.project));
+    JButton exportProjectButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("export project"));
+    exportProjectButton.addActionListener(actionEvent -> this.eventProcessor.exportProject(this.project));
+    JButton importRiskButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("import risk"));
+    importRiskButton.addActionListener(actionEvent -> this.eventProcessor.riskImportRequested(this.project));
+    JButton newRiskButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("new risk"));
+    newRiskButton.addActionListener(actionEvent -> this.eventProcessor.newRiskButtonClick(this.project));
+
+    this.southPanel.add(backButton);
+    this.southPanel.add(editProjectButton);
+    this.southPanel.add(exportProjectButton);
+    this.southPanel.add(importRiskButton);
+    this.southPanel.add(newRiskButton);
 
     // Add panels to main Panels
     this.add(this.northPanel, BorderLayout.NORTH);
@@ -77,61 +73,66 @@ public class ProjectViewPanel extends GeneralRimantoPanel {
 
   private void buildProjectPanel()
   {
-    this.projectNameLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("project name"));
-    this.projectDescriptionLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("project description"));
-    this.projectNameTextField = new JTextArea(this.project.getProjectName());
-    this.projectNameScrollPane = new JScrollPane(this.projectNameTextField);
-    this.projectDescriptionTextArea = new JTextArea(this.project.getProjectDescription());
-    this.projectDescriptionScrollPane = new JScrollPane(this.projectDescriptionTextArea);
-    this.northPanel.add(this.projectNameLabel);
-    this.northPanel.add(this.projectNameScrollPane);
-    this.northPanel.add(this.projectDescriptionLabel);
-    this.northPanel.add(this.projectDescriptionScrollPane);
+    JLabel nameLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("project name"));
+    JLabel projectNameLabel = new JLabel(this.project.getProjectName());
+    JScrollPane projectNameScrollPane = new JScrollPane(projectNameLabel);
+    JLabel descriptionLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("project description"));
+    JLabel projectDescriptionLabel = new JLabel(this.project.getProjectDescription());
+    JScrollPane projectDescriptionScrollPane = new JScrollPane(projectDescriptionLabel);
+    projectDescriptionScrollPane.setPreferredSize(new Dimension(0, 35));
 
-    this.projectStartDateLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("date of project start"));
-    this.projectEndDateLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("date of project end"));
+    this.northPanel.add(nameLabel);
+    this.northPanel.add(projectNameScrollPane);
+    this.northPanel.add(descriptionLabel);
+    this.northPanel.add(projectDescriptionScrollPane);
 
-    DatePickerSettings datePickerSettings = new DatePickerSettings();
-    datePickerSettings.setAllowKeyboardEditing(false);
-    datePickerSettings.setAllowEmptyDates(false);
-    this.projectStartDatePicker = new DatePicker(datePickerSettings);
-    this.projectStartDatePicker.setDate(this.project.getDateOfProjectStart());
-    this.projectEndDatePicker = new DatePicker(datePickerSettings.copySettings());
-    this.projectEndDatePicker.setDate(this.project.getDateOfProjectEnd());
+    JLabel startDateLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("date of project start"));
+    JLabel projectStartDateLabel = new JLabel(this.project.getDateOfProjectStart().toString());
+    JLabel endDateLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("date of project end"));
+    JLabel projectEndDateLabel = new JLabel(this.project.getDateOfProjectEnd().toString());
 
-    this.northPanel.add(this.projectStartDateLabel);
-    this.northPanel.add(this.projectStartDatePicker);
-    this.northPanel.add(this.projectEndDateLabel);
-    this.northPanel.add(this.projectEndDatePicker);
+    this.northPanel.add(startDateLabel);
+    this.northPanel.add(projectStartDateLabel);
+    this.northPanel.add(endDateLabel);
+    this.northPanel.add(projectEndDateLabel);
 
+    JLabel furtherResourcesLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("further resources"));
+    JPanel resourcesPanel = new JPanel(new GridLayout(0, 1));
+    for(URI uri : this.project.getLinkedResources())
+    {
+      JButton button = new JButton(uri.toString());
+      button.addActionListener(actionEvent ->
+      {
+        //TODO: Auch für Dateien auf System oder Netzwerk möglich machen
+        Desktop desktop = java.awt.Desktop.getDesktop();
+        try {
+          desktop.browse(uri);
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      });
+      resourcesPanel.add(button);
+    }
 
-    this.furtherResourcesLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("further resources"));
-    // TODO: Darstellung Liste
-    this.furtherResourcesTextArea = new JTextArea();
-    this.furtherResourcesScrollPane = new JScrollPane(this.furtherResourcesTextArea);
+    this.northPanel.add(furtherResourcesLabel);
+    this.northPanel.add(resourcesPanel);
 
-    this.northPanel.add(this.furtherResourcesLabel);
-    this.northPanel.add(this.furtherResourcesScrollPane);
+    JLabel revisionLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("next date of revision"));
+    LocalDate date = this.project.getDateOfNextProjectRevision();
+    JLabel projectRevisionLabel;
+    if (date == null)
+    {
+      projectRevisionLabel = new JLabel("None");
+    }
+    else
+    {
+      projectRevisionLabel = new JLabel(this.project.getDateOfNextProjectRevision().toString());
+    }
 
-    DatePickerSettings revisionDatePickerSettings = new DatePickerSettings();
-    revisionDatePickerSettings.setAllowKeyboardEditing(false);
-    this.projectRevisionLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("next date of revision"));
-    this.projectRevisionDatePicker = new DatePicker(revisionDatePickerSettings);
-    this.projectRevisionDatePicker.setDate(this.project.getDateOfNextProjectRevision());
-
-    this.northPanel.add(this.projectRevisionLabel);
-    this.northPanel.add(this.projectRevisionDatePicker);
+    this.northPanel.add(revisionLabel);
+    this.northPanel.add(projectRevisionLabel);
   }
 
-  private void switchEditiingOfProjectData(boolean isEditable)
-  {
-    this.projectDescriptionTextArea.setEnabled(isEditable);
-    this.projectNameTextField.setEnabled(isEditable);
-    this.projectStartDatePicker.setEnabled(isEditable);
-    this.projectEndDatePicker.setEnabled(isEditable);
-    this.furtherResourcesTextArea.setEnabled(isEditable);
-    this.projectRevisionDatePicker.setEnabled(isEditable);
-  }
 
   private void buildRiskPanel() throws Exception {
     // Create new Table

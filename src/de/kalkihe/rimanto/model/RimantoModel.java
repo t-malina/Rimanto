@@ -60,7 +60,27 @@ public class RimantoModel implements de.kalkihe.rimanto.model.IRimantoModel {
   }
 
   @Override
-  public void importProject(File importFile) throws IOException {
+  public void importProject(File importFile) throws IOException, ClassNotFoundException {
     this.rimantoFileStorage.importProject(importFile);
+  }
+
+  @Override
+  public void addRiskToProject(IProject project, IRisk risk, List<IProject> furtherProjects) {
+  }
+
+  @Override
+  public void editProject(IProject oldProject, IProject newProject) throws IOException {
+    oldProject.editProjectData(newProject);
+    this.rimantoFileStorage.saveNewProject(oldProject);
+  }
+
+  @Override
+  public void deleteProject(IProject project) {
+    this.rimantoFileStorage.deleteProject(project);
+  }
+
+  @Override
+  public void exportProject(IProject project, File exportFile) throws IOException {
+    this.rimantoFileStorage.exportProject(project, exportFile);
   }
 }
