@@ -20,23 +20,29 @@ import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 
-// Singleton
+/**
+ * Class with singleton instance for creation of obejcts
+ */
 public class RimantoIOCContainer {
+  /**
+   * Reference to the lone single instance of this class
+   */
   private static RimantoIOCContainer iocContainer = new RimantoIOCContainer();
 
-  /*
-   * Singletons
+  /***
+   * Reference that are singletons themselves
    */
-  IRimantoModel rimantoModel;
-  IRimantoView rimantoView;
-  IRimantoPresenter rimantoPresenter;
-  IWordbook wordbook;
-  IEventProcessor eventProcessor;
-  IPanelGetter panelGetter;
-  IRimantoFileStorage rimantoFileStorage;
+  private IRimantoModel rimantoModel;
+  private IRimantoView rimantoView;
+  private IRimantoPresenter rimantoPresenter;
+  private IWordbook wordbook;
+  private IEventProcessor eventProcessor;
+  private IPanelGetter panelGetter;
+  private IRimantoFileStorage rimantoFileStorage;
 
-  /*
-   * Method to get a reference to the instance of this class
+  /**
+   * Static method to get a reference to the instance of this class
+   * @return
    */
   public static RimantoIOCContainer getInstance()
   {
@@ -46,6 +52,13 @@ public class RimantoIOCContainer {
   /*
    * Returns a instance of the passed class.
    * Uses created singleton if applicable
+   */
+
+  /**
+   * Returns an instance of the passed class, Uses created singleton objects if applicable
+   * @param wantedClass THe interface an object is needed for
+   * @return An object of an implementation of the passed interface
+   * @throws Exception
    */
   public Object getInstanceFor(Class wantedClass) throws Exception {
     if (wantedClass == IRimantoModel.class) {
@@ -100,18 +113,20 @@ public class RimantoIOCContainer {
     }
   }
 
+  /**
+   * Used to set the wordbook to new created instance
+   */
   public void setWordbook()
   {
     this.wordbook = new MultiLanguagueWordbook();
   }
 
+  /**
+   * Used to set the wordbook to an already known instance
+   * @param wordbook the reference to the known wordbook
+   */
   public void setWordbook(IWordbook wordbook)
   {
     this.wordbook = wordbook;
-  }
-
-  public static IProject CreateProject(String projectName, String projectDescription, LocalDate startDate, LocalDate endDate, List<URI> furtherResources, LocalDate revisionDate)
-  {
-    return new Project(projectName, projectDescription, startDate, endDate, furtherResources, revisionDate);
   }
 }
