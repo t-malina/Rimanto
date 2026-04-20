@@ -1,11 +1,10 @@
 package de.kalkihe.rimanto.view.frames;
 
-import de.kalkihe.rimanto.view.wordbook.IWordbook;
+import de.kalkihe.rimanto.utilities.IWordbook;
 
 import javax.swing.*;
-import java.awt.*;
 
-public class RimantoMainFrame extends JFrame {
+public class RimantoMainFrameOLD extends JFrame {
   /*
    * Other needed classes
    */
@@ -22,7 +21,7 @@ public class RimantoMainFrame extends JFrame {
   private JScrollPane jScrollPane;
   private JMenuBar menuBar;
 
-  public RimantoMainFrame(IWordbook wordbook) {
+  public RimantoMainFrameOLD(IWordbook wordbook) {
     this.wordbook = wordbook;
     init();
   }

@@ -1,4 +1,6 @@
 package de.kalkihe.rimanto.view.panel;
 
-public class ProjectViewPanel {
+import javax.swing.*;
+
+public class ProjectViewPanel extends JPanel {
 }
