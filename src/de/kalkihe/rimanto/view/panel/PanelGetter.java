@@ -1,5 +1,7 @@
 package de.kalkihe.rimanto.view.panel;
 
+import de.kalkihe.rimanto.model.data.IProject;
+import de.kalkihe.rimanto.model.data.IRisk;
 import de.kalkihe.rimanto.presenter.IEventProcessor;
 import de.kalkihe.rimanto.utilities.IWordbook;
 import de.kalkihe.rimanto.view.IRimantoView;
@@ -27,13 +29,13 @@ public class PanelGetter implements IPanelGetter{
   }
 
   @Override
-  public JPanel getPanelForProjectView() throws Exception {
-    return new ProjectViewPanel(this.wordbook, this.eventProcessor, this.rimantoView);
+  public JPanel getPanelForProjectView(IProject project) throws Exception {
+    return new ProjectViewPanel(this.wordbook, this.eventProcessor, this.rimantoView, project);
   }
 
   @Override
-  public JPanel getPanelForRiskView() throws Exception {
-    return new RiskViewPanel(this.wordbook, this.eventProcessor, this.rimantoView);
+  public JPanel getPanelForRiskView(IRisk risk) throws Exception {
+    return new RiskViewPanel(this.wordbook, this.eventProcessor, this.rimantoView, risk);
   }
 
   @Override

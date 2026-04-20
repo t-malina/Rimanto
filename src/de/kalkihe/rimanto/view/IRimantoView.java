@@ -41,5 +41,9 @@ public interface IRimantoView {
   void projectCreated() throws Exception;
 
   File showImportFileDialog(String allowedFileFormat);
+
+  void showProject(IProject project) throws Exception;
+
+  void showRisk(IRisk risk) throws Exception;
 }
 
