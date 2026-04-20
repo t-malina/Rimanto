@@ -83,6 +83,7 @@ public class RimantoView implements IRimantoView{
 
   @Override
   public void startCreationOfProject() {
+    this.rimantoMainFrame.setJPanel(this.panelGetter.getPanelForProjectInput());
 
   }
 

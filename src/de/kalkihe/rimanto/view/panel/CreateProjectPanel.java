@@ -3,6 +3,7 @@ package de.kalkihe.rimanto.view.panel;
 import de.kalkihe.rimanto.presenter.IEventProcessor;
 import de.kalkihe.rimanto.utilities.IWordbook;
 import de.kalkihe.rimanto.view.IRimantoView;
+import org.jdatepicker.JDatePicker;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +19,8 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
 
   private JTextField projectNameTextField;
   private JTextArea projectDescriptionTextArea;
+  private JDatePicker projectStartDatePicker;
+  private JDatePicker projectEndDatePicker;
 
   public CreateProjectPanel(IWordbook wordbook, IEventProcessor eventProcessor, IRimantoView rimantoView) {
     super(wordbook, eventProcessor, rimantoView);
@@ -26,7 +29,7 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
 
   protected void buildPanel()
   {
-    this.centerPanel = new JPanel(new GridLayout(5, 2));
+    this.centerPanel = new JPanel(new GridLayout(0, 2));
     this.projectNameLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("project name"));
     this.projectDescriptionLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("project description"));
     this.projectNameTextField = new JTextField();
@@ -36,6 +39,8 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
     this.centerPanel.add(this.projectDescriptionLabel);
     this.centerPanel.add(this.projectDescriptionTextArea);
     this.add(this.centerPanel);
+
+
 
   }
 }

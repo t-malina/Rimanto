@@ -42,7 +42,7 @@ public class RimantoIOCContainer {
     this.rimantoModel = new RimantoModel();
     this.rimantoView = new RimantoView();
     this.wordbook = new Wordbook();
-    this.eventProcessor = new EventProcessor();
+    this.eventProcessor = new EventProcessor(this.rimantoView);
     this.panelGetter = new PanelGetter(this.wordbook, this.eventProcessor, this.rimantoView);
     this.rimantoFileStorage = new DummyDataFileStorage();
   }
