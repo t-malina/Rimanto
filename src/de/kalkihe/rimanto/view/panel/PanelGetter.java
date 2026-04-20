@@ -29,18 +29,18 @@ public class PanelGetter implements IPanelGetter{
   }
 
   @Override
-  public JPanel getPanelForProjectView() {
-    return new ProjectViewPanel();
+  public JPanel getPanelForProjectView() throws Exception {
+    return new ProjectViewPanel(this.wordbook, this.eventProcessor, this.rimantoView);
   }
 
   @Override
-  public JPanel getPanelForRiskView() {
-    return new RiskViewPanel();
+  public JPanel getPanelForRiskView() throws Exception {
+    return new RiskViewPanel(this.wordbook, this.eventProcessor, this.rimantoView);
   }
 
   @Override
   public JPanel getPanelForProjectInput() {
-    return null;
+    return new CreateProjectPanel(this.wordbook, this.eventProcessor, this.rimantoView);
   }
 
   @Override
