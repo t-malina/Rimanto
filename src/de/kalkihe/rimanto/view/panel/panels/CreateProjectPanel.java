@@ -16,6 +16,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.*;
 
+/**
+ * Panel to create projects
+ */
 public class CreateProjectPanel extends GeneralRimantoPanel {
   private JPanel centerPanel;
   private JPanel southPanel;
@@ -49,6 +52,13 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
 
   private IProject project;
 
+  /**
+   * Constructor for panel with existing project
+   * @param wordbook Wordbook for labels etc
+   * @param eventProcessor Eventhandler to pass events to
+   * @param rimantoView reference to view
+   * @param project Project to display on ui elements
+   */
   public CreateProjectPanel(IWordbook wordbook, IEventProcessor eventProcessor, IRimantoView rimantoView, IProject project)
   {
     super(wordbook, eventProcessor, rimantoView);
@@ -57,12 +67,21 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
     this.initialize(project);
   }
 
+  /**
+   * Constructor for panel with new project
+   * @param wordbook Wordbook for labels etc
+   * @param eventProcessor Eventhandler to pass events to
+   * @param rimantoView reference to view
+   */
   public CreateProjectPanel(IWordbook wordbook, IEventProcessor eventProcessor, IRimantoView rimantoView) {
     super(wordbook, eventProcessor, rimantoView);
     this.buildPanel();
     this.initialize();
   }
 
+  /**
+   * Builds the panel
+   */
   protected void buildPanel()
   {
     this.centerPanel = new JPanel(new GridLayout(0, 2, 20, 20));
@@ -129,10 +148,12 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
     this.projectEndDatePicker.addKeyListener(new TabKeyAdapter(this.furtherResourcesTextArea));
     this.furtherResourcesTextArea.addKeyListener(new TabKeyAdapter(this.projectRevisionDatePicker));
     this.projectRevisionDatePicker.addKeyListener(new TabKeyAdapter(this.projectNameTextArea));
-
   }
 
-
+  /**
+   * Initializes ui elements with data of passed project and for offering edition of project
+   * @param project The project with data to initialize ui elements
+   */
   private void initialize(IProject project)  {
     this.projectNameTextArea.setText(project.getProjectName());
     this.projectDescriptionTextArea.setText(project.getProjectDescription());
@@ -152,10 +173,11 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
     this.southPanel.add(this.saveButton);
 
     this.add(this.southPanel, BorderLayout.SOUTH);
-
-
   }
 
+  /**
+   * Initialize ui elements for creation of new project
+   */
   private void initialize()
   {
     this.cancelButton.addActionListener(actionEvent -> this.eventProcessor.backToOverview());
@@ -166,6 +188,9 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
     this.add(this.southPanel, BorderLayout.SOUTH);
   }
 
+  /**
+   * Called when save button was clicked for new creation of project
+   */
   private void saveButtonClick()
   {
     IProject project = this.generateProjectFromInput();
@@ -176,6 +201,10 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
   }
 
 
+  /**
+   * Called when save button was clicked for edition of existing project
+   * @param project The project to edit
+   */
   private void saveButtonClick(IProject project)
   {
     IProject editedProject = this.generateProjectFromInput();
@@ -185,6 +214,10 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
     }
   }
 
+  /**
+   * Checks the data in the input and creates a project
+   * @return A project, when data is valid. Null, when data is not valid or data is missing
+   */
   private IProject generateProjectFromInput(){
     String projectName = this.projectNameTextArea.getText();
     boolean noProjectName = projectName.trim().length() == 0;
@@ -227,6 +260,9 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
     return project;
   }
 
+  /**
+   * Allows user to add files to the project. Shows file chooser and adds the URI to this file to the corresponding text area
+   */
   void addFileToProject()
   {
     JFileChooser fileChooser = new JFileChooser();

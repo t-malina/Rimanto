@@ -14,8 +14,11 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * Panel for the start screen
+ */
 public class OverviewPanel extends GeneralRimantoPanel {
-  /*
+  /**
    * UI-elements
    */
   private JPanel northPanel;
@@ -26,16 +29,23 @@ public class OverviewPanel extends GeneralRimantoPanel {
   private JTable projectTable;
   private JScrollPane projectTableScrollPane;
 
-  /*
-   * Constructors
+  /**
+   * Constructor
    * Initializes needed references
    * Initiates building of the panel
+   * @param wordbook Wordbook for labels etc
+   * @param eventProcessor Eventhandler to pass events to
+   * @param rimantoView reference to view
    */
   public OverviewPanel(IWordbook wordbook, IEventProcessor eventProcessor, IRimantoView rimantoView) throws Exception {
     super(wordbook, eventProcessor, rimantoView);
     this.buildPanel();
   }
 
+  /**
+   * Builds the elements of the panel
+   * @throws Exception
+   */
   protected void buildPanel() throws Exception {
     // Create Panels
     this.northPanel = new JPanel(new BorderLayout());
