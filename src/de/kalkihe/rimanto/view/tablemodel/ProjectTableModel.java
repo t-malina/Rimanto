@@ -53,7 +53,7 @@ public class ProjectTableModel extends GeneralTableModel {
     else
     {
       // Display a message that there are no projects in the table header
-      this.columnNames.add(this.wordbook.getWordFor("no projects"));
+      this.columnNames.add(this.wordbook.getWordForWithCapitalLeadingLetter("no_projects"));
     }
   }
 
