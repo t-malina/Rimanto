@@ -122,7 +122,8 @@ public class RiskViewPanel extends GeneralRimantoPanel {
     this.furtherProjectListModel = new DefaultListModel<>();
     this.initializeWithAllProjectsExceptOwn(this.furtherProjectListModel);
     this.furtherProjectsList = new JList(this.furtherProjectListModel);
-    this.centerPanel.add(this.furtherProjectsList);
+    JScrollPane furtherProjectScrollPane = new JScrollPane(this.furtherProjectsList);
+    this.centerPanel.add(furtherProjectScrollPane);
 
     JLabel categoryOfImpactOnOtherProjectLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("category"));
     this.centerPanel.add(categoryOfImpactOnOtherProjectLabel);
@@ -212,6 +213,21 @@ public class RiskViewPanel extends GeneralRimantoPanel {
     this.riskRevisionDatePicker.setEnabled(isEditable);
     this.furtherProjectsList.setEnabled(isEditable);
     this.categeoryOfImpactOnOtherProjectsTextField.setEditable(isEditable);
+    Color newBackgroundColor;
+    if (isEditable)
+    {
+      newBackgroundColor = Color.WHITE;
+    }
+    else
+    {
+      newBackgroundColor = this.getBackground();
+    }
+    this.riskNameTextArea.setBackground(newBackgroundColor);
+    this.riskDescriptionTextArea.setBackground(newBackgroundColor);
+    this.riskMitigationTextArea.setBackground(newBackgroundColor);
+    this.riskObservatorTextField.setBackground(newBackgroundColor);
+    this.furtherProjectsList.setBackground(newBackgroundColor);
+    this.categeoryOfImpactOnOtherProjectsTextField.setBackground(newBackgroundColor);
   }
 
   private void removeActionListenersFromButton(JButton button)

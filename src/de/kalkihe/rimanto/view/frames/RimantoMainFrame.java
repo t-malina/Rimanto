@@ -53,7 +53,7 @@ public class RimantoMainFrame extends JFrame {
   /*
    * Creates all needed items for the menu bar of the main window
    */
-  private void initializeMenuBar() {
+  public void initializeMenuBar() {
     mainMenuBar = new JMenuBar();
     JMenu fileMenu = new JMenu(wordbook.getWordForWithCapitalLeadingLetter("file"));
     JMenuItem exitMenu = new JMenuItem(wordbook.getWordForWithCapitalLeadingLetter("exit"));
