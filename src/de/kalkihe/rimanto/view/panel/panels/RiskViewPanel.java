@@ -166,7 +166,7 @@ public class RiskViewPanel extends GeneralRimantoPanel {
     this.riskPriorityComboBox.setSelectedItem(new Integer(risk.getRiskPriority()));
     this.riskMitigationTextArea.setText(risk.getRiskMitigation());
     this.riskObservatorTextField.setText(risk.getPersonInCharge());
-    this.riskRevisionDatePicker.setDate(risk.getDateOfNextRiskRevision());
+    this.riskRevisionDatePicker.setDate(risk.getDateOfNextRiskReview());
     this.furtherProjectListModel.removeAllElements();
     this.furtherProjectListModel.addAll(risk.getImpactOfRiskOnOtherProjects());
     this.categeoryOfImpactOnOtherProjectsTextField.setText(risk.getCategoryOfImpactOnOtherProjects());

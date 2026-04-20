@@ -55,7 +55,7 @@ public class MultiLanguagueWordbook implements IWordbook, Serializable {
       + this.getWordForWithCapitalLeadingLetter("risk_mitigation") + this.colon + risk.getRiskMitigation() + "\n"
       + this.getWordForWithCapitalLeadingLetter("person_in_charge") + this.colon + risk.getPersonInCharge() + "\n"
       + this.getWordForWithCapitalLeadingLetter("next_date_of_revision") + this.colon;
-    LocalDate date = risk.getDateOfNextRiskRevision();
+    LocalDate date = risk.getDateOfNextRiskReview();
     if (date != null) {
       result += date.toString();
     }
