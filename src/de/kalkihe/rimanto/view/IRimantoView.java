@@ -12,7 +12,7 @@ public interface IRimantoView {
    * Method to show an error dialog
    * Parameter to declare, if the application is to stop after error is shown and closed
    */
-  void showErrorDialog(Exception exception, boolean shutdownApplication);
+  void showErrorDialog(String errorMessage, Exception exception, boolean shutdownApplication);
 
   /*
    * Sets reference to IRimantoPresenter in implementations

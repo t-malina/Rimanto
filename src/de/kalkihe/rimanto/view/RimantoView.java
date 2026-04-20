@@ -4,9 +4,9 @@ import de.kalkihe.rimanto.model.data.IProject;
 import de.kalkihe.rimanto.model.data.IRisk;
 import de.kalkihe.rimanto.presenter.IRimantoPresenter;
 import de.kalkihe.rimanto.utilities.RimantoIOCContainer;
-import de.kalkihe.rimanto.view.error.IErrorDialog;
 import de.kalkihe.rimanto.view.filefilters.RimantoFileFIlter;
 import de.kalkihe.rimanto.view.frames.RimantoMainFrame;
+import de.kalkihe.rimanto.view.frames.ShowErrorFrame;
 import de.kalkihe.rimanto.view.panel.IPanelGetter;
 import de.kalkihe.rimanto.utilities.IWordbook;
 
@@ -36,10 +36,12 @@ public class RimantoView implements IRimantoView{
    * Initializes the displaying of an error message
    */
   @Override
-  public void showErrorDialog(Exception exception, boolean shutdownApplication) {
+  public void showErrorDialog(String errorMessage, Exception exception, boolean shutdownApplication) {
     try {
-      IErrorDialog errorDialog = (IErrorDialog) RimantoIOCContainer.getInstance().getInstanceFor(IErrorDialog.class);
-      errorDialog.showErrorDialog(exception, shutdownApplication);
+      ShowErrorFrame errorFrame = new ShowErrorFrame(this.wordbook, errorMessage, exception, shutdownApplication);
+      errorFrame.setModal(true);
+      errorFrame.setLocationRelativeTo(this.rimantoMainFrame);
+      errorFrame.setVisible(true);
     } catch (Exception e) {
       e.printStackTrace();
     }
