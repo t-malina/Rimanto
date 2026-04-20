@@ -7,7 +7,13 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+/*
+ * Implementation of IRimantoFileStorage interface to provide dummy data for testing the application
+ */
 public class DummyDataFileStorage implements IRimantoFileStorage {
+  /*
+   * Returns list with some dummy projects
+   */
   @Override
   public List<IProject> readProjects() {
     List<IProject> resultList = new ArrayList<IProject>();

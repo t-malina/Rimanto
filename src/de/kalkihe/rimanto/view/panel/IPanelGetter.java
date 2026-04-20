@@ -3,7 +3,10 @@ package de.kalkihe.rimanto.view.panel;
 import javax.swing.*;
 
 public interface IPanelGetter {
-  JPanel getPanelForOverview();
+  /*
+   * Gets the Panel for the start view of the application
+   */
+  JPanel getPanelForOverview() throws Exception;
   JPanel getPanelForProjectView();
   JPanel getPanelForRiskView();
   JPanel getPanelForProjectInput();

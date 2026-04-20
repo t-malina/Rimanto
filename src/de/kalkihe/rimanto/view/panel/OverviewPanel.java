@@ -1,5 +1,6 @@
 package de.kalkihe.rimanto.view.panel;
 
+import de.kalkihe.rimanto.model.data.IProject;
 import de.kalkihe.rimanto.presenter.IEventProcessor;
 import de.kalkihe.rimanto.utilities.IWordbook;
 import de.kalkihe.rimanto.view.IRimantoView;
@@ -11,17 +12,28 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class OverviewPanel extends JPanel {
+  /*
+   * Needed references
+   */
   private IWordbook wordbook;
   private IEventProcessor eventProcessor;
   private IRimantoView rimantoView;
 
+  /*
+   * UI-elements
+   */
   private JPanel northPanel;
   private JPanel centerPanel;
   private JPanel southPanel;
   private JTable projectTable;
   private JScrollPane projectTableScrollPane;
 
-  public OverviewPanel(IWordbook wordbook, IEventProcessor eventProcessor, IRimantoView rimantoView) {
+  /*
+   * Constructors
+   * Initializes needed references
+   * Initiates building of the panel
+   */
+  public OverviewPanel(IWordbook wordbook, IEventProcessor eventProcessor, IRimantoView rimantoView) throws Exception {
     super(new BorderLayout());
     this.eventProcessor = eventProcessor;
     this.rimantoView = rimantoView;
@@ -29,36 +41,53 @@ public class OverviewPanel extends JPanel {
     this.buildPanel();
   }
 
-  private void buildPanel()
-  {
+  private void buildPanel() throws Exception {
+    // Create Panels
     this.northPanel = new JPanel(new BorderLayout());
     this.centerPanel = new JPanel(new BorderLayout());
     this.southPanel = new JPanel(new FlowLayout());
 
-    String data[][]= this.rimantoView.requestDataForProjectOverview();
-    String column[]= this.rimantoView.requestColumnNamesForProjectOverview();
-
-    this.projectTable = new JTable(data, column);
-    this.projectTable.setModel(new RimantoTableModel(data, column));
+    // Create new Table
+    this.projectTable = new JTable();
+    // Add Sorter to table
+    this.projectTable.setAutoCreateRowSorter(true);
+    // Set Table Model for Table
+    this.projectTable.setModel(new ProjectTableModel(this.rimantoView.requestProjects()));
+    // Put Table into Scroll pane
     this.projectTableScrollPane = new JScrollPane(this.projectTable);
+    // Adjust scroll pane
     this.projectTableScrollPane.setPreferredSize(new Dimension(400,300));
     this.projectTableScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     this.projectTableScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+    // Add click listener for selecting project
     this.projectTable.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
         super.mouseClicked(e);
+        // Has to a double click
         if (e.getClickCount() == 2) {
+          // Get clicked table
           JTable target = (JTable) e.getSource();
-          int row = target.getSelectedRow();
-          int column = target.getSelectedColumn();
-          // do some action if appropriate column
+          // Get model of table
+          ProjectTableModel model = (ProjectTableModel) target.getModel();
+          // Read selected Row
+          int selectedRow = target.getSelectedRow();
+          // Read the cell with the id of the selected project
+          Object cellContent = target.getValueAt(selectedRow, model.getColumnWithId());
+          // Convert content of the cell to integer
+          String cellText = cellContent.toString();
+          Integer projectId = Integer.valueOf(cellText);
+          // Get selected project
+          IProject project = model.getProjectWithId(projectId);
+          //TODO;Replace with call to view for selected project
           JDialog dialog = new JDialog();
-          dialog.setTitle("row: " + row + ", column: " + column);
+          dialog.setSize(400, 200);
+          dialog.setTitle(project.getProjectName());
           dialog.setVisible(true);
         }
       }
     });
+    // Add Scroll pane to center panel
     this.centerPanel.add(this.projectTableScrollPane);
 
     //TODO: Buttons

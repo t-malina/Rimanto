@@ -1,14 +1,14 @@
 package de.kalkihe.rimanto.presenter;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 import de.kalkihe.rimanto.model.IRimantoModel;
+import de.kalkihe.rimanto.model.data.IProject;
+import de.kalkihe.rimanto.model.data.IRisk;
 import de.kalkihe.rimanto.utilities.RimantoIOCContainer;
 import de.kalkihe.rimanto.view.IRimantoView;
-import de.kalkihe.rimanto.utilities.RimantoModule;
+
+import java.util.List;
 
 public class RimantoPresenter implements IRimantoPresenter{
-  private Injector injector;
   private IRimantoView rimantoView;
   private IRimantoModel rimantoModel;
   private RimantoIOCContainer rimantoIOCContainer;
@@ -17,6 +17,9 @@ public class RimantoPresenter implements IRimantoPresenter{
     super();
   }
 
+  /*
+   * Gets all needed dependencies from ioc-container
+   */
   private void resolveDependencies() throws Exception {
     this.rimantoIOCContainer = RimantoIOCContainer.getInstance();
 
@@ -26,13 +29,15 @@ public class RimantoPresenter implements IRimantoPresenter{
 
     this.rimantoModel = (IRimantoModel) this.rimantoIOCContainer.getInstanceFor(IRimantoModel.class);
   }
+
+  /*
+   * Initializes the application for the user to work with
+   */
   private void initializeApplication()
   {
     try{
       // Resolve all needed dependencies
       this.resolveDependencies();
-      // Initialize model
-      this.rimantoModel.initializeModel(this.injector);
       // Initialize main application window and show it
       rimantoView.initializeApplicationWindow();
     }
@@ -57,23 +62,19 @@ public class RimantoPresenter implements IRimantoPresenter{
     }
   }
 
+  /*
+   * Method to request list of all projects at model
+   */
   @Override
-  public String[] fetchColumnNamesForProjects() {
-    return this.rimantoModel.getColumnNamesForProjects();
+  public List<IProject> fetchProjects() {
+    return this.rimantoModel.getProjectList();
   }
 
+  /*
+   * Method to request list of all risks of a given project
+   */
   @Override
-  public String[][] fetchDataOfProjects() {
-    return this.rimantoModel.getDataOfProjects();
-  }
-
-  @Override
-  public String[] fetchColumnNamesForRisks() {
-    return this.rimantoModel.getColumnNamesForRisks();
-  }
-
-  @Override
-  public String[][] fetchDataOfRisks() {
-    return this.rimantoModel.getDataOfRisks();
+  public List<IRisk> fetchRisksOfProject(IProject project) {
+    return this.rimantoModel.getRisksOfProject(project);
   }
 }
