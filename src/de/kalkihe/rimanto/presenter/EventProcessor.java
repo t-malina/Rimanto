@@ -6,6 +6,7 @@ import de.kalkihe.rimanto.view.IRimantoView;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 
 public class EventProcessor implements IEventProcessor{
   private IRimantoView rimantoView;
@@ -57,7 +58,12 @@ public class EventProcessor implements IEventProcessor{
         this.rimantoView.projectCreated();
       }
     }
-    catch(Exception exception)
+    //TODO: Add reference to wordbook --> use error messages
+    catch(FileAlreadyExistsException exception)
+    {
+      this.rimantoView.showErrorDialog(exception, false);
+    }
+    catch (Exception exception)
     {
       this.rimantoView.showErrorDialog(exception, false);
     }

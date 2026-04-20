@@ -27,5 +27,5 @@ public interface IRimantoModel {
 
   String getProjectFileFormat();
 
-  void importProject(File importFile);
+  void importProject(File importFile) throws IOException;
 }

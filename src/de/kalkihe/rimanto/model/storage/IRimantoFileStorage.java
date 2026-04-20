@@ -4,6 +4,7 @@ import de.kalkihe.rimanto.model.data.IProject;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.util.List;
 
 public interface IRimantoFileStorage {
@@ -17,6 +18,6 @@ public interface IRimantoFileStorage {
 
   String getProjectFileFormat();
 
-  void importProject(File importFile);
+  void importProject(File importFile) throws IOException;
 
 }

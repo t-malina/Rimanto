@@ -46,6 +46,8 @@ public class Wordbook implements IWordbook{
     words.put("error", "error");
     words.put("wrong revision date", "The revision date has to be between the start and the end date");
     words.put("rimanto project", "rimanto project");
+    words.put("import project exists", "The project you wanted to import is already existing!");
+    words.put("import project error", "Error while importing project");
   }
 
   /*
