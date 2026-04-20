@@ -20,6 +20,8 @@ public class RimantoMainFrame extends JFrame {
 
   private IEventProcessor eventProcessor;
 
+  private ImageIcon icon;
+
   /*
    * Constructor
    * Initializes the wordbook.
@@ -37,8 +39,8 @@ public class RimantoMainFrame extends JFrame {
     // Set Title of Main window
     this.setTitle("Rimanto");
     // Set icon of the main window
-    ImageIcon icon = new ImageIcon("./images/danger.png");
-    this.setIconImage(icon.getImage());
+    this.icon = new ImageIcon(getClass().getResource("/danger.png"));
+    this.setIconImage(this.icon.getImage());
     // Set initial size of the current window
     // this.setSize(800, 700);
     // Set minimum size of the window
@@ -90,6 +92,6 @@ public class RimantoMainFrame extends JFrame {
   private void showAbout()
   {
     String message = this.wordbook.getWordForWithCapitalLeadingLetter("rimanto") + "\n\n" + this.wordbook.getWordForWithCapitalLeadingLetter("icon");
-    JOptionPane.showMessageDialog(this, message, this.wordbook.getWordForWithCapitalLeadingLetter("about"), 0, new ImageIcon("./images/danger.png"));
+    JOptionPane.showMessageDialog(this, message, this.wordbook.getWordForWithCapitalLeadingLetter("about"), 0, this.icon);
   }
 }

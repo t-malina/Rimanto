@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
+import java.nio.file.FileAlreadyExistsException;
 
 public class EventProcessor implements IEventProcessor{
   private IRimantoView rimantoView;
@@ -56,6 +57,10 @@ public class EventProcessor implements IEventProcessor{
         this.rimantoView.projectCreated();
       }
     }
+    catch (FileAlreadyExistsException exception)
+    {
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("import_project_exists"), exception, false);
+    }
     catch (IOException exception)
     {
       this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_project_read"), exception, false);
@@ -100,6 +105,10 @@ public class EventProcessor implements IEventProcessor{
         this.rimantoModel.importRisk(file, project);
         this.rimantoView.showProject(project);
       }
+    }
+    catch (FileAlreadyExistsException exception)
+    {
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("risk_already_in_project"), exception, false);
     }
     catch (IOException exception)
     {
@@ -354,7 +363,11 @@ public class EventProcessor implements IEventProcessor{
       boolean fileOpeningSuccessfull = this.openFile(desktop, ressource);
       if (! fileOpeningSuccessfull)
       {
-        this.openURL(desktop, ressource);
+        boolean urlOpeningSUccessfull = this.openURL(desktop, ressource);
+        if (! urlOpeningSUccessfull)
+        {
+          throw new Exception();
+        }
       }
     }
     catch (Exception exception)

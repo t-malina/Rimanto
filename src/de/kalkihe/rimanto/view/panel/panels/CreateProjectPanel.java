@@ -213,6 +213,7 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
         resource = resource.trim();
         if (resource.length() != 0)
         {
+          resource = resource.replace('\\', '/');
           furtherResources.add(URI.create(resource));
         }
       }

@@ -38,7 +38,7 @@ public class RiskTableModel extends GeneralTableModel {
     // if there is no project existing
     else {
       // Display a message that there are no projects in the table header
-      this.columnNames.add(this.wordbook.getWordFor("no_risks"));
+      this.columnNames.add(this.wordbook.getWordForWithCapitalLeadingLetter("no_risks"));
     }
   }
 
