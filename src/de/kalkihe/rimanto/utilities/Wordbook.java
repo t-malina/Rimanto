@@ -38,6 +38,8 @@ public class Wordbook implements IWordbook{
     words.put("current projects", "current Projects");
     words.put("back", "back");
     words.put("no projects", "No projects yet!");
+    words.put("project description", "Description of the project");
+    words.put("project name" , "Name of the project");
   }
 
   /*
