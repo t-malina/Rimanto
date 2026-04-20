@@ -5,10 +5,7 @@ import de.kalkihe.rimanto.model.data.IRisk;
 import de.kalkihe.rimanto.presenter.IEventProcessor;
 import de.kalkihe.rimanto.utilities.IWordbook;
 import de.kalkihe.rimanto.view.IRimantoView;
-import de.kalkihe.rimanto.view.panel.panels.CreateProjectPanel;
-import de.kalkihe.rimanto.view.panel.panels.OverviewPanel;
-import de.kalkihe.rimanto.view.panel.panels.ProjectViewPanel;
-import de.kalkihe.rimanto.view.panel.panels.RiskViewPanel;
+import de.kalkihe.rimanto.view.panel.panels.*;
 
 import javax.swing.*;
 
@@ -60,5 +57,10 @@ public class PanelGetter implements IPanelGetter{
   @Override
   public JPanel getPanelForErrorView() {
     return null;
+  }
+
+  @Override
+  public JPanel getPanelForExportRisk(IProject project, IRisk risk) throws Exception {
+    return new InstructionGeneratorPanel(this.wordbook, this.eventProcessor, this.rimantoView, project, risk);
   }
 }

@@ -2,10 +2,7 @@ package de.kalkihe.rimanto.model.data;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class Risk implements IRisk, Serializable, Cloneable {
   String riskName;
@@ -68,7 +65,7 @@ public class Risk implements IRisk, Serializable, Cloneable {
 
   @Override
   public String getCategoryOfImpactOnOtherProjects() {
-    return null;
+    return this.categoryOfImpactOnOtherProjects;
   }
 
   @Override
@@ -125,6 +122,19 @@ public class Risk implements IRisk, Serializable, Cloneable {
   public void makeAnnotatedRisk() {
     this.dateOfNextRiskRevision = null;
     this.categoryOfImpactOnOtherProjects = "";
-    this.impactOfRiskOnOtherProjects.clear();
+    this.impactOfRiskOnOtherProjects = new ArrayList<>();
+  }
+
+  @Override
+  public void editRiskData(IRisk newRisk) {
+    this.riskName = newRisk.getRiskName();
+    this.riskDescription = newRisk.getRiskDescription();
+    this.impactOfRiskOnOtherProjects = newRisk.getImpactOfRiskOnOtherProjects();
+    this.categoryOfImpactOnOtherProjects = newRisk.getCategoryOfImpactOnOtherProjects();
+    this.dateOfNextRiskRevision = newRisk.getDateOfNextRiskRevision();
+    this.riskPriority = newRisk.getRiskPriority();
+    this.riskImpact = newRisk.getRiskImpact();
+    this.riskMitigation = newRisk.getRiskMitigation();
+    this.personInCharge = newRisk.getPersonInCharge();
   }
 }

@@ -64,4 +64,6 @@ public interface IProject {
   void addRisk(IRisk risk);
 
   void editProjectData(IProject projectToTakeDataFrom);
+
+  void deleteRisk(IRisk risk);
 }

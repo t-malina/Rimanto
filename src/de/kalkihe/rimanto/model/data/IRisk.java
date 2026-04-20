@@ -24,4 +24,6 @@ public interface IRisk {
   void annotateRiskSource(IProject project, String category);
 
   void makeAnnotatedRisk();
+
+  void editRiskData(IRisk newRisk);
 }

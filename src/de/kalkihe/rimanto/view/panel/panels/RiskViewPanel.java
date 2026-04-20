@@ -10,8 +10,8 @@ import de.kalkihe.rimanto.utilities.IWordbook;
 import de.kalkihe.rimanto.view.IRimantoView;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +36,11 @@ public class RiskViewPanel extends GeneralRimantoPanel {
   private DatePicker riskRevisionDatePicker;
   private JList<IProject> furtherProjectsList;
   private JTextField categeoryOfImpactOnOtherProjectsTextField;
+
+  private JButton cancelOrBackButton;
+  private JButton saveOrEditButton;
+
+  private DefaultListModel<IProject> furtherProjectListModel;
 
 
   public RiskViewPanel(IWordbook wordbook, IEventProcessor eventProcessor, IRimantoView rimantoView, IProject project) throws Exception {
@@ -113,10 +118,9 @@ public class RiskViewPanel extends GeneralRimantoPanel {
 
     JLabel furtherProjectLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("further projects"));
     this.centerPanel.add(furtherProjectLabel);
-    List<IProject> projectList = this.rimantoView.requestProjects();
-    projectList.remove(this.project);
-    Object[] objects = projectList.toArray();
-    this.furtherProjectsList = new JList(objects);
+    this.furtherProjectListModel = new DefaultListModel<>();
+    this.initializeWithAllProjectsExceptOwn(this.furtherProjectListModel);
+    this.furtherProjectsList = new JList(this.furtherProjectListModel);
     this.centerPanel.add(this.furtherProjectsList);
 
     JLabel categoryOfImpactOnOtherProjectLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("category"));
@@ -130,18 +134,52 @@ public class RiskViewPanel extends GeneralRimantoPanel {
 
   private void initialize()
   {
-    JButton cancelButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("cancel"));
-    cancelButton.addActionListener(actionEvent -> this.eventProcessor.newRiskCreationCanceled(this.project));
-    JButton saveButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("save"));
-    saveButton.addActionListener(actionEvent -> this.saveButtonClick());
-    this.southPanel.add(cancelButton);
-    this.southPanel.add(saveButton);
+    this.cancelOrBackButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("cancel"));
+    this.cancelOrBackButton.addActionListener(actionEvent -> this.eventProcessor.newRiskCreationCanceled(this.project));
+    this.saveOrEditButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("save"));
+    this.saveOrEditButton.addActionListener(actionEvent -> this.saveButtonClick());
+    this.southPanel.add(this.cancelOrBackButton);
+    this.southPanel.add(this.saveOrEditButton);
 
     this.add(this.southPanel, BorderLayout.SOUTH);
   }
 
   private void initialize(IRisk risk)
   {
+    // Fill Elements with Data
+    this.riskNameTextArea.setText(risk.getRiskName());
+    this.riskDescriptionTextArea.setText(risk.getRiskDescription());
+    this.riskImpactComboBox.setSelectedItem(new Integer(risk.getRiskImpact()));
+    this.riskPriorityComboBox.setSelectedItem(new Integer(risk.getRiskPriority()));
+    this.riskMitigationTextArea.setText(risk.getRiskMitigation());
+    this.riskObservatorTextField.setText(risk.getPersonInCharge());
+    this.riskRevisionDatePicker.setDate(risk.getDateOfNextRiskRevision());
+    this.furtherProjectListModel.removeAllElements();
+    this.furtherProjectListModel.addAll(risk.getImpactOfRiskOnOtherProjects());
+    this.categeoryOfImpactOnOtherProjectsTextField.setText(risk.getCategoryOfImpactOnOtherProjects());
+
+    this.cancelOrBackButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("back"));
+    this.cancelOrBackButton.addActionListener(actionEvent -> this.eventProcessor.exitRiskDetailView(project, risk));
+    this.southPanel.add(this.cancelOrBackButton);
+
+    JButton exportRiskButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("export risk"));
+    exportRiskButton.addActionListener(actionEvent -> this.eventProcessor.exportRisk(this.project, risk));
+    this.southPanel.add(exportRiskButton);
+
+    JButton exportRiskAsInstructionButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("export risk instruction"));
+    exportRiskAsInstructionButton.addActionListener(actionEvent -> this.eventProcessor.exportRiskAsInstruction(this.project, risk));
+    this.southPanel.add(exportRiskAsInstructionButton);
+
+    JButton deleteRiskButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("delete risk"));
+    deleteRiskButton.addActionListener(actionEvent -> this.eventProcessor.deleteRisk(this.project, risk));
+    this.southPanel.add(deleteRiskButton);
+
+    this.saveOrEditButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("edit risk"));
+    this.saveOrEditButton.addActionListener(actionEvent -> this.editButtonClick(risk));
+    this.southPanel.add(this.saveOrEditButton);
+
+
+    this.add(this.southPanel, BorderLayout.SOUTH);
 
   }
 
@@ -151,21 +189,77 @@ public class RiskViewPanel extends GeneralRimantoPanel {
     {
       component.setEnabled(isEditable);
     }
+    this.riskNameTextArea.setEnabled(isEditable);
+    this.riskDescriptionTextArea.setEnabled(isEditable);
+    this.riskMitigationTextArea.setEnabled((isEditable));
 
   }
+
+  private void removeActionListenersFromButton(JButton button)
+  {
+    for(ActionListener listener: button.getActionListeners())
+    {
+      button.removeActionListener(listener);
+    }
+  }
+
+  private void editButtonClick(IRisk risk)
+  {
+    this.removeActionListenersFromButton(this.saveOrEditButton);
+    this.saveOrEditButton.setText(this.wordbook.getWordForWithCapitalLeadingLetter("save"));
+    this.saveOrEditButton.addActionListener(actionEvent -> this.saveButtonClick(risk));
+
+    this.removeActionListenersFromButton(this.cancelOrBackButton);
+    this.cancelOrBackButton.setText(this.wordbook.getWordForWithCapitalLeadingLetter("cancel"));
+    this.cancelOrBackButton.addActionListener(actionEvent -> this.cancelButtonClick(risk));
+
+    this.furtherProjectListModel.removeAllElements();
+    this.initializeWithAllProjectsExceptOwn(this.furtherProjectListModel);
+    int[] indices = new int[risk.getImpactOfRiskOnOtherProjects().size()];
+    int index = 0;
+    for(IProject project : risk.getImpactOfRiskOnOtherProjects())
+    {
+      this.furtherProjectsList.setSelectedValue(project, false);
+      indices[index] = (this.furtherProjectsList.getSelectedIndex());
+      index++;
+    }
+    this.furtherProjectsList.setSelectedIndices(indices);
+
+    this.setEditMode(true);
+  }
+
+  private void initializeWithAllProjectsExceptOwn(DefaultListModel<IProject> model)
+  {
+    List<IProject> projectList = this.rimantoView.requestProjects();
+    projectList.remove(this.project);
+    model.addAll(projectList);
+  }
+
+  private void cancelButtonClick(IRisk risk)
+  {
+    this.southPanel.removeAll();
+    this.southPanel.revalidate();
+    this.initialize(risk);
+    this.setEditMode(false);
+  }
+
 
   private void saveButtonClick()
   {
     IRisk risk = this.generateRiskFromInput();
     if (risk != null)
     {
-      this.eventProcessor.newRiskToCreate(this.project, risk, this.furtherProjectsList.getSelectedValuesList());
+      this.eventProcessor.newRiskToCreate(this.project, risk);
     }
   }
 
   private void saveButtonClick(IRisk risk)
   {
-
+    IRisk newRisk = this.generateRiskFromInput();
+    if (newRisk != null)
+    {
+      this.eventProcessor.editRisk(this.project, risk, newRisk);
+    }
   }
 
   private IRisk generateRiskFromInput()
@@ -195,7 +289,14 @@ public class RiskViewPanel extends GeneralRimantoPanel {
     int riskImpact = (int) this.riskImpactComboBox.getSelectedItem();
     String riskObserver = this.riskObservatorTextField.getText();
     List<IProject> furtherProjects = this.furtherProjectsList.getSelectedValuesList();
+    boolean furtherProjectsSelected = furtherProjects.size() != 0;
     String categoryForFurtherProjects = this.categeoryOfImpactOnOtherProjectsTextField.getText();
+    boolean noCategoryGiven = categoryForFurtherProjects.trim().length() == 0;
+    if (furtherProjectsSelected && noCategoryGiven)
+    {
+      JOptionPane.showMessageDialog(this, this.wordbook.getWordForWithCapitalLeadingLetter("no category"), this.wordbook.getWordForWithCapitalLeadingLetter("error"), 0);
+      return null;
+    }
 
     IRisk risk = new Risk(riskName, riskDescription, riskPriority, riskImpact, riskMitigation, riskObserver, revisionDate, furtherProjects, categoryForFurtherProjects);
     return risk;

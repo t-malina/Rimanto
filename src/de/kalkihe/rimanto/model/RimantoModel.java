@@ -8,6 +8,7 @@ import de.kalkihe.rimanto.utilities.RimantoIOCContainer;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.util.List;
 
 public class RimantoModel implements de.kalkihe.rimanto.model.IRimantoModel {
@@ -60,15 +61,21 @@ public class RimantoModel implements de.kalkihe.rimanto.model.IRimantoModel {
   }
 
   @Override
+  public String getRiskFileFormat() {
+    return this.rimantoFileStorage.getRiskFileFormat();
+  }
+
+  @Override
   public void importProject(File importFile) throws IOException, ClassNotFoundException {
     this.rimantoFileStorage.importProject(importFile);
   }
 
   @Override
-  public void addRiskToProject(IProject project, IRisk risk, List<IProject> furtherProjects) throws CloneNotSupportedException, IOException {
+  public void addRiskToProject(IProject project, IRisk risk) throws CloneNotSupportedException, IOException {
     project.addRisk(risk);
-    for(IProject currentProject : furtherProjects)
+    for(int index = 0; index < risk.getImpactOfRiskOnOtherProjects().size(); index++)
     {
+      IProject currentProject = risk.getImpactOfRiskOnOtherProjects().get(index);
       IRisk newRisk = (IRisk) risk.clone();
       newRisk.makeAnnotatedRisk();
       newRisk.annotateRiskSource(project, risk.getCategoryOfImpactOnOtherProjects());
@@ -92,5 +99,47 @@ public class RimantoModel implements de.kalkihe.rimanto.model.IRimantoModel {
   @Override
   public void exportProject(IProject project, File exportFile) throws IOException {
     this.rimantoFileStorage.exportProject(project, exportFile);
+  }
+
+  @Override
+  public void importRisk(File importFile, IProject project) throws IOException, ClassNotFoundException {
+    IRisk risk = this.rimantoFileStorage.importRisk(importFile);
+    if(project.getProjectRisks().contains(risk))
+    {
+      // TODO: AUslagern
+      throw new FileAlreadyExistsException("Risk is already in project!");
+    }
+    project.addRisk(risk);
+    this.rimantoFileStorage.saveProject(project);
+  }
+
+  @Override
+  public void editRisk(IProject project, IRisk oldRisk, IRisk newRisk) throws IOException, CloneNotSupportedException {
+    for (int index = 0; index < newRisk.getImpactOfRiskOnOtherProjects().size(); index++)
+    {
+      IProject currentProject = newRisk.getImpactOfRiskOnOtherProjects().get(index);
+      boolean isNewRiskToAppend = ! oldRisk.getImpactOfRiskOnOtherProjects().contains(currentProject);
+      if (isNewRiskToAppend)
+      {
+        IRisk riskToAppend = (IRisk) newRisk.clone();
+        riskToAppend.makeAnnotatedRisk();
+        riskToAppend.annotateRiskSource(project, newRisk.getCategoryOfImpactOnOtherProjects());
+        currentProject.addRisk(riskToAppend);
+        this.rimantoFileStorage.saveProject(currentProject);
+      }
+    }
+    oldRisk.editRiskData(newRisk);
+    this.rimantoFileStorage.saveProject(project);
+  }
+
+  @Override
+  public void deleteRisk(IProject project, IRisk risk) throws IOException {
+    project.deleteRisk(risk);
+    this.rimantoFileStorage.saveProject(project);
+  }
+
+  @Override
+  public void exportRisk(IRisk risk, File exportFile) throws IOException {
+    this.rimantoFileStorage.exportRisk(risk, exportFile);
   }
 }

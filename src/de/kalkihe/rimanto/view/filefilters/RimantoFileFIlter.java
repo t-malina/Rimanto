@@ -24,7 +24,7 @@ public class RimantoFileFIlter extends FileFilter {
   @Override
   public String getDescription()
   {
-    return this.wordbook.getWordForWithCapitalLeadingLetter("rimanto project");
+    return this.wordbook.getWordForWithCapitalLeadingLetter("rimanto file");
   }
 
 

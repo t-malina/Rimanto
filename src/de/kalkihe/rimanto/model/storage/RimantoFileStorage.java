@@ -13,7 +13,8 @@ import java.util.List;
 
 public class RimantoFileStorage implements IRimantoFileStorage {
   private Path pathToStorageFolder;
-  private String projectFileFormat = ".rmt";
+  private String projectFileFormat = ".rmtp";
+  private String riskFileFormat = ".rmtr";
 
   private List<IProject> currentProjects;
 
@@ -32,12 +33,13 @@ public class RimantoFileStorage implements IRimantoFileStorage {
     }
   }
 
-  private void writeProjectToDisk(IProject project, File file) throws IOException {
+
+  private void writeObjectToDisk(Object object, File file) throws IOException {
     FileOutputStream fileOutputStream = null;
     ObjectOutputStream objectOutputStream = null;
     fileOutputStream = new FileOutputStream(file);
     objectOutputStream = new ObjectOutputStream(fileOutputStream);
-    objectOutputStream.writeObject(project);
+    objectOutputStream.writeObject(object);
     if (fileOutputStream != null)
     {
       fileOutputStream.close();
@@ -46,6 +48,11 @@ public class RimantoFileStorage implements IRimantoFileStorage {
       objectOutputStream.close();
     }
   }
+
+  private void writeProjectToDisk(IProject project, File file) throws IOException {
+    this.writeObjectToDisk(project, file);
+  }
+
 
   private void writeProjectToDisk(IProject project, String fileName, Path folder) throws IOException {
     File file = new File(folder.toString(), fileName + this.projectFileFormat);
@@ -67,13 +74,24 @@ public class RimantoFileStorage implements IRimantoFileStorage {
     return resultList;
   }
 
-  private IProject readProject(File fileToRead) throws IOException, ClassNotFoundException {
+  private Object readFile(File fileToRead) throws IOException, ClassNotFoundException {
     FileInputStream fileInputStream = new FileInputStream(fileToRead);
     ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-    IProject project = (IProject) objectInputStream.readObject();
-    objectInputStream.close();
+    Object object =   objectInputStream.readObject();
     fileInputStream.close();
+    objectInputStream.close();
+    return object;
+  }
+
+
+  private IProject readProject(File fileToRead) throws IOException, ClassNotFoundException {
+    IProject project = (IProject) this.readFile(fileToRead);
     return project;
+  }
+
+  private IRisk readRisk(File fileToRead) throws IOException, ClassNotFoundException {
+    IRisk risk = (IRisk) this.readFile(fileToRead);
+    return risk;
   }
 
   @Override
@@ -88,7 +106,7 @@ public class RimantoFileStorage implements IRimantoFileStorage {
 
   @Override
   public String getRiskFileFormat() {
-    return null;
+    return this.riskFileFormat;
   }
 
   @Override
@@ -125,7 +143,12 @@ public class RimantoFileStorage implements IRimantoFileStorage {
   }
 
   @Override
-  public IRisk importRisk(File importFile) {
-    return null;
+  public IRisk importRisk(File importFile) throws IOException, ClassNotFoundException {
+    return this.readRisk(importFile);
+  }
+
+  @Override
+  public void exportRisk(IRisk risk, File exportFile) throws IOException {
+   this.writeObjectToDisk(risk, exportFile);
   }
 }

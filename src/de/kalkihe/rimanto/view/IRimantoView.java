@@ -54,6 +54,8 @@ public interface IRimantoView {
 
   File showExportFileDialog(String allowedFileFormat);
 
+  void exportRiskAsInstruction(IProject project, IRisk risk) throws Exception;
+
 
 }
 

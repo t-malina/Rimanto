@@ -27,13 +27,23 @@ public interface IRimantoModel {
 
   String getProjectFileFormat();
 
+  String getRiskFileFormat();
+
   void importProject(File importFile) throws IOException, ClassNotFoundException;
 
-  void addRiskToProject(IProject project, IRisk risk, List<IProject> furtherProjects) throws CloneNotSupportedException, IOException;
+  void addRiskToProject(IProject project, IRisk risk) throws CloneNotSupportedException, IOException;
 
   void editProject(IProject oldProject, IProject newProject) throws IOException;
 
   void deleteProject(IProject project);
 
   void exportProject(IProject project, File exportFile) throws IOException;
+
+  void importRisk(File importFile, IProject project) throws IOException, ClassNotFoundException;
+
+  void editRisk(IProject project, IRisk oldRisk, IRisk newRisk) throws IOException, CloneNotSupportedException;
+
+  void deleteRisk(IProject project, IRisk risk) throws IOException;
+
+  void exportRisk(IRisk risk, File exportFile) throws IOException;
 }
