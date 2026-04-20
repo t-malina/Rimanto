@@ -15,17 +15,25 @@ import javax.swing.*;
 import java.io.File;
 import java.util.List;
 
+/**
+ * Implementation of the view
+ */
 public class RimantoView implements IRimantoView{
-
+  /**
+   * Needed references
+   */
   private RimantoIOCContainer rimantoIOCContainer;
   private IRimantoPresenter presenter;
   private IWordbook wordbook;
   private IPanelGetter panelGetter;
   private IEventProcessor eventProcessor;
 
+  /**
+   * Main application window
+   */
   private RimantoMainFrame rimantoMainFrame;
 
-  /*
+  /**
    * Resolves all needed depencies with help from ioc container
    */
   private void resolveDependencies() throws Exception {
@@ -35,8 +43,11 @@ public class RimantoView implements IRimantoView{
     this.eventProcessor = (IEventProcessor) this.rimantoIOCContainer.getInstanceFor(IEventProcessor.class);
   }
 
-  /*
-   * Initializes the displaying of an error message
+  /**
+   * Method to show an error dialog
+   * @param errorMessage Error message
+   * @param exception The causing exception
+   * @param shutdownApplication Parameter to declare, if the application is to stop after error is shown and closed
    */
   @Override
   public void showErrorDialog(String errorMessage, Exception exception, boolean shutdownApplication) {
@@ -50,14 +61,18 @@ public class RimantoView implements IRimantoView{
     }
   }
 
-  /*
-   * Set reference to presenter
+  /**
+   * Sets reference to IRimantoPresenter in implementations
+   * @param rimantoPresenter
    */
   @Override
   public void setPresenter(IRimantoPresenter rimantoPresenter) {
     this.presenter = rimantoPresenter;
   }
 
+  /**
+   * Initializes the Application window
+   */
   @Override
   public void initializeApplicationWindow() throws Exception {
     // Set look and feel to native system style
@@ -78,38 +93,56 @@ public class RimantoView implements IRimantoView{
   }
 
 
-  /*
-   * Requests list of all projects from presenter
+  /**
+   * Request a list of all projects from presenter
+   * @return List of projects
    */
   @Override
   public List<IProject> requestProjects() {
     return this.presenter.fetchProjects();
   }
 
-  /*
-   * Requests list of all risks of the given project from presenter
+  /**
+   * Request a list of all projects from presenter
+   * @return List of projects
    */
   @Override
   public List<IRisk> requestRisksForProject(IProject project) {
     return this.presenter.fetchRisksOfProject(project);
   }
 
+  /**
+   * Starts the creation of a project
+   */
   @Override
   public void startCreationOfProject() {
     this.rimantoMainFrame.setJPanel(this.panelGetter.getPanelForProjectInput());
 
   }
 
+  /**
+   * Shows the overiew
+   * @throws Exception
+   */
   @Override
   public void showOverview() throws Exception {
     this.rimantoMainFrame.setJPanel(this.panelGetter.getPanelForOverview());
   }
 
+  /**
+   * To call when project was created
+   * @throws Exception
+   */
   @Override
   public void projectCreated() throws Exception {
     this.rimantoMainFrame.setJPanel(this.panelGetter.getPanelForOverview());
   }
 
+  /**
+   * Shows import file dialog
+   * @param allowedFileFormat Allowed file format
+   * @return Selected file
+   */
   @Override
   public File showImportFileDialog(String allowedFileFormat) {
     JFileChooser fileChooser = new JFileChooser();
@@ -123,32 +156,51 @@ public class RimantoView implements IRimantoView{
     return null;
   }
 
+  /**
+   * Shows the view for the passed project
+   * @param project Project to show
+   * @throws Exception
+   */
   @Override
   public void showProject(IProject project) throws Exception {
     this.rimantoMainFrame.setJPanel(this.panelGetter.getPanelForProjectView(project));
   }
 
+  /**
+   * Shows the view for the passed risk
+   * @param project Project the passed risk belongs to
+   * @param risk Risk to show
+   * @throws Exception
+   */
   @Override
   public void showRisk(IProject project, IRisk risk) throws Exception {
     this.rimantoMainFrame.setJPanel(this.panelGetter.getPanelForRiskView(project, risk));
   }
 
+  /**
+   * Shows the view to create a risk
+   * @param project Project the risk is to create for
+   * @throws Exception
+   */
   @Override
   public void startCreationOfRisk(IProject project) throws Exception {
     this.rimantoMainFrame.setJPanel(this.panelGetter.getPanelForRiskCreation(project));
   }
 
+  /**
+   * Starts the edition of a project
+   * @param project Project that is to edit
+   */
   @Override
   public void startEditingOfProject(IProject project) {
     this.rimantoMainFrame.setJPanel(this.panelGetter.getPanelForProjectEditing(project));
   }
 
-  @Override
-  public void projectEdited(IProject project) throws Exception {
-    this.rimantoMainFrame.setJPanel(this.panelGetter.getPanelForProjectView(project));
-
-  }
-
+  /**
+   * Shows an export file dialog
+   * @param allowedFileFormat Allowed file format
+   * @return The selected file to export something to
+   */
   @Override
   public File showExportFileDialog(String allowedFileFormat) {
     JFileChooser fileChooser = new JFileChooser();
@@ -162,15 +214,22 @@ public class RimantoView implements IRimantoView{
     return null;
   }
 
+  /**
+   * Shows the view to export a risk as work instruction
+   * @param project Project the risk belongs to
+   * @param risk Risk that is to export
+   * @throws Exception
+   */
   @Override
   public void exportRiskAsInstruction(IProject project, IRisk risk) throws Exception {
     this.rimantoMainFrame.setJPanel(this.panelGetter.getPanelForExportRisk(project, risk));
   }
 
+  /**
+   * Called when the language has changed.
+   */
   @Override
   public void languageChanged() {
     this.rimantoMainFrame.initializeMenuBar();
   }
-
-
 }
