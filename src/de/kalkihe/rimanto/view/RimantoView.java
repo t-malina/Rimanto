@@ -123,13 +123,13 @@ public class RimantoView implements IRimantoView{
   }
 
   @Override
-  public void showRisk(IRisk risk) throws Exception {
-    this.rimantoMainFrame.setJPanel(this.panelGetter.getPanelForRiskView(risk));
+  public void showRisk(IProject project, IRisk risk) throws Exception {
+    this.rimantoMainFrame.setJPanel(this.panelGetter.getPanelForRiskView(project, risk));
   }
 
   @Override
   public void startCreationOfRisk(IProject project) throws Exception {
-    this.rimantoMainFrame.setJPanel(this.panelGetter.getPanelForRiskCreation());
+    this.rimantoMainFrame.setJPanel(this.panelGetter.getPanelForRiskCreation(project));
   }
 
   @Override

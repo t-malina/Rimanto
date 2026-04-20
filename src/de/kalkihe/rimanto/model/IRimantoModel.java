@@ -29,7 +29,7 @@ public interface IRimantoModel {
 
   void importProject(File importFile) throws IOException, ClassNotFoundException;
 
-  void addRiskToProject(IProject project, IRisk risk, List<IProject> furtherProjects);
+  void addRiskToProject(IProject project, IRisk risk, List<IProject> furtherProjects) throws CloneNotSupportedException, IOException;
 
   void editProject(IProject oldProject, IProject newProject) throws IOException;
 

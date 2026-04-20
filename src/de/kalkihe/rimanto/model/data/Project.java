@@ -23,7 +23,7 @@ public class Project implements IProject, Serializable {
 
   @Override
   public void addRisk(IRisk risk) {
-
+    this.projectRisks.add(risk);
   }
 
   @Override
@@ -97,7 +97,7 @@ public class Project implements IProject, Serializable {
   }
 
   public List<IRisk> getProjectRisks() {
-    return projectRisks;
+    return this.projectRisks;
   }
 
   /*
@@ -122,5 +122,10 @@ public class Project implements IProject, Serializable {
   @Override
   public int hashCode() {
     return this.uuid.hashCode();
+  }
+
+  @Override
+  public String toString() {
+    return this.projectName;
   }
 }

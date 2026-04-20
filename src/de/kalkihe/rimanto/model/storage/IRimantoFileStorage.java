@@ -1,6 +1,7 @@
 package de.kalkihe.rimanto.model.storage;
 
 import de.kalkihe.rimanto.model.data.IProject;
+import de.kalkihe.rimanto.model.data.IRisk;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,14 +15,18 @@ public interface IRimantoFileStorage {
    */
   List<IProject> readProjects() throws IOException, ClassNotFoundException;
 
-  void saveNewProject(IProject project) throws IOException;
+  void saveProject(IProject project) throws IOException;
 
   String getProjectFileFormat();
+
+  String getRiskFileFormat();
 
   void importProject(File importFile) throws IOException, ClassNotFoundException;
 
   void deleteProject(IProject project);
 
   void exportProject(IProject project, File exportFile) throws IOException;
+
+  IRisk importRisk(File importFile);
 
 }

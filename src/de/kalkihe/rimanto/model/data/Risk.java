@@ -3,10 +3,11 @@ package de.kalkihe.rimanto.model.data;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class Risk implements IRisk, Serializable {
+public class Risk implements IRisk, Serializable, Cloneable {
   String riskName;
   String riskDescription;
   int riskPriority;
@@ -14,13 +15,21 @@ public class Risk implements IRisk, Serializable {
   String riskMitigation;
   String personInCharge;
   LocalDate dateOfNextRiskRevision;
-  Map<Risk, String> impactOfRiskOnOtherProjects;
+  List<IProject> impactOfRiskOnOtherProjects;
+  String categoryOfImpactOnOtherProjects;
 
-  public Risk(String riskName, String riskDescription, int riskPriority) {
+  public Risk(String riskName, String riskDescription, int riskPriority, int riskImpact, String riskMitigation, String personInCharge, LocalDate dateOfNextRiskRevision, List<IProject> impactOfRiskOnOtherProjects, String categoryOfImpactOnOtherProjects) {
     this.riskName = riskName;
     this.riskDescription = riskDescription;
     this.riskPriority = riskPriority;
+    this.riskImpact = riskImpact;
+    this.riskMitigation = riskMitigation;
+    this.personInCharge = personInCharge;
+    this.dateOfNextRiskRevision = dateOfNextRiskRevision;
+    this.impactOfRiskOnOtherProjects = impactOfRiskOnOtherProjects;
+    this.categoryOfImpactOnOtherProjects = categoryOfImpactOnOtherProjects;
   }
+
 
   @Override
   public String getRiskDescription() {
@@ -53,8 +62,13 @@ public class Risk implements IRisk, Serializable {
   }
 
   @Override
-  public Map<Risk, String> getImpactOfRiskOnOtherProjects() {
+  public List<IProject> getImpactOfRiskOnOtherProjects() {
     return impactOfRiskOnOtherProjects;
+  }
+
+  @Override
+  public String getCategoryOfImpactOnOtherProjects() {
+    return null;
   }
 
   @Override
@@ -93,5 +107,24 @@ public class Risk implements IRisk, Serializable {
   @Override
   public int hashCode() {
     return Objects.hash(riskName, riskDescription, riskPriority, riskImpact, riskMitigation, personInCharge, dateOfNextRiskRevision, impactOfRiskOnOtherProjects);
+  }
+
+  @Override
+  public Object clone() throws CloneNotSupportedException {
+    IRisk risk = new Risk(this.riskName, this.riskDescription, this.riskPriority, this.riskImpact, this.riskMitigation, this.personInCharge, this.dateOfNextRiskRevision, this.impactOfRiskOnOtherProjects, this.categoryOfImpactOnOtherProjects);
+    return risk;
+  }
+
+  @Override
+  public void annotateRiskSource(IProject project, String category) {
+    // TODO: Auslagern
+    this.riskDescription += "\n\n Originally from project \"" + project.getProjectName() +"\", affects \"" + category + "\" of this project";
+  }
+
+  @Override
+  public void makeAnnotatedRisk() {
+    this.dateOfNextRiskRevision = null;
+    this.categoryOfImpactOnOtherProjects = "";
+    this.impactOfRiskOnOtherProjects.clear();
   }
 }

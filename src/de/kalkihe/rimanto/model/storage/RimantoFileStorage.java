@@ -1,6 +1,7 @@
 package de.kalkihe.rimanto.model.storage;
 
 import de.kalkihe.rimanto.model.data.IProject;
+import de.kalkihe.rimanto.model.data.IRisk;
 
 import java.io.*;
 import java.nio.file.FileAlreadyExistsException;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public class RimantoFileStorage implements IRimantoFileStorage {
   private Path pathToStorageFolder;
-  private String fileFormat = ".rmt";
+  private String projectFileFormat = ".rmt";
 
   private List<IProject> currentProjects;
 
@@ -47,7 +48,7 @@ public class RimantoFileStorage implements IRimantoFileStorage {
   }
 
   private void writeProjectToDisk(IProject project, String fileName, Path folder) throws IOException {
-    File file = new File(folder.toString(), fileName + this.fileFormat);
+    File file = new File(folder.toString(), fileName + this.projectFileFormat);
     this.writeProjectToDisk(project, file);
   }
 
@@ -57,7 +58,7 @@ public class RimantoFileStorage implements IRimantoFileStorage {
     File folder = this.pathToStorageFolder.toFile();
     for (File file : folder.listFiles())
     {
-      if (file.toString().endsWith(this.fileFormat))
+      if (file.toString().endsWith(this.projectFileFormat))
       {
         resultList.add(this.readProject(file));
       }
@@ -76,19 +77,24 @@ public class RimantoFileStorage implements IRimantoFileStorage {
   }
 
   @Override
-  public void saveNewProject(IProject project) throws IOException {
+  public void saveProject(IProject project) throws IOException {
     this.writeProjectToDisk(project, project.getUuid().toString(), this.pathToStorageFolder);
   }
 
   @Override
   public String getProjectFileFormat() {
-    return this.fileFormat;
+    return this.projectFileFormat;
+  }
+
+  @Override
+  public String getRiskFileFormat() {
+    return null;
   }
 
   @Override
   public void importProject(File importFile) throws IOException, ClassNotFoundException {
     IProject readProject = this.readProject(importFile);
-    File targetFile = new File(this.pathToStorageFolder.toString(), readProject.getUuid() + this.fileFormat);
+    File targetFile = new File(this.pathToStorageFolder.toString(), readProject.getUuid() + this.projectFileFormat);
     if (targetFile.exists())
     {
       throw new FileAlreadyExistsException(targetFile.getAbsolutePath());
@@ -109,12 +115,17 @@ public class RimantoFileStorage implements IRimantoFileStorage {
 
   @Override
   public void deleteProject(IProject project) {
-    File file = new File(this.pathToStorageFolder.toString(), project.getUuid() + this.fileFormat);
+    File file = new File(this.pathToStorageFolder.toString(), project.getUuid() + this.projectFileFormat);
     file.delete();
   }
 
   @Override
   public void exportProject(IProject project, File exportFile) throws IOException {
     this.writeProjectToDisk(project, exportFile);
+  }
+
+  @Override
+  public IRisk importRisk(File importFile) {
+    return null;
   }
 }

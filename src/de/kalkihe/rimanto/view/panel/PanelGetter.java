@@ -38,13 +38,13 @@ public class PanelGetter implements IPanelGetter{
   }
 
   @Override
-  public JPanel getPanelForRiskView(IRisk risk) throws Exception {
-    return new RiskViewPanel(this.wordbook, this.eventProcessor, this.rimantoView, risk);
+  public JPanel getPanelForRiskView(IProject project, IRisk risk) throws Exception {
+    return new RiskViewPanel(this.wordbook, this.eventProcessor, this.rimantoView, project, risk);
   }
 
   @Override
-  public JPanel getPanelForRiskCreation() throws Exception {
-    return new RiskViewPanel(this.wordbook, this.eventProcessor, this.rimantoView);
+  public JPanel getPanelForRiskCreation(IProject project) throws Exception {
+    return new RiskViewPanel(this.wordbook, this.eventProcessor, this.rimantoView, project);
   }
 
   @Override
