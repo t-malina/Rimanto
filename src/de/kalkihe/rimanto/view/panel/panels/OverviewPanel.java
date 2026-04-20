@@ -1,4 +1,4 @@
-package de.kalkihe.rimanto.view.panel;
+package de.kalkihe.rimanto.view.panel.panels;
 
 import de.kalkihe.rimanto.model.data.IProject;
 import de.kalkihe.rimanto.presenter.IEventProcessor;

@@ -1,4 +1,4 @@
-package de.kalkihe.rimanto.view.panel;
+package de.kalkihe.rimanto.view.panel.panels;
 
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
@@ -7,14 +7,12 @@ import de.kalkihe.rimanto.model.data.Project;
 import de.kalkihe.rimanto.presenter.IEventProcessor;
 import de.kalkihe.rimanto.utilities.IWordbook;
 import de.kalkihe.rimanto.view.IRimantoView;
-import de.kalkihe.rimanto.view.error.IErrorDialog;
 
 import javax.swing.*;
 import java.awt.*;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Properties;
 import java.util.*;
 
 public class CreateProjectPanel extends GeneralRimantoPanel {
