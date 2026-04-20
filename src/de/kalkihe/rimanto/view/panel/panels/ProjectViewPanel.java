@@ -61,6 +61,11 @@ public class ProjectViewPanel extends GeneralRimantoPanel {
 
     this.buildRiskPanel();
 
+    JLabel legendLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("legend"));
+    this.descriptionPanel.add(legendLabel);
+
+    this.descriptionPanel.add(Box.createVerticalGlue());
+    
     JLabel label = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("risk_to_review"));
     label.setOpaque(true);
     label.setBackground(Color.RED);
