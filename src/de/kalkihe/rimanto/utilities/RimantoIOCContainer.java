@@ -2,6 +2,8 @@ package de.kalkihe.rimanto.utilities;
 
 import de.kalkihe.rimanto.model.IRimantoModel;
 import de.kalkihe.rimanto.model.RimantoModel;
+import de.kalkihe.rimanto.model.data.IProject;
+import de.kalkihe.rimanto.model.data.Project;
 import de.kalkihe.rimanto.model.storage.DummyDataFileStorage;
 import de.kalkihe.rimanto.model.storage.IRimantoFileStorage;
 import de.kalkihe.rimanto.presenter.EventProcessor;
@@ -13,6 +15,11 @@ import de.kalkihe.rimanto.view.error.ErrorDialog;
 import de.kalkihe.rimanto.view.error.IErrorDialog;
 import de.kalkihe.rimanto.view.panel.IPanelGetter;
 import de.kalkihe.rimanto.view.panel.PanelGetter;
+
+import java.net.URI;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
 
 // Singleton
 public class RimantoIOCContainer {
@@ -88,5 +95,10 @@ public class RimantoIOCContainer {
     {
       throw new Exception("Error while getting instance for " + wantedClass.toString() + ": No implementation found!");
     }
+
+  }
+  public static IProject CreateProject(String projectName, String projectDescription, LocalDate startDate, LocalDate endDate, List<URI> furtherResources, LocalDate revisionDate)
+  {
+    return new Project(projectName, projectDescription, startDate, endDate, furtherResources, revisionDate);
   }
 }

@@ -2,18 +2,17 @@ package de.kalkihe.rimanto.model.data;
 
 import java.io.File;
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 public class Project implements IProject{
   private String projectName;
   private String projectDescription;
-  private GregorianCalendar dateOfProjectStart;
-  private GregorianCalendar dateOfProjectEnd;
-  private List<File> attachedFiles;
+  private LocalDate dateOfProjectStart;
+  private LocalDate dateOfProjectEnd;
   private List<URI> linkedResources;
-  private GregorianCalendar dateOfNextProjectRevision;
+  private LocalDate dateOfNextProjectRevision;
   private List<IRisk> projectRisks;
 
 
@@ -21,12 +20,11 @@ public class Project implements IProject{
    * Constructor
    * Initializes project data with passed data
    */
-  public Project(String projectName, String projectDescription, GregorianCalendar dateOfProjectStart, GregorianCalendar dateOfProjectEnd, List<File> attachedFiles, List<URI> linkedResources, GregorianCalendar dateOfNextProjectRevision) {
+  public Project(String projectName, String projectDescription, LocalDate dateOfProjectStart, LocalDate dateOfProjectEnd, List<URI> linkedResources, LocalDate dateOfNextProjectRevision) {
     this.projectName = projectName;
     this.projectDescription = projectDescription;
     this.dateOfProjectStart = dateOfProjectStart;
     this.dateOfProjectEnd = dateOfProjectEnd;
-    this.attachedFiles = attachedFiles;
     this.linkedResources = linkedResources;
     this.dateOfNextProjectRevision = dateOfNextProjectRevision;
   }
@@ -52,23 +50,19 @@ public class Project implements IProject{
     return projectDescription;
   }
 
-  public GregorianCalendar getDateOfProjectStart() {
+  public LocalDate getDateOfProjectStart() {
     return dateOfProjectStart;
   }
 
-  public GregorianCalendar getDateOfProjectEnd() {
+  public LocalDate getDateOfProjectEnd() {
     return dateOfProjectEnd;
-  }
-
-  public List<File> getAttachedFiles() {
-    return attachedFiles;
   }
 
   public List<URI> getLinkedResources() {
     return linkedResources;
   }
 
-  public GregorianCalendar getDateOfNextProjectRevision() {
+  public LocalDate getDateOfNextProjectRevision() {
     return dateOfNextProjectRevision;
   }
 
@@ -82,8 +76,8 @@ public class Project implements IProject{
    */
   @Override
   public boolean isToReview() {
-    Calendar currentDate = Calendar.getInstance();
-    return this.dateOfNextProjectRevision.before(currentDate);
+    LocalDate currentDate = LocalDate.now();
+    return this.dateOfNextProjectRevision.isBefore(currentDate);
 
   }
 }

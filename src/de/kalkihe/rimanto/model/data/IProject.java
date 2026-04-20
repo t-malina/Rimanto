@@ -2,6 +2,7 @@ package de.kalkihe.rimanto.model.data;
 
 import java.io.File;
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.List;
 
@@ -30,17 +31,12 @@ public interface IProject {
   /*
    * Method to get the start date of the project
    */
-  Calendar getDateOfProjectStart();
+  LocalDate getDateOfProjectStart();
 
   /*
    * Method to get the end Date of the project
    */
-  Calendar getDateOfProjectEnd();
-
-  /*
-   * Method to get a list of file pointers to files attached to this project
-   */
-  List<File> getAttachedFiles();
+  LocalDate getDateOfProjectEnd();
 
   /*
    * Method to get List of links to ressources linked to the project
@@ -50,7 +46,7 @@ public interface IProject {
   /*
    * Method to get the Date of the next revision of the project
    */
-  Calendar getDateOfNextProjectRevision();
+  LocalDate getDateOfNextProjectRevision();
 
   /*
    * Method to get a list of all risks of that project

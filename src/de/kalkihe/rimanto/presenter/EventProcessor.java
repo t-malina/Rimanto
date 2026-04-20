@@ -1,5 +1,6 @@
 package de.kalkihe.rimanto.presenter;
 
+import de.kalkihe.rimanto.model.data.IProject;
 import de.kalkihe.rimanto.view.IRimantoView;
 
 public class EventProcessor implements IEventProcessor{
@@ -12,5 +13,15 @@ public class EventProcessor implements IEventProcessor{
   @Override
   public void newProjectButtonClick() {
     this.rimantoView.startCreationOfProject();
+  }
+
+  @Override
+  public void newProjectCreationCanceled() {
+
+  }
+
+  @Override
+  public void newProjectToCreate(IProject newProject) {
+
   }
 }
