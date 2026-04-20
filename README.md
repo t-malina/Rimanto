@@ -1,7 +1,7 @@
 # Rimanto - Risk Management Tool
-A tool for managing risks of a project. 
+Rimanto is an free open source tool for managing risks of a project. It features creation of projects, linking further resources to projects and adding risks to projects. A date on which it is to review can be added to every project and risk. Furthermore, projects and risks can be exported and imported to be shared among users of Rimanto. Risks can also be exported as work order to send to your employees. 
 
-In development in the context of a Studienarbeit at the DHBW-Karlsruhe.
+Rimanto has been in development in the context of a Studienarbeit at the DHBW-Karlsruhe.
 
 ## Installation
 
