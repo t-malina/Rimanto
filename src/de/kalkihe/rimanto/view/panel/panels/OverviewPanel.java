@@ -2,7 +2,7 @@ package de.kalkihe.rimanto.view.panel.panels;
 
 import de.kalkihe.rimanto.model.data.IProject;
 import de.kalkihe.rimanto.presenter.IEventProcessor;
-import de.kalkihe.rimanto.utilities.IWordbook;
+import de.kalkihe.rimanto.model.wordbook.IWordbook;
 import de.kalkihe.rimanto.view.IRimantoView;
 import de.kalkihe.rimanto.view.tablemodel.GeneralTableModel;
 import de.kalkihe.rimanto.view.tablemodel.ProjectTableModel;
@@ -88,26 +88,26 @@ public class OverviewPanel extends GeneralRimantoPanel {
     // Add Scroll pane to center panel
     this.centerPanel.add(this.projectTableScrollPane);
 
-    JButton newProjectButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("new project"));
+    JButton newProjectButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("new_project"));
     newProjectButton.addActionListener(actionEvent -> {
       this.eventProcessor.newProjectButtonClick();
     });
-    JButton importProjectButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("import project"));
+    JButton importProjectButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("import_project"));
     importProjectButton.addActionListener(actionEvent -> {
       this.eventProcessor.projectImportRequested();
     });
     this.buttonPanel.add(importProjectButton);
     this.buttonPanel.add(newProjectButton);
-    JLabel overviewLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("current projects"));
+    JLabel overviewLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("current_projects"));
     overviewLabel.setBorder(new EmptyBorder(10, 20, 10, 0));
     this.northPanel.add(overviewLabel);
 
-    JLabel projectReviewLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("project to review"));
+    JLabel projectReviewLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("project_to_review"));
     projectReviewLabel.setOpaque(true);
     projectReviewLabel.setBackground(Color.RED);
     this.descriptionPanel.add(projectReviewLabel);
 
-    JLabel projectRiskReviewLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("project with risks to review"));
+    JLabel projectRiskReviewLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("project_with_risks_to_review"));
     projectRiskReviewLabel.setOpaque(true);
     projectRiskReviewLabel.setBackground(Color.YELLOW);
     this.descriptionPanel.add(projectRiskReviewLabel);

@@ -3,8 +3,7 @@ package de.kalkihe.rimanto.presenter;
 import de.kalkihe.rimanto.model.IRimantoModel;
 import de.kalkihe.rimanto.model.data.IProject;
 import de.kalkihe.rimanto.model.data.IRisk;
-import de.kalkihe.rimanto.utilities.IWordbook;
-import de.kalkihe.rimanto.utilities.RimantoIOCContainer;
+import de.kalkihe.rimanto.model.wordbook.IWordbook;
 import de.kalkihe.rimanto.view.IRimantoView;
 
 import java.awt.*;
@@ -12,8 +11,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
-import java.nio.file.FileAlreadyExistsException;
-import java.util.List;
 
 public class EventProcessor implements IEventProcessor{
   private IRimantoView rimantoView;
@@ -40,11 +37,11 @@ public class EventProcessor implements IEventProcessor{
     }
     catch (IOException e)
     {
-      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error project write"), e, false);
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_project_write"), e, false);
     }
     catch (Exception e)
     {
-      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error general"), e, false);
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_general"), e, false);
     }
   }
 
@@ -61,11 +58,11 @@ public class EventProcessor implements IEventProcessor{
     }
     catch (IOException exception)
     {
-      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error project read"), exception, false);
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_project_read"), exception, false);
     }
     catch (Exception exception)
     {
-      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error general"), exception, false);
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_general"), exception, false);
     }
   }
 
@@ -77,7 +74,7 @@ public class EventProcessor implements IEventProcessor{
     }
     catch (Exception exception)
     {
-      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error general"), exception, true);
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_general"), exception, true);
     }
   }
 
@@ -89,7 +86,7 @@ public class EventProcessor implements IEventProcessor{
     }
     catch(Exception exception)
     {
-      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error general"), exception, true);
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_general"), exception, true);
     }
   }
 
@@ -106,11 +103,11 @@ public class EventProcessor implements IEventProcessor{
     }
     catch (IOException exception)
     {
-      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error risk read"), exception, false);
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_risk_read"), exception, false);
     }
     catch (Exception exception)
     {
-      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error general"), exception, false);
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_general"), exception, false);
     }
   }
 
@@ -122,11 +119,11 @@ public class EventProcessor implements IEventProcessor{
     }
     catch (IOException exception)
     {
-      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error projects read"), exception, true);
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_projects_read"), exception, true);
     }
     catch (Exception exception)
     {
-      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error general"), exception, true);
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_general"), exception, true);
     }
   }
 
@@ -138,7 +135,7 @@ public class EventProcessor implements IEventProcessor{
     }
     catch (Exception exception)
     {
-      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error general"), exception, true);
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_general"), exception, true);
     }
   }
 
@@ -151,11 +148,11 @@ public class EventProcessor implements IEventProcessor{
     }
     catch (IOException exception)
     {
-      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error risk write"), exception, false);
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_risk_write"), exception, false);
     }
     catch (Exception exception)
     {
-      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error general"), exception, false);
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_general"), exception, false);
     }
   }
 
@@ -167,11 +164,11 @@ public class EventProcessor implements IEventProcessor{
     }
     catch (IOException exception)
     {
-      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error projects read"), exception, true);
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_projects_read"), exception, true);
     }
     catch (Exception exception)
     {
-      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error general"), exception, false);
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_general"), exception, false);
     }
   }
 
@@ -194,11 +191,11 @@ public class EventProcessor implements IEventProcessor{
     }
     catch (IOException e)
     {
-      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error project write"), e, true);
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_project_write"), e, true);
     }
     catch (Exception e)
     {
-      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error general"), e, true);
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_general"), e, true);
     }
   }
 
@@ -211,11 +208,11 @@ public class EventProcessor implements IEventProcessor{
     }
     catch (IOException e)
     {
-      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error project write"), e, true);
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_project_write"), e, true);
     }
     catch (Exception e)
     {
-      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error general"), e, true);
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_general"), e, true);
     }
   }
 
@@ -229,11 +226,11 @@ public class EventProcessor implements IEventProcessor{
       }
       catch (IOException e)
       {
-        this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error project write"), e, false);
+        this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_project_write"), e, false);
       }
       catch (Exception e)
       {
-        this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error general"), e, false);
+        this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_general"), e, false);
       }
     }
   }
@@ -250,11 +247,11 @@ public class EventProcessor implements IEventProcessor{
       }
       catch (IOException e)
       {
-        this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error risk write"), e, false);
+        this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_risk_write"), e, false);
       }
       catch (Exception e)
       {
-        this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error general"), e, false);
+        this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_general"), e, false);
       }
     }
   }
@@ -267,7 +264,7 @@ public class EventProcessor implements IEventProcessor{
     }
     catch (Exception e)
     {
-      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error general"), e, false);
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_general"), e, false);
     }
   }
 
@@ -280,11 +277,11 @@ public class EventProcessor implements IEventProcessor{
     }
     catch (IOException e)
     {
-      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error risk write"), e, false);
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_risk_write"), e, false);
     }
     catch (Exception e)
     {
-      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error general"), e, false);
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_general"), e, false);
     }
   }
 
@@ -297,11 +294,11 @@ public class EventProcessor implements IEventProcessor{
     }
     catch (IOException e)
     {
-      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error risk write"), e, false);
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_risk_write"), e, false);
     }
     catch (Exception e)
     {
-      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error general"), e, false);
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_general"), e, false);
     }
   }
 
@@ -324,11 +321,11 @@ public class EventProcessor implements IEventProcessor{
     }
     catch (IOException e)
     {
-      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error project write"), e, false);
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_project_write"), e, false);
     }
     catch (Exception e)
     {
-      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error general"), e, false);
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_general"), e, false);
     }
   }
 
@@ -341,11 +338,11 @@ public class EventProcessor implements IEventProcessor{
     }
     catch (IOException e)
     {
-      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error risk write"), e, false);
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_risk_write"), e, false);
     }
     catch (Exception e)
     {
-      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error general"), e, false);
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_general"), e, false);
     }
   }
 
@@ -362,7 +359,25 @@ public class EventProcessor implements IEventProcessor{
     }
     catch (Exception exception)
     {
-      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error resource opening"), exception, false);
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_resource_opening"), exception, false);
+    }
+  }
+
+  @Override
+  public void languageChanged(String language, String country) {
+    this.wordbook.setLocale(language, country);
+    this.backToOverview();
+    try
+    {
+      this.rimantoModel.saveWordbook(this.wordbook);
+    }
+    catch(IOException exception)
+    {
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_settings_write"), exception, true);
+    }
+    catch (Exception exception)
+    {
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_general"), exception, true);
     }
   }
 

@@ -2,6 +2,7 @@ package de.kalkihe.rimanto.model.storage;
 
 import de.kalkihe.rimanto.model.data.IProject;
 import de.kalkihe.rimanto.model.data.IRisk;
+import de.kalkihe.rimanto.model.wordbook.IWordbook;
 
 import java.io.*;
 import java.nio.file.FileAlreadyExistsException;
@@ -15,6 +16,7 @@ public class RimantoFileStorage implements IRimantoFileStorage {
   private Path pathToStorageFolder;
   private String projectFileFormat = ".rmtp";
   private String riskFileFormat = ".rmtr";
+  private String wordbookFilename = "settings.rmt";
 
   private List<IProject> currentProjects;
 
@@ -32,7 +34,6 @@ public class RimantoFileStorage implements IRimantoFileStorage {
       folder.mkdir();
     }
   }
-
 
   private void writeObjectToDisk(Object object, File file) throws IOException {
     FileOutputStream fileOutputStream = null;
@@ -128,7 +129,6 @@ public class RimantoFileStorage implements IRimantoFileStorage {
       }
       Files.copy(importFile.toPath(), targetFile.toPath());
     }
-
   }
 
   @Override
@@ -150,5 +150,17 @@ public class RimantoFileStorage implements IRimantoFileStorage {
   @Override
   public void exportRisk(IRisk risk, File exportFile) throws IOException {
    this.writeObjectToDisk(risk, exportFile);
+  }
+
+  @Override
+  public void saveWordbook(IWordbook wordbook) throws IOException {
+    File writeFile = new File(this.pathToStorageFolder.toString(), this.wordbookFilename);
+    this.writeObjectToDisk(wordbook, writeFile);
+  }
+
+  @Override
+  public IWordbook readWordbook() throws IOException, ClassNotFoundException {
+    File readFile = new File(this.pathToStorageFolder.toString(), this.wordbookFilename);
+    return (IWordbook) this.readFile(readFile);
   }
 }

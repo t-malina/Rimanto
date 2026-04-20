@@ -3,7 +3,7 @@ package de.kalkihe.rimanto.presenter;
 import de.kalkihe.rimanto.model.IRimantoModel;
 import de.kalkihe.rimanto.model.data.IProject;
 import de.kalkihe.rimanto.model.data.IRisk;
-import de.kalkihe.rimanto.utilities.IWordbook;
+import de.kalkihe.rimanto.model.wordbook.IWordbook;
 import de.kalkihe.rimanto.utilities.RimantoIOCContainer;
 import de.kalkihe.rimanto.view.IRimantoView;
 
@@ -32,7 +32,6 @@ public class RimantoPresenter implements IRimantoPresenter{
 
     this.rimantoModel = (IRimantoModel) this.rimantoIOCContainer.getInstanceFor(IRimantoModel.class);
 
-    this.wordbook = (IWordbook) this.rimantoIOCContainer.getInstanceFor(IWordbook.class);
   }
 
   /*
@@ -45,6 +44,17 @@ public class RimantoPresenter implements IRimantoPresenter{
       this.resolveDependencies();
       // Initialize the model
       this.rimantoModel.initializeModel();
+
+      try
+      {
+        IWordbook wordbook = this.rimantoModel.readWordbook();
+        this.rimantoIOCContainer.setWordbook(wordbook);
+      }
+      catch (Exception exception)
+      {
+        this.rimantoIOCContainer.setWordbook();
+      }
+
       // Initialize main application window and show it
       rimantoView.initializeApplicationWindow();
     }
@@ -52,7 +62,7 @@ public class RimantoPresenter implements IRimantoPresenter{
     {
       exception.printStackTrace();
       // Show error dialog and shutdown application
-      rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error startup"), exception, true);
+      rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_startup"), exception, true);
     }
   }
 
@@ -80,11 +90,11 @@ public class RimantoPresenter implements IRimantoPresenter{
     }
     catch (IOException exception)
     {
-      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error projects read"), exception, true);
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_projects_read"), exception, true);
     }
     catch (Exception exception)
     {
-      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error general"), exception, true);
+      this.rimantoView.showErrorDialog(this.wordbook.getWordForWithCapitalLeadingLetter("error_general"), exception, true);
     }
     return null;
   }

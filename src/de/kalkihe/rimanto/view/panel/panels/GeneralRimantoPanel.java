@@ -1,7 +1,7 @@
 package de.kalkihe.rimanto.view.panel.panels;
 
 import de.kalkihe.rimanto.presenter.IEventProcessor;
-import de.kalkihe.rimanto.utilities.IWordbook;
+import de.kalkihe.rimanto.model.wordbook.IWordbook;
 import de.kalkihe.rimanto.view.IRimantoView;
 
 import javax.swing.*;

@@ -3,7 +3,7 @@ package de.kalkihe.rimanto.view.panel.panels;
 import de.kalkihe.rimanto.model.data.IProject;
 import de.kalkihe.rimanto.model.data.IRisk;
 import de.kalkihe.rimanto.presenter.IEventProcessor;
-import de.kalkihe.rimanto.utilities.IWordbook;
+import de.kalkihe.rimanto.model.wordbook.IWordbook;
 import de.kalkihe.rimanto.view.IRimantoView;
 import de.kalkihe.rimanto.view.tablemodel.GeneralTableModel;
 import de.kalkihe.rimanto.view.tablemodel.RimantoTableCellRenderer;
@@ -13,10 +13,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URL;
 import java.time.LocalDate;
 
 public class ProjectViewPanel extends GeneralRimantoPanel {
@@ -50,7 +46,7 @@ public class ProjectViewPanel extends GeneralRimantoPanel {
 
     this.buildRiskPanel();
 
-    JLabel label = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("risk to review"));
+    JLabel label = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("risk_to_review"));
     label.setOpaque(true);
     label.setBackground(Color.RED);
     this.descriptionPanel.add(label);
@@ -59,22 +55,22 @@ public class ProjectViewPanel extends GeneralRimantoPanel {
     JButton backButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("back"));
     backButton.addActionListener(actionEvent -> this.eventProcessor.backToOverview());
     this.buttonPanel.add(backButton);
-    JButton editProjectButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("edit project"));
+    JButton editProjectButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("edit_project"));
     editProjectButton.addActionListener(actionEvent -> this.eventProcessor.projectEditingRequested(this.project));
     this.buttonPanel.add(editProjectButton);
-    JButton exportProjectButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("export project"));
+    JButton exportProjectButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("export_project"));
     exportProjectButton.addActionListener(actionEvent -> this.eventProcessor.exportProject(this.project));
     this.buttonPanel.add(exportProjectButton);
-    JButton importRiskButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("import risk"));
+    JButton importRiskButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("import_risk"));
     importRiskButton.addActionListener(actionEvent -> this.eventProcessor.riskImportRequested(this.project));
     this.buttonPanel.add(importRiskButton);
-    JButton newRiskButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("new risk"));
+    JButton newRiskButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("new_risk"));
     newRiskButton.addActionListener(actionEvent -> this.eventProcessor.newRiskButtonClick(this.project));
     this.buttonPanel.add(newRiskButton);
 
     if(this.project.isToReview())
     {
-      JButton reviewButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("review done"));
+      JButton reviewButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("review_done"));
       reviewButton.setBackground(Color.GREEN);
       reviewButton.addActionListener(actionEvent -> this.eventProcessor.setProjectAsReviewed(this.project));
       this.buttonPanel.add(reviewButton);
@@ -91,10 +87,10 @@ public class ProjectViewPanel extends GeneralRimantoPanel {
 
   private void buildProjectPanel()
   {
-    JLabel nameLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("project name"));
+    JLabel nameLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("project_name"));
     JTextArea projectNameLabel = new JTextArea(this.project.getProjectName());
     JScrollPane projectNameScrollPane = super.getScrollPaneWithReadOnly(projectNameLabel);
-    JLabel descriptionLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("project description"));
+    JLabel descriptionLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("project_description"));
     JTextArea projectDescriptionLabel = new JTextArea(this.project.getProjectDescription());
     JScrollPane projectDescriptionScrollPane = super.getScrollPaneWithReadOnly(projectDescriptionLabel);
     projectDescriptionScrollPane.setPreferredSize(new Dimension(0, 35));
@@ -104,9 +100,9 @@ public class ProjectViewPanel extends GeneralRimantoPanel {
     this.northPanel.add(descriptionLabel);
     this.northPanel.add(projectDescriptionScrollPane);
 
-    JLabel startDateLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("date of project start"));
+    JLabel startDateLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("date_of_project_start"));
     JLabel projectStartDateLabel = new JLabel(this.project.getDateOfProjectStart().toString());
-    JLabel endDateLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("date of project end"));
+    JLabel endDateLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("date_of_project_end"));
     JLabel projectEndDateLabel = new JLabel(this.project.getDateOfProjectEnd().toString());
 
     this.northPanel.add(startDateLabel);
@@ -114,7 +110,7 @@ public class ProjectViewPanel extends GeneralRimantoPanel {
     this.northPanel.add(endDateLabel);
     this.northPanel.add(projectEndDateLabel);
 
-    JLabel furtherResourcesLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("further resources"));
+    JLabel furtherResourcesLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("further_resources"));
 
     JList furtherRessoucesList = new JList(this.project.getLinkedResources().toArray());
     furtherRessoucesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -136,7 +132,7 @@ public class ProjectViewPanel extends GeneralRimantoPanel {
     scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     this.northPanel.add(scrollPane);
 
-    JLabel revisionLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("next date of revision"));
+    JLabel revisionLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("next_date_of_revision"));
     LocalDate date = this.project.getDateOfNextProjectRevision();
     JLabel projectRevisionLabel;
     if (date == null)

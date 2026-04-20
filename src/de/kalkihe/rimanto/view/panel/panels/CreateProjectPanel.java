@@ -5,16 +5,13 @@ import com.github.lgooddatepicker.components.DatePickerSettings;
 import de.kalkihe.rimanto.model.data.IProject;
 import de.kalkihe.rimanto.model.data.Project;
 import de.kalkihe.rimanto.presenter.IEventProcessor;
-import de.kalkihe.rimanto.utilities.IWordbook;
+import de.kalkihe.rimanto.model.wordbook.IWordbook;
 import de.kalkihe.rimanto.view.IRimantoView;
 import de.kalkihe.rimanto.view.panel.keyevent.TabKeyAdapter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.net.URI;
-import java.security.Key;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.*;
@@ -69,8 +66,8 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
   {
     this.centerPanel = new JPanel(new GridLayout(0, 2, 20, 20));
     this.southPanel = new JPanel(new FlowLayout());
-    this.projectNameLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("project name"));
-    this.projectDescriptionLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("project description"));
+    this.projectNameLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("project_name"));
+    this.projectDescriptionLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("project_description"));
     this.projectNameTextArea = new JTextArea();
     this.projectNameScrollPane = super.configureAndInsertTextArea(this.projectNameTextArea);
     this.projectDescriptionTextArea = new JTextArea();
@@ -80,8 +77,8 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
     this.centerPanel.add(this.projectDescriptionLabel);
     this.centerPanel.add(this.projectDescriptionScrollPane);
 
-    this.projectStartDateLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("date of project start"));
-    this.projectEndDateLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("date of project end"));
+    this.projectStartDateLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("date_of_project_start"));
+    this.projectEndDateLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("date_of_project_end"));
 
     DatePickerSettings datePickerSettings = new DatePickerSettings();
     datePickerSettings.setAllowKeyboardEditing(false);
@@ -97,7 +94,7 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
     this.centerPanel.add(this.projectEndDateLabel);
     this.centerPanel.add(this.projectEndDatePicker);
 
-    this.furtherResourcesLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("further resources"));
+    this.furtherResourcesLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("further_resources"));
     this.furtherResourcesTextArea = new JTextArea();
     this.furtherResourcesScrollPane = super.configureAndInsertTextArea(this.furtherResourcesTextArea);
 
@@ -107,7 +104,7 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
     DatePickerSettings revisionDatePickerSettings = new DatePickerSettings();
     revisionDatePickerSettings.setAllowKeyboardEditing(false);
     revisionDatePickerSettings.setFormatForDatesCommonEra(this.wordbook.getDateTimeFormatter());
-    this.projectRevisionLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("next date of revision"));
+    this.projectRevisionLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("next_date_of_revision"));
     this.projectRevisionDatePicker = new DatePicker(revisionDatePickerSettings);
 
     this.centerPanel.add(this.projectRevisionLabel);
@@ -117,7 +114,7 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
 
     this.saveButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("save"));
     this.cancelButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("cancel"));
-    this.deleteButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("delete project"));
+    this.deleteButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("delete_project"));
 
 
     this.projectNameTextArea.addKeyListener(new TabKeyAdapter(this.projectDescriptionTextArea));
@@ -188,7 +185,7 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
     boolean noProjectName = projectName.trim().length() == 0;
     if (noProjectName)
     {
-      JOptionPane.showMessageDialog(this, this.wordbook.getWordFor("missing project data"), this.wordbook.getWordForWithCapitalLeadingLetter("error"), 0);
+      JOptionPane.showMessageDialog(this, this.wordbook.getWordFor("missing_project_data"), this.wordbook.getWordForWithCapitalLeadingLetter("error"), 0);
       return null;
     }
     LocalDate startDate = this.projectStartDatePicker.getDate();
@@ -199,7 +196,7 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
       boolean inBetween = revisionDate.isAfter(startDate) && revisionDate.isBefore(endDate);
       if (!inBetween)
       {
-        JOptionPane.showMessageDialog(this, this.wordbook.getWordFor("wrong revision date"), this.wordbook.getWordForWithCapitalLeadingLetter("error"), 0);
+        JOptionPane.showMessageDialog(this, this.wordbook.getWordFor("wrong_revision_date"), this.wordbook.getWordForWithCapitalLeadingLetter("error"), 0);
         return null;
       }
     }

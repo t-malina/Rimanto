@@ -21,7 +21,7 @@ public interface IRisk {
 
   Object clone() throws CloneNotSupportedException;
 
-  void annotateRiskSource(IProject project, String category);
+  void annotateRiskSource(IProject project, String category) throws Exception;
 
   void makeAnnotatedRisk();
 

@@ -5,7 +5,7 @@ import com.github.lgooddatepicker.components.DatePickerSettings;
 import de.kalkihe.rimanto.model.data.IProject;
 import de.kalkihe.rimanto.model.data.IRisk;
 import de.kalkihe.rimanto.presenter.IEventProcessor;
-import de.kalkihe.rimanto.utilities.IWordbook;
+import de.kalkihe.rimanto.model.wordbook.IWordbook;
 import de.kalkihe.rimanto.view.IRimantoView;
 import de.kalkihe.rimanto.view.panel.keyevent.TabKeyAdapter;
 
@@ -46,7 +46,7 @@ public class InstructionGeneratorPanel extends GeneralRimantoPanel {
     this.recipientTextField = new JTextField();
     this.northPanel.add(recipientTextField);
 
-    JLabel dueDateLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("due date"));
+    JLabel dueDateLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("due_date"));
     this.northPanel.add(dueDateLabel);
     DatePickerSettings datePickerSettings = new DatePickerSettings();
     datePickerSettings.setAllowKeyboardEditing(false);
@@ -74,11 +74,11 @@ public class InstructionGeneratorPanel extends GeneralRimantoPanel {
     backButton.addActionListener(actionEvent -> this.eventProcessor.abortRiskAsInstruction(this.project, this.risk));
     this.southPanel.add(backButton);
 
-    JButton copyTextButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("copy text"));
+    JButton copyTextButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("copy_text"));
     copyTextButton.addActionListener(actionEvent -> this.copyOutput());
     this.southPanel.add(copyTextButton);
 
-    JButton generateTextButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("generate text"));
+    JButton generateTextButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("generate_text"));
     generateTextButton.addActionListener(actionEvent -> this.generateOutput());
     this.southPanel.add(generateTextButton);
 

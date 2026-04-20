@@ -6,7 +6,7 @@ import de.kalkihe.rimanto.model.data.IProject;
 import de.kalkihe.rimanto.model.data.IRisk;
 import de.kalkihe.rimanto.model.data.Risk;
 import de.kalkihe.rimanto.presenter.IEventProcessor;
-import de.kalkihe.rimanto.utilities.IWordbook;
+import de.kalkihe.rimanto.model.wordbook.IWordbook;
 import de.kalkihe.rimanto.view.IRimantoView;
 import de.kalkihe.rimanto.view.panel.keyevent.TabKeyAdapter;
 
@@ -14,7 +14,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class RiskViewPanel extends GeneralRimantoPanel {
@@ -75,37 +74,37 @@ public class RiskViewPanel extends GeneralRimantoPanel {
     this.centerPanel = new JPanel(new GridLayout(0, 2, 20, 20));
     this.southPanel = new JPanel(new FlowLayout());
 
-    JLabel riskNameLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("risk name"));
+    JLabel riskNameLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("risk_name"));
     this.centerPanel.add(riskNameLabel);
     this.riskNameTextArea = new JTextArea();
     JScrollPane riskNameScrollPane = super.configureAndInsertTextArea(this.riskNameTextArea);
     this.centerPanel.add(riskNameScrollPane);
 
-    JLabel riskDescriptionLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("risk description"));
+    JLabel riskDescriptionLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("risk_description"));
     this.centerPanel.add(riskDescriptionLabel);
     this.riskDescriptionTextArea = new JTextArea();
     JScrollPane riskDescriptionScrollPane = super.configureAndInsertTextArea(this.riskDescriptionTextArea);
     this.centerPanel.add(riskDescriptionScrollPane);
 
-    JLabel riskPriorityLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("risk priority"));
+    JLabel riskPriorityLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("risk_priority"));
     this.centerPanel.add(riskPriorityLabel);
     this.riskPriorityComboBox = new JComboBox<Integer>();
     this.fillCombBox(this.riskPriorityComboBox);
     this.centerPanel.add(this.riskPriorityComboBox);
 
-    JLabel riskImpactLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("risk impact"));
+    JLabel riskImpactLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("risk_impact"));
     this.centerPanel.add(riskImpactLabel);
     this.riskImpactComboBox = new JComboBox<>();
     this.fillCombBox(this.riskImpactComboBox);
     this.centerPanel.add(this.riskImpactComboBox);
 
-    JLabel riskMitigationLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("risk mitigation"));
+    JLabel riskMitigationLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("risk_mitigation"));
     this.centerPanel.add(riskMitigationLabel);
     this.riskMitigationTextArea = new JTextArea();
     JScrollPane riskMitigationScrollPane = super.configureAndInsertTextArea(this.riskMitigationTextArea);
     this.centerPanel.add(riskMitigationScrollPane);
 
-    JLabel riskObserverLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("person in charge"));
+    JLabel riskObserverLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("person_in_charge"));
     this.centerPanel.add(riskObserverLabel);
     this.riskObservatorTextField = new JTextField();
     this.centerPanel.add(riskObservatorTextField);
@@ -114,11 +113,11 @@ public class RiskViewPanel extends GeneralRimantoPanel {
     revisionDatePickerSettings.setAllowKeyboardEditing(false);
     revisionDatePickerSettings.setFormatForDatesCommonEra(this.wordbook.getDateTimeFormatter());
     this.riskRevisionDatePicker = new DatePicker(revisionDatePickerSettings);
-    JLabel riskRevisionDateLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("next date of revision"));
+    JLabel riskRevisionDateLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("next_date_of_revision"));
     this.centerPanel.add(riskRevisionDateLabel);
     this.centerPanel.add(riskRevisionDatePicker);
 
-    JLabel furtherProjectLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("further projects"));
+    JLabel furtherProjectLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("further_projects"));
     this.centerPanel.add(furtherProjectLabel);
     this.furtherProjectListModel = new DefaultListModel<>();
     this.initializeWithAllProjectsExceptOwn(this.furtherProjectListModel);
@@ -175,25 +174,25 @@ public class RiskViewPanel extends GeneralRimantoPanel {
     this.cancelOrBackButton.addActionListener(actionEvent -> this.eventProcessor.exitRiskDetailView(project, risk));
     this.southPanel.add(this.cancelOrBackButton);
 
-    JButton exportRiskButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("export risk"));
+    JButton exportRiskButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("export_risk"));
     exportRiskButton.addActionListener(actionEvent -> this.eventProcessor.exportRisk(this.project, risk));
     this.southPanel.add(exportRiskButton);
 
-    JButton exportRiskAsInstructionButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("export risk instruction"));
+    JButton exportRiskAsInstructionButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("export_risk_instruction"));
     exportRiskAsInstructionButton.addActionListener(actionEvent -> this.eventProcessor.exportRiskAsInstruction(this.project, risk));
     this.southPanel.add(exportRiskAsInstructionButton);
 
-    JButton deleteRiskButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("delete risk"));
+    JButton deleteRiskButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("delete_risk"));
     deleteRiskButton.addActionListener(actionEvent -> this.eventProcessor.deleteRisk(this.project, risk));
     this.southPanel.add(deleteRiskButton);
 
-    this.saveOrEditButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("edit risk"));
+    this.saveOrEditButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("edit_risk"));
     this.saveOrEditButton.addActionListener(actionEvent -> this.editButtonClick(risk));
     this.southPanel.add(this.saveOrEditButton);
 
     if (risk.isToReview())
     {
-      JButton reviewButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("review done"));
+      JButton reviewButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("review_done"));
       reviewButton.setBackground(Color.GREEN);
       reviewButton.addActionListener(actionEvent -> this.eventProcessor.setRiskAsReviewed(this.project, risk));
       this.southPanel.add(reviewButton);
@@ -292,7 +291,7 @@ public class RiskViewPanel extends GeneralRimantoPanel {
     boolean noRiskMitigation = riskMitigation.trim().length() == 0;
     if (noRiskName || noRiskDescription || noRiskMitigation)
     {
-      JOptionPane.showMessageDialog(this, this.wordbook.getWordFor("missing risk data"), this.wordbook.getWordForWithCapitalLeadingLetter("error"), 0);
+      JOptionPane.showMessageDialog(this, this.wordbook.getWordFor("missing_risk_data"), this.wordbook.getWordForWithCapitalLeadingLetter("error"), 0);
       return null;
     }
     LocalDate revisionDate = this.riskRevisionDatePicker.getDate();
@@ -301,7 +300,7 @@ public class RiskViewPanel extends GeneralRimantoPanel {
       boolean inBetween = revisionDate.isAfter(this.project.getDateOfProjectStart()) && revisionDate.isBefore(this.project.getDateOfProjectEnd());
       if (!inBetween)
       {
-        JOptionPane.showMessageDialog(this, this.wordbook.getWordFor("wrong revision date"), this.wordbook.getWordForWithCapitalLeadingLetter("error"), 0);
+        JOptionPane.showMessageDialog(this, this.wordbook.getWordFor("wrong_revision_date"), this.wordbook.getWordForWithCapitalLeadingLetter("error"), 0);
         return null;
       }
     }
@@ -314,7 +313,7 @@ public class RiskViewPanel extends GeneralRimantoPanel {
     boolean noCategoryGiven = categoryForFurtherProjects.trim().length() == 0;
     if (furtherProjectsSelected && noCategoryGiven)
     {
-      JOptionPane.showMessageDialog(this, this.wordbook.getWordForWithCapitalLeadingLetter("no category"), this.wordbook.getWordForWithCapitalLeadingLetter("error"), 0);
+      JOptionPane.showMessageDialog(this, this.wordbook.getWordForWithCapitalLeadingLetter("no_category"), this.wordbook.getWordForWithCapitalLeadingLetter("error"), 0);
       return null;
     }
 
