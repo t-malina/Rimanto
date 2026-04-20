@@ -70,10 +70,7 @@ public class OverviewPanel extends GeneralRimantoPanel {
           // Get selected project
           IProject project = model.getProjectWithId(projectId);
           //TODO;Replace with call to view for selected project
-          JDialog dialog = new JDialog();
-          dialog.setSize(400, 200);
-          dialog.setTitle(project.getProjectName());
-          dialog.setVisible(true);
+          eventProcessor.projectForDetailViewSelected(project);
         }
       }
     });
@@ -98,5 +95,7 @@ public class OverviewPanel extends GeneralRimantoPanel {
     this.add(this.northPanel, BorderLayout.NORTH);
     this.add(this.centerPanel, BorderLayout.CENTER);
     this.add(this.southPanel, BorderLayout.SOUTH);
+
+    //TODO: Legende
   }
 }
