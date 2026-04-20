@@ -1,4 +1,4 @@
-package de.kalkihe.rimanto.view;
+package de.kalkihe.rimanto.view.frames;
 
 import javax.swing.*;
 

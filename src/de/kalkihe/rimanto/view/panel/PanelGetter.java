@@ -1,4 +1,4 @@
 package de.kalkihe.rimanto.view.panel;
 
-public class PanelGetter {
+public class PanelGetter implements IPanelGetter{
 }
