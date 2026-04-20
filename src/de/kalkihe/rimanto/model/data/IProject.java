@@ -59,6 +59,10 @@ public interface IProject {
    */
   boolean isToReview();
 
+  boolean hasRisksToReview();
+
+  void resetReview();
+
   UUID getUuid();
 
   void addRisk(IRisk risk);

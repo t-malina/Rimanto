@@ -5,6 +5,8 @@ import de.kalkihe.rimanto.model.data.IRisk;
 import de.kalkihe.rimanto.presenter.IEventProcessor;
 import de.kalkihe.rimanto.utilities.IWordbook;
 import de.kalkihe.rimanto.view.IRimantoView;
+import de.kalkihe.rimanto.view.tablemodel.GeneralTableModel;
+import de.kalkihe.rimanto.view.tablemodel.RimantoTableCellRenderer;
 import de.kalkihe.rimanto.view.tablemodel.RiskTableModel;
 
 import javax.swing.*;
@@ -21,6 +23,8 @@ public class ProjectViewPanel extends GeneralRimantoPanel {
   private JPanel northPanel;
   private JPanel centerPanel;
   private JPanel southPanel;
+  private JPanel descriptionPanel;
+  private JPanel buttonPanel;
 
   private JTable riskTable;
   private JScrollPane riskTableScrollPane;
@@ -36,29 +40,46 @@ public class ProjectViewPanel extends GeneralRimantoPanel {
     // Create Panels
     this.northPanel = new JPanel(new GridLayout(0, 2, 0, 0));
     this.centerPanel = new JPanel(new BorderLayout());
-    this.southPanel = new JPanel(new FlowLayout());
+    this.southPanel = new JPanel(new GridLayout(2, 0));
+    this.descriptionPanel = new JPanel(new FlowLayout());
+    this.buttonPanel = new JPanel(new FlowLayout());
 
     this.buildProjectPanel();
 
     this.buildRiskPanel();
 
+    JLabel label = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("risk to review"));
+    label.setOpaque(true);
+    label.setBackground(Color.RED);
+    this.descriptionPanel.add(label);
+
     // Buttons
     JButton backButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("back"));
     backButton.addActionListener(actionEvent -> this.eventProcessor.backToOverview());
+    this.buttonPanel.add(backButton);
     JButton editProjectButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("edit project"));
     editProjectButton.addActionListener(actionEvent -> this.eventProcessor.projectEditingRequested(this.project));
+    this.buttonPanel.add(editProjectButton);
     JButton exportProjectButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("export project"));
     exportProjectButton.addActionListener(actionEvent -> this.eventProcessor.exportProject(this.project));
+    this.buttonPanel.add(exportProjectButton);
     JButton importRiskButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("import risk"));
     importRiskButton.addActionListener(actionEvent -> this.eventProcessor.riskImportRequested(this.project));
+    this.buttonPanel.add(importRiskButton);
     JButton newRiskButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("new risk"));
     newRiskButton.addActionListener(actionEvent -> this.eventProcessor.newRiskButtonClick(this.project));
+    this.buttonPanel.add(newRiskButton);
 
-    this.southPanel.add(backButton);
-    this.southPanel.add(editProjectButton);
-    this.southPanel.add(exportProjectButton);
-    this.southPanel.add(importRiskButton);
-    this.southPanel.add(newRiskButton);
+    if(this.project.isToReview())
+    {
+      JButton reviewButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("review done"));
+      reviewButton.setBackground(Color.GREEN);
+      reviewButton.addActionListener(actionEvent -> this.eventProcessor.setProjectAsReviewed(this.project));
+      this.buttonPanel.add(reviewButton);
+    }
+
+    this.southPanel.add(this.descriptionPanel);
+    this.southPanel.add(this.buttonPanel);
 
     // Add panels to main Panels
     this.add(this.northPanel, BorderLayout.NORTH);
@@ -135,7 +156,12 @@ public class ProjectViewPanel extends GeneralRimantoPanel {
     // Add Sorter to table
     this.riskTable.setAutoCreateRowSorter(true);
     // Set Table Model for Table
-    this.riskTable.setModel(new RiskTableModel(this.rimantoView.requestRisksForProject(project)));
+    GeneralTableModel riskTableModel = new RiskTableModel(this.rimantoView.requestRisksForProject(project));
+    this.riskTable.setModel(riskTableModel);
+    for (int index = 0; index < riskTableModel.getColumnCount(); index++)
+    {
+      this.riskTable.getColumnModel().getColumn(index).setCellRenderer(new RimantoTableCellRenderer());
+    }
     // Put Table into Scroll pane
     this.riskTableScrollPane = new JScrollPane(this.riskTable);
     // Adjust scroll pane

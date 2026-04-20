@@ -137,4 +137,18 @@ public class Risk implements IRisk, Serializable, Cloneable {
     this.riskMitigation = newRisk.getRiskMitigation();
     this.personInCharge = newRisk.getPersonInCharge();
   }
+
+  @Override
+  public boolean isToReview() {
+    if (dateOfNextRiskRevision == null)
+    {
+      return false;
+    }
+    return this.dateOfNextRiskRevision.isBefore(LocalDate.now()) || this.dateOfNextRiskRevision.isEqual((LocalDate.now()));
+  }
+
+  @Override
+  public void resetReview() {
+    this.dateOfNextRiskRevision = null;
+  }
 }

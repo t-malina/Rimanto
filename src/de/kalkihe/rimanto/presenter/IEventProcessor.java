@@ -35,4 +35,7 @@ public interface IEventProcessor {
 
   void abortRiskAsInstruction(IProject project, IRisk risk);
 
+  void setProjectAsReviewed(IProject project);
+  void setRiskAsReviewed(IProject project, IRisk risk);
+
 }

@@ -4,7 +4,9 @@ import de.kalkihe.rimanto.model.data.IProject;
 import de.kalkihe.rimanto.presenter.IEventProcessor;
 import de.kalkihe.rimanto.utilities.IWordbook;
 import de.kalkihe.rimanto.view.IRimantoView;
+import de.kalkihe.rimanto.view.tablemodel.GeneralTableModel;
 import de.kalkihe.rimanto.view.tablemodel.ProjectTableModel;
+import de.kalkihe.rimanto.view.tablemodel.RimantoTableCellRenderer;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -19,6 +21,8 @@ public class OverviewPanel extends GeneralRimantoPanel {
   private JPanel northPanel;
   private JPanel centerPanel;
   private JPanel southPanel;
+  private JPanel buttonPanel;
+  private JPanel descriptionPanel;
   private JTable projectTable;
   private JScrollPane projectTableScrollPane;
 
@@ -36,15 +40,22 @@ public class OverviewPanel extends GeneralRimantoPanel {
     // Create Panels
     this.northPanel = new JPanel(new BorderLayout());
     this.centerPanel = new JPanel(new BorderLayout());
-    this.southPanel = new JPanel(new FlowLayout());
+    this.southPanel = new JPanel(new GridLayout(2, 0));
+    this.buttonPanel = new JPanel(new FlowLayout());
+    this.descriptionPanel = new JPanel(new FlowLayout());
 
     // Create new Table
     this.projectTable = new JTable();
     // Add Sorter to table
     this.projectTable.setAutoCreateRowSorter(true);
     // Set Table Model for Table
-    this.projectTable.setModel(new ProjectTableModel(this.rimantoView.requestProjects()));
-    // Put Table into Scroll pane
+    GeneralTableModel projectTableModel = new ProjectTableModel(this.rimantoView.requestProjects());
+    this.projectTable.setModel(projectTableModel);
+    for(int index = 0; index < projectTableModel.getColumnCount(); index++)
+    {
+      this.projectTable.getColumnModel().getColumn(index).setCellRenderer(new RimantoTableCellRenderer());
+    }
+    // Put Table into Scroll pan
     this.projectTableScrollPane = new JScrollPane(this.projectTable);
     // Adjust scroll pane
     this.projectTableScrollPane.setPreferredSize(new Dimension(400,300));
@@ -58,13 +69,13 @@ public class OverviewPanel extends GeneralRimantoPanel {
         // Has to a double click
         if (e.getClickCount() == 2) {
           // Get clicked table
-          JTable target = (JTable) e.getSource();
+          JTable table = (JTable) e.getSource();
           // Get model of table
-          ProjectTableModel model = (ProjectTableModel) target.getModel();
+          ProjectTableModel model = (ProjectTableModel) table.getModel();
           // Read selected Row
-          int selectedRow = target.getSelectedRow();
+          int selectedRow = table.getSelectedRow();
           // Read the cell with the id of the selected project
-          Object cellContent = target.getValueAt(selectedRow, model.getColumnWithId());
+          Object cellContent = table.getValueAt(selectedRow, model.getColumnWithId());
           // Convert content of the cell to integer
           String cellText = cellContent.toString();
           Integer projectId = Integer.valueOf(cellText);
@@ -86,12 +97,27 @@ public class OverviewPanel extends GeneralRimantoPanel {
     importProjectButton.addActionListener(actionEvent -> {
       this.eventProcessor.projectImportRequested();
     });
-    this.southPanel.add(importProjectButton);
-    this.southPanel.add(newProjectButton);
+    this.buttonPanel.add(importProjectButton);
+    this.buttonPanel.add(newProjectButton);
     //TODO: Labels
     JLabel overviewLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("current projects"));
     overviewLabel.setBorder(new EmptyBorder(10, 20, 10, 0));
     this.northPanel.add(overviewLabel);
+
+    JLabel projectReviewLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("project to review"));
+    projectReviewLabel.setOpaque(true);
+    projectReviewLabel.setBackground(Color.RED);
+    this.descriptionPanel.add(projectReviewLabel);
+
+    JLabel projectRiskReviewLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("project with risks to review"));
+    projectRiskReviewLabel.setOpaque(true);
+    projectRiskReviewLabel.setBackground(Color.YELLOW);
+    this.descriptionPanel.add(projectRiskReviewLabel);
+
+    this.southPanel.add(this.descriptionPanel);
+    this.southPanel.add(this.buttonPanel);
+
+
     // Add panels to main Panels
     this.add(this.northPanel, BorderLayout.NORTH);
     this.add(this.centerPanel, BorderLayout.CENTER);

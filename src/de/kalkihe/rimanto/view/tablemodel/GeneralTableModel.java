@@ -4,12 +4,13 @@ import de.kalkihe.rimanto.model.data.IProject;
 import de.kalkihe.rimanto.utilities.IWordbook;
 import de.kalkihe.rimanto.utilities.RimantoIOCContainer;
 
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GeneralTableModel extends AbstractTableModel {
+public abstract class GeneralTableModel extends AbstractTableModel {
   // List with the names of the columns of the table
   java.util.List<String> columnNames;
   // List of Lists of Strings with the data for the table
@@ -81,5 +82,15 @@ public class GeneralTableModel extends AbstractTableModel {
     return 0;
   }
 
+  abstract public Color getRowColor(JTable table, int row);
 
+
+  protected int getIdAtRow(JTable table, int row)
+  {
+    Object cellContent = table.getValueAt(row, this.getColumnWithId());
+    // Convert content of the cell to integer
+    String cellText = cellContent.toString();
+    Integer id = Integer.valueOf(cellText);
+    return id;
+  }
 }

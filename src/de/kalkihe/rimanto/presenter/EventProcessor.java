@@ -265,4 +265,30 @@ public class EventProcessor implements IEventProcessor{
   public void abortRiskAsInstruction(IProject project, IRisk risk) {
     this.riskForDetailViewSelected(project, risk);
   }
+
+  @Override
+  public void setProjectAsReviewed(IProject project) {
+    try
+    {
+      this.rimantoModel.setProjectAsReviewed(project);
+      this.rimantoView.showProject(project);
+    }
+    catch (Exception exception)
+    {
+      this.rimantoView.showErrorDialog(exception, false);
+    }
+  }
+
+  @Override
+  public void setRiskAsReviewed(IProject project, IRisk risk) {
+    try
+    {
+      this.rimantoModel.setRiskAsReviewed(project, risk);
+      this.rimantoView.showRisk(project, risk);
+    }
+    catch (Exception exception)
+    {
+      this.rimantoView.showErrorDialog(exception, false);
+    }
+  }
 }

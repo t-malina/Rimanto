@@ -2,6 +2,7 @@ package de.kalkihe.rimanto.view.tablemodel;
 
 import de.kalkihe.rimanto.model.data.IRisk;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,5 +65,17 @@ public class RiskTableModel extends GeneralTableModel {
   {
     //TODO: Implement returning of right color
     return null;
+  }
+
+  @Override
+  public Color getRowColor(JTable table, int row) {
+    int riskId = super.getIdAtRow(table, row);
+    IRisk risk = this.getRiskWithId(riskId);
+    if (risk.isToReview())
+    {
+      return Color.RED;
+    }
+    return Color.WHITE;
+
   }
 }
