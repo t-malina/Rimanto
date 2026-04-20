@@ -36,7 +36,8 @@ public class RimantoView implements IRimantoView{
    */
   @Override
   public void showErrorDialog(Exception exception, boolean shutdownApplication) {
-    JOptionPane.showMessageDialog(this.rimantoMainFrame, exception.getMessage());
+    JOptionPane.showMessageDialog(this.rimantoMainFrame, exception.getMessage() + exception.getStackTrace());
+    exception.printStackTrace();
   }
 
   /*

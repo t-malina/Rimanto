@@ -4,6 +4,7 @@ import de.kalkihe.rimanto.model.data.IProject;
 import de.kalkihe.rimanto.presenter.IEventProcessor;
 import de.kalkihe.rimanto.utilities.IWordbook;
 import de.kalkihe.rimanto.view.IRimantoView;
+import de.kalkihe.rimanto.view.tablemodel.ProjectTableModel;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

@@ -4,10 +4,7 @@ import java.io.File;
 import java.io.Serializable;
 import java.net.URI;
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 public class Project implements IProject, Serializable {
   private String projectName;
@@ -36,6 +33,7 @@ public class Project implements IProject, Serializable {
     this.linkedResources = linkedResources;
     this.dateOfNextProjectRevision = dateOfNextProjectRevision;
     this.uuid = UUID.randomUUID();
+    this.projectRisks = new ArrayList<IRisk>();
   }
 
   @Override
