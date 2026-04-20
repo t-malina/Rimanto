@@ -50,6 +50,7 @@ public class ShowErrorFrame extends JDialog {
     this.exception = exception;
     this.shutdownApplication = shutdownApplication;
     this.init();
+    exception.printStackTrace();
   }
 
   /**
