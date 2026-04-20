@@ -7,10 +7,14 @@ import de.kalkihe.rimanto.model.data.Project;
 import de.kalkihe.rimanto.presenter.IEventProcessor;
 import de.kalkihe.rimanto.utilities.IWordbook;
 import de.kalkihe.rimanto.view.IRimantoView;
+import de.kalkihe.rimanto.view.panel.keyevent.TabKeyAdapter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.net.URI;
+import java.security.Key;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.*;
@@ -29,7 +33,7 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
   private JScrollPane projectDescriptionScrollPane;
   private JScrollPane furtherResourcesScrollPane;
 
-  private JTextArea projectNameTextField;
+  private JTextArea projectNameTextArea;
   private JTextArea projectDescriptionTextArea;
 
   private DatePicker projectStartDatePicker;
@@ -67,10 +71,10 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
     this.southPanel = new JPanel(new FlowLayout());
     this.projectNameLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("project name"));
     this.projectDescriptionLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("project description"));
-    this.projectNameTextField = new JTextArea();
-    this.projectNameScrollPane = new JScrollPane(this.projectNameTextField);
+    this.projectNameTextArea = new JTextArea();
+    this.projectNameScrollPane = super.configureAndInsertTextArea(this.projectNameTextArea);
     this.projectDescriptionTextArea = new JTextArea();
-    this.projectDescriptionScrollPane = new JScrollPane(this.projectDescriptionTextArea);
+    this.projectDescriptionScrollPane = super.configureAndInsertTextArea(this.projectDescriptionTextArea);
     this.centerPanel.add(this.projectNameLabel);
     this.centerPanel.add(this.projectNameScrollPane);
     this.centerPanel.add(this.projectDescriptionLabel);
@@ -82,6 +86,7 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
     DatePickerSettings datePickerSettings = new DatePickerSettings();
     datePickerSettings.setAllowKeyboardEditing(false);
     datePickerSettings.setAllowEmptyDates(false);
+    datePickerSettings.setFormatForDatesCommonEra(this.wordbook.getDateTimeFormatter());
     this.projectStartDatePicker = new DatePicker(datePickerSettings);
     this.projectEndDatePicker = new DatePicker(datePickerSettings.copySettings());
     this.projectStartDatePicker.setDateToToday();
@@ -92,16 +97,16 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
     this.centerPanel.add(this.projectEndDateLabel);
     this.centerPanel.add(this.projectEndDatePicker);
 
-
     this.furtherResourcesLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("further resources"));
     this.furtherResourcesTextArea = new JTextArea();
-    this.furtherResourcesScrollPane = new JScrollPane(this.furtherResourcesTextArea);
+    this.furtherResourcesScrollPane = super.configureAndInsertTextArea(this.furtherResourcesTextArea);
 
     this.centerPanel.add(this.furtherResourcesLabel);
     this.centerPanel.add(this.furtherResourcesScrollPane);
 
     DatePickerSettings revisionDatePickerSettings = new DatePickerSettings();
     revisionDatePickerSettings.setAllowKeyboardEditing(false);
+    revisionDatePickerSettings.setFormatForDatesCommonEra(this.wordbook.getDateTimeFormatter());
     this.projectRevisionLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("next date of revision"));
     this.projectRevisionDatePicker = new DatePicker(revisionDatePickerSettings);
 
@@ -113,10 +118,20 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
     this.saveButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("save"));
     this.cancelButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("cancel"));
     this.deleteButton = new JButton(this.wordbook.getWordForWithCapitalLeadingLetter("delete project"));
+
+
+    this.projectNameTextArea.addKeyListener(new TabKeyAdapter(this.projectDescriptionTextArea));
+    this.projectDescriptionTextArea.addKeyListener(new TabKeyAdapter(this.projectStartDatePicker));
+    this.projectStartDatePicker.addKeyListener(new TabKeyAdapter(this.projectEndDatePicker));
+    this.projectEndDatePicker.addKeyListener(new TabKeyAdapter(this.furtherResourcesTextArea));
+    this.furtherResourcesTextArea.addKeyListener(new TabKeyAdapter(this.projectRevisionDatePicker));
+    this.projectRevisionDatePicker.addKeyListener(new TabKeyAdapter(this.projectNameTextArea));
+
   }
 
+
   private void initialize(IProject project)  {
-    this.projectNameTextField.setText(project.getProjectName());
+    this.projectNameTextArea.setText(project.getProjectName());
     this.projectDescriptionTextArea.setText(project.getProjectDescription());
     this.projectStartDatePicker.setDate(project.getDateOfProjectStart());
     this.projectEndDatePicker.setDate(project.getDateOfProjectEnd());
@@ -134,6 +149,8 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
     this.southPanel.add(this.saveButton);
 
     this.add(this.southPanel, BorderLayout.SOUTH);
+
+
   }
 
   private void initialize()
@@ -167,7 +184,7 @@ public class CreateProjectPanel extends GeneralRimantoPanel {
   }
 
   private IProject generateProjectFromInput(){
-    String projectName = this.projectNameTextField.getText();
+    String projectName = this.projectNameTextArea.getText();
     boolean noProjectName = projectName.trim().length() == 0;
     if (noProjectName)
     {

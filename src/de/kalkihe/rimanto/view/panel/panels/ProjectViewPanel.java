@@ -13,8 +13,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URL;
 import java.time.LocalDate;
 
 public class ProjectViewPanel extends GeneralRimantoPanel {
@@ -38,7 +40,7 @@ public class ProjectViewPanel extends GeneralRimantoPanel {
   @Override
   protected void buildPanel() throws Exception {
     // Create Panels
-    this.northPanel = new JPanel(new GridLayout(0, 2, 0, 0));
+    this.northPanel = new JPanel(new GridLayout(0, 2));
     this.centerPanel = new JPanel(new BorderLayout());
     this.southPanel = new JPanel(new GridLayout(2, 0));
     this.descriptionPanel = new JPanel(new FlowLayout());
@@ -90,11 +92,11 @@ public class ProjectViewPanel extends GeneralRimantoPanel {
   private void buildProjectPanel()
   {
     JLabel nameLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("project name"));
-    JLabel projectNameLabel = new JLabel(this.project.getProjectName());
-    JScrollPane projectNameScrollPane = new JScrollPane(projectNameLabel);
+    JTextArea projectNameLabel = new JTextArea(this.project.getProjectName());
+    JScrollPane projectNameScrollPane = super.getScrollPaneWithReadOnly(projectNameLabel);
     JLabel descriptionLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("project description"));
-    JLabel projectDescriptionLabel = new JLabel(this.project.getProjectDescription());
-    JScrollPane projectDescriptionScrollPane = new JScrollPane(projectDescriptionLabel);
+    JTextArea projectDescriptionLabel = new JTextArea(this.project.getProjectDescription());
+    JScrollPane projectDescriptionScrollPane = super.getScrollPaneWithReadOnly(projectDescriptionLabel);
     projectDescriptionScrollPane.setPreferredSize(new Dimension(0, 35));
 
     this.northPanel.add(nameLabel);
@@ -113,25 +115,26 @@ public class ProjectViewPanel extends GeneralRimantoPanel {
     this.northPanel.add(projectEndDateLabel);
 
     JLabel furtherResourcesLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("further resources"));
-    JPanel resourcesPanel = new JPanel(new GridLayout(0, 1));
-    for(URI uri : this.project.getLinkedResources())
-    {
-      JButton button = new JButton(uri.toString());
-      button.addActionListener(actionEvent ->
-      {
-        //TODO: Auch für Dateien auf System oder Netzwerk möglich machen
-        Desktop desktop = java.awt.Desktop.getDesktop();
-        try {
-          desktop.browse(uri);
-        } catch (IOException e) {
-          e.printStackTrace();
+
+    JList furtherRessoucesList = new JList(this.project.getLinkedResources().toArray());
+    furtherRessoucesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    furtherRessoucesList.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        super.mouseClicked(e);
+        if(e.getClickCount() == 2)
+        {
+          JList target = (JList) e.getSource();
+          eventProcessor.ressourceForViewRequested(target.getSelectedValue().toString());
         }
-      });
-      resourcesPanel.add(button);
-    }
+      }
+    });
 
     this.northPanel.add(furtherResourcesLabel);
-    this.northPanel.add(resourcesPanel);
+    JScrollPane scrollPane = new JScrollPane(furtherRessoucesList);
+    scrollPane.setPreferredSize(new Dimension(0, 20));
+    scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+    this.northPanel.add(scrollPane);
 
     JLabel revisionLabel = new JLabel(this.wordbook.getWordForWithCapitalLeadingLetter("next date of revision"));
     LocalDate date = this.project.getDateOfNextProjectRevision();

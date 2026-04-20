@@ -41,7 +41,6 @@ public class Project implements IProject, Serializable {
     this.projectRisks.remove(risk);
   }
 
-
   /*
    * Constructor
    * Initializes project data with passed data
@@ -72,7 +71,6 @@ public class Project implements IProject, Serializable {
 
   @Override
   public String[] getGeneralDataNames() {
-    // TODO: Remove hard coding of text
     String[] result = {"name", "description"};
     return result;
   }
