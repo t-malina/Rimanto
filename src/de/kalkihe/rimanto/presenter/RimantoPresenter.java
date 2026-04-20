@@ -38,6 +38,8 @@ public class RimantoPresenter implements IRimantoPresenter{
     try{
       // Resolve all needed dependencies
       this.resolveDependencies();
+      // Initialize the model
+      this.rimantoModel.initializeModel();
       // Initialize main application window and show it
       rimantoView.initializeApplicationWindow();
     }

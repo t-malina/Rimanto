@@ -148,4 +148,10 @@ public class ProjectTableModel extends AbstractTableModel {
     return 0;
   }
 
+  public Color getRowColor(int row)
+  {
+    //TODO: Implement returning of right color
+    return null;
+  }
+
 }
