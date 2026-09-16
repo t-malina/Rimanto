@@ -1,0 +1,12 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Rimanto",
+            "request": "launch",
+            "mainClass": "de.kalkihe.rimanto.presenter.RimantoPresenter",
+            "projectName": "Rimanto_e5b3b083",
+        }
+    ]
+}
