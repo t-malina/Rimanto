@@ -37,13 +37,16 @@ public class ShowErrorFrame extends JDialog {
 
   /**
    * Constructor. Sets the needed references, attributes
-   * @param wordbook The wordbook for labels and messages
-   * @param errorMessage The error message to display
-   * @param exception The causing exception
-   * @param shutdownApplication True, if the application is to shut down after closing of this window
+   * 
+   * @param wordbook            The wordbook for labels and messages
+   * @param errorMessage        The error message to display
+   * @param exception           The causing exception
+   * @param shutdownApplication True, if the application is to shut down after
+   *                            closing of this window
    * @throws HeadlessException
    */
-  public ShowErrorFrame(IWordbook wordbook, String errorMessage, Exception exception, boolean shutdownApplication) throws HeadlessException {
+  public ShowErrorFrame(IWordbook wordbook, String errorMessage, Exception exception, boolean shutdownApplication)
+      throws HeadlessException {
     super();
     this.wordbook = wordbook;
     this.errorMessage = errorMessage;
@@ -60,8 +63,8 @@ public class ShowErrorFrame extends JDialog {
     // Set Title of Main window
     this.setTitle(this.wordbook.getWordForWithCapitalLeadingLetter("error"));
     // Set icon of the main window
-    ImageIcon icon = new ImageIcon(getClass().getResource("/danger.png"));
-    this.setIconImage(icon.getImage());
+    // ImageIcon icon = new ImageIcon(getClass().getResource("/danger.png"));
+    // this.setIconImage(icon.getImage());
     // Set the minimum size of this window
     this.setMinimumSize(new Dimension(300, 200));
     // Set the Layout
@@ -76,7 +79,7 @@ public class ShowErrorFrame extends JDialog {
     errorTextArea.setBackground(UIManager.getColor("Label.background"));
     errorTextArea.setFont(UIManager.getFont("Label.font"));
     errorTextArea.setBorder(UIManager.getBorder("Label.border"));
-    JScrollPane scrollPane =  new JScrollPane(errorTextArea);
+    JScrollPane scrollPane = new JScrollPane(errorTextArea);
 
     // Set the text of the error text area
     errorTextArea.setText("\n" + errorMessage + "\n\n\n" + this.getStackTrace(exception));
@@ -101,14 +104,10 @@ public class ShowErrorFrame extends JDialog {
   /**
    * Closes this window
    */
-  private void closeFrame()
-  {
-    if (this.shutdownApplication)
-    {
+  private void closeFrame() {
+    if (this.shutdownApplication) {
       System.exit(0);
-    }
-    else
-    {
+    } else {
       this.dispose();
     }
   }
@@ -116,8 +115,7 @@ public class ShowErrorFrame extends JDialog {
   /**
    * Copies the error message to clipboard
    */
-  private void copyErrorMessage()
-  {
+  private void copyErrorMessage() {
     StringSelection selection = new StringSelection(this.errorTextArea.getText());
     Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
     clipboard.setContents(selection, null);
@@ -125,11 +123,11 @@ public class ShowErrorFrame extends JDialog {
 
   /**
    * Returns the stack trace of the passed exception
+   * 
    * @param exception Exception to read stack trace from
    * @return The stack trace of the exception
    */
-  private String getStackTrace(Exception exception)
-  {
+  private String getStackTrace(Exception exception) {
     StringWriter stringWriter = new StringWriter();
     PrintWriter printWriter = new PrintWriter(stringWriter);
     exception.printStackTrace(printWriter);

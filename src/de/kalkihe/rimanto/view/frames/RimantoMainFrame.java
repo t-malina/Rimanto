@@ -24,8 +24,10 @@ public class RimantoMainFrame extends JFrame {
   private ImageIcon icon;
 
   /**
-   * Constructor. Initializes needed references and starts initializing the application window
-   * @param wordbook The wordbook to use
+   * Constructor. Initializes needed references and starts initializing the
+   * application window
+   * 
+   * @param wordbook       The wordbook to use
    * @param eventProcessor The event processor to give events to
    */
   public RimantoMainFrame(IWordbook wordbook, IEventProcessor eventProcessor) {
@@ -47,8 +49,8 @@ public class RimantoMainFrame extends JFrame {
     // Set Title of Main window
     this.setTitle("Rimanto");
     // Set icon of the main window
-    this.icon = new ImageIcon(getClass().getResource("/danger.png"));
-    this.setIconImage(this.icon.getImage());
+    // this.icon = new ImageIcon(getClass().getResource("/danger.png"));
+    // this.setIconImage(this.icon.getImage());
     // Set initial size of the current window
     // this.setSize(800, 700);
     // Set minimum size of the window
@@ -89,10 +91,10 @@ public class RimantoMainFrame extends JFrame {
 
   /**
    * Sets the panel that is to show
+   * 
    * @param panel The panel that is to show
    */
-  public void setJPanel(JPanel panel)
-  {
+  public void setJPanel(JPanel panel) {
     this.shownPanel.removeAll();
     this.shownPanel.add(panel);
     this.shownPanel.revalidate();
@@ -102,9 +104,10 @@ public class RimantoMainFrame extends JFrame {
   /**
    * Shows the about message window
    */
-  private void showAbout()
-  {
-    String message = this.wordbook.getWordForWithCapitalLeadingLetter("rimanto") + "\n\n" + this.wordbook.getWordForWithCapitalLeadingLetter("icon");
-    JOptionPane.showMessageDialog(this, message, this.wordbook.getWordForWithCapitalLeadingLetter("about"), 0, this.icon);
+  private void showAbout() {
+    String message = this.wordbook.getWordForWithCapitalLeadingLetter("rimanto") + "\n\n"
+        + this.wordbook.getWordForWithCapitalLeadingLetter("icon");
+    JOptionPane.showMessageDialog(this, message, this.wordbook.getWordForWithCapitalLeadingLetter("about"), 0,
+        this.icon);
   }
 }
