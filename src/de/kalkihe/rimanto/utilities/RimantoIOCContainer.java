@@ -108,7 +108,7 @@ public class RimantoIOCContainer {
    * Used to set the wordbook to new created instance
    */
   public void setWordbook() {
-    this.wordbook = new MultiLanguagueWordbook();
+    this.wordbook = new StubWordbook();
   }
 
   /**
